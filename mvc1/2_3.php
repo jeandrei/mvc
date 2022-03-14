@@ -11,7 +11,7 @@
  */
 class User {
     // Propriedades (atributos)
-    public $name = 'Brad';
+    public $name;
 
     //Metodos (Funções)
     public function sayHello(){
@@ -22,10 +22,17 @@ class User {
 
 // Instanciamos um objeto
 $user1 = new User();
-
-echo $user->name;
+$user1->name = 'Brad';
+echo $user1->name;
+echo '<br>';
+echo $user1->sayHello();
 
 echo '<br>';
 
-echo $user1->sayHello();
+// Create new user
+$user2 = new User();
+$user2->name = 'Jeff';
+echo $user2->name;
+echo '<br>';
+echo $user2->sayHello();
 ?>
