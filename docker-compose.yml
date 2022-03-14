@@ -71,7 +71,7 @@ services:
         #./dumps/ijdb.sql nosso backup do banco
         #/docker-entrypoint-initdb.d/ijdb.sql inicializa a restauração do banco
         #- ./dumps/mvc.sql:/docker-entrypoint-initdb.d/shareposts.sql modelo
-        - ./desenvolvimento/mvc/bd/mvc.sql:/docker-entrypoint-initdb.d/mvc.sql  
+        - mvc/bd/mvc.sql:/docker-entrypoint-initdb.d/mvc.sql  
     networks:
         #nome da rede de comunicação entre containers
         - default
