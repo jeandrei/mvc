@@ -1,0 +1,9 @@
+Criamos o header e footer para incluir nas páginas
+Crie o diretório app\views\inc
+E depois app\views\inc\header.php
+E app\views\inc\footer.php
+Depois damos um require no view, teremos que adicionar
+em todos os views
+Para dar certo os links dos arquivos
+public\css\style.css e public\js\main.js
+tem que arrumar no arquivo app\config\config.php a URLROOT

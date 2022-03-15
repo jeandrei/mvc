@@ -1,0 +1,6 @@
+Criamos o base controller, libraries\controller.php
+Todos os controllers que criarmos tem que extender a esse
+controller base
+
+O controller base será responsável por carregar
+os models e os views

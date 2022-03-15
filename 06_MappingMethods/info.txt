@@ -1,0 +1,17 @@
+Agora iremos trabalhar no metodo do Core
+app/pages/about
+about é o método
+Vai procurar no app/controllers a classe exemplo
+Pages que tem que ter o mesmo nome do arquivo Pages.php
+se existir o método exemplo about dentro da classe executa
+Esse parâmetro será passado pela parte 1 do array da url
+pages/about/1
+array [0=>'pages',1=>'about',[2=>1]]
+Se digitar app/pages ele vai carregar o método index
+que esta lá em app/controllers/Pages public function index
+Se digitar app/pages/about ele vai carregar o método about
+que está lá em app/controllers/Pages public function about
+
+
+
+

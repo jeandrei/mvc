@@ -1,0 +1,14 @@
+Criamos o arquivo
+app\config\config.php
+Que contem configurações de banco de dados
+url, nome do sistema, versão etc.
+Carregamos o arquivo config.php no arquivo
+app\bootstrap.php
+
+Temos acesso a esses parâmetros de configuração
+em qualquer lugar
+exemplo views\pages\index.php
+
+Por fim criamos uma função autoloader que vai ler
+ou seja carregar todos os arquivos que estiverem 
+na pasta libraries

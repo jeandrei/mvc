@@ -1,0 +1,16 @@
+Criando nosso primeiro view
+Crie o arquivo views\pages\index.php
+Coloque algum conteúdo lá como HOMEPAGE
+agora no controller de Pages
+no método index com o view
+public function index(){
+    $this->view('pages\index');
+}
+
+Após ao digitar app/pages ele tem que aparecer
+o conteúdo de views\pages\index.php
+
+Criamos da mesma forma views\pages\about.php
+
+Exemplo de como passar dados para o view veja em
+controllers\pages\index
