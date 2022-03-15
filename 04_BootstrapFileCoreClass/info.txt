@@ -1,0 +1,29 @@
+Adicionamos mais um .htaccess para evitar ter que 
+digitar na url o /public
+app/public
+O que o arquivo .htaccess vai fazer é ao digitar
+ip/app vai sempre para a pasta public
+Esse .htacces é criado na raiz do app no diretório /
+
+Colocamos o código
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteRule ^$ public/ [L]
+  RewriteRule (.*) public/$1 [L]
+</IfModule>
+
+Agora precisamos carregar a pasta app\libraries que é onde
+temos as classes Controller, Core e Database.
+Obs.: Todas as classes da pasta Libraries tem que começar
+com letra maiúscula.
+
+No arquivo app\bootstrap damos um require nas bibliotecas
+
+Criamos a classe Core no arquivo libraries\Core.php
+Instanciamos a classe Core no arquivo app\public\index.php
+Ao final digite na url app\qualquercoisa e veja o resultado
+
+
+
+
+

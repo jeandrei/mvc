@@ -1,0 +1,41 @@
+Vídeo 14
+Vamos direcionat tudo para o public\index.php
+Para isso temos que utilizar o modrewrite que é um
+modulo do php que nos permite reescrever urls 
+e fazer um monte de outras coisas
+usamos essa funcionalidade com o arquivo do apache .htaccess 
+Neste caso o arquivo em questão é public\.htaccess
+
+Colocamos o seguinte código no arquivo .htaccess
+<ifModule mod_rewrite.c>
+  Options -Multiviews
+  RewriteEngine On
+  RewriteBase /03_redirectEverythingToIndex/public
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.+) index.php?url=$1 [QSA,L]
+</IfModule>
+
+Onde 03_redirectEverythingToIndex é a pasta onde está 
+o nosso app.
+Sempre quando criar um novo projeto tem que atualizar 
+este arquivo colocando o nome da pasta atual do app
+O que esse arquivo vai fazer é sempre redirecionar para
+o arquivo \public\index.php
+e vai criar uma variável na url chamada url e um 
+parâmetro.
+Dessa forma não precisamos digitar na url
+app\index.php?url=user
+Simplesmente digitamos app\user
+Ao final ao digitar uma url
+app\public\qualquercoisa.php
+ou seja neste caso
+03_RedirectEverythingToIndex\public\qualquercoisa.php
+tem que carregar o index.php a não ser que
+exista o arquivo solicitado como app\public\teste.php
+Se não funcionar tente dar um chmod 777 -R \app
+
+Por fim damos um require no arquivo bootstrap.php
+que vai carregar todos os arquivos que precisamos
+
+

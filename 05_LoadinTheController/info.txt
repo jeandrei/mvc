@@ -1,0 +1,14 @@
+Continuação da classe Core
+
+Criamos um arquivo para testar se o controller está
+sendo carregado
+em controllrs criamos o arquivo Pages.php
+Que como está configurado no Core o currentController sempre
+vai carregar por default Pages então quando colocar
+app/ vai carregar Pages
+Para testar crie um novo arquivo controllers/Posts.php
+lembre no plural e com letra maiúscula e dentro do arquivo
+crie a classe também igual o nome do arquivo
+class Posts
+Depois tente acessar para ver se carregou
+app/posts
