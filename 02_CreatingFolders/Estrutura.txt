@@ -1,0 +1,24 @@
+\public - Front and da aplicação, onde o index.php principal vai ficar bem como o .htaccess que vai fazer com que sempre seja redirecionado para /public/index.php,
+também aqui vai estar o css, javascript, jquery etc...
+\public\index.php
+\public\css\style.css
+\public\js\main.js
+\public\img
+\public\.htaccess
+\app - que terá todo o resto da aplicação, toda a estrutura mvc, as bibliotecas, 
+o arquivo de configuração config.php, helpers etc...
+\app\libraries\Core.php - vai tratar a url dividindo em um array classe\metodo\id
+\app\libraries\Database.php - classe PDO conexão com o banco de dados, o model vai usar esse arquivo
+\app\libraries\Controller.php - permite carregar models e views a partir de outros controllers
+ATENÇÃO: TODO CONTROLLER QUE CRIARMOS VAI EXTENDER A ESSA CLASSE Controller.php
+\app\models
+\app\views
+\app\controllers
+\app\helpers - para coisas menores como redirect helper, session helper, flash message etc 
+\app\config - parâmetros do banco de dados
+\app\bootstrap.php - arquivo que vai dar um require em todos os arquivos que precisamos exemplo:
+libreries, arquivo de configuração, helpers etc.
+\app\.htaccess - para impedir o acesso a pasta app
+
+
+
