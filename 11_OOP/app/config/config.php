@@ -19,7 +19,7 @@ header('Content-Type: text/html; charset=utf-8');
 define('DB_HOST', 'mysql');
 define('DB_USER', 'root');
 define('DB_PASS', 'rootadm');
-define('DB_NAME', 'mvc');
+define('DB_NAME', 'shareposts');
 
 // App Root
 define('APPROOT', dirname(dirname(__FILE__)));

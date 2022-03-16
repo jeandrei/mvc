@@ -15,7 +15,7 @@ DROP DATABASE IF EXISTS shareposts;
 
 CREATE DATABASE shareposts CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-use mvc;ULTS */;
+use shareposts
 
 --
 -- Banco de dados: `shareposts`
