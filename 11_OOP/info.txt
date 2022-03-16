@@ -7,7 +7,7 @@ Crie as constantes com os parâmetros de conexão com o banco de dados
 define('DB_HOST', 'mysql');
 define('DB_USER', 'root');
 define('DB_PASS', 'rootadm');
-define('DB_NAME', 'mvc');
+define('DB_NAME', 'shareposts');
 
 OBS.: se for docker DB_HOST é o nome do container
 
@@ -17,6 +17,16 @@ Vamos criar nossa classe PDO
 Depois de criado a classe PDO vamos criar um model para testar
 Crie o arquivo \app\models\Post.php
 Model é sempre singular
+
+No final das contas a sequência é a seguinte
+Quando chamamos a app\pages
+Se não for passado nenhum método vai ficar o metodo padrão index
+Então no controller vai Carregar o Model
+Deois vai entrar no método index
+Que vai buscar os posts com o método getPosts que está no model
+Vai passar os dados para a variável posts
+e vai passar para o array data
+que por fim passa para o view
 
 
 
