@@ -62,8 +62,8 @@ services:
     command: --max_allowed_packet=32505856    
     environment:
         #dados de conexão com o banco de dados
-        MYSQL_DATABASE: mvc
-        MYSQL_USER: mvc
+        MYSQL_DATABASE: shareposts
+        MYSQL_USER: shareposts
         MYSQL_PASSWORD: mypassword
         MYSQL_ROOT_PASSWORD: rootadm 
     volumes:
@@ -71,7 +71,7 @@ services:
         #./dumps/ijdb.sql nosso backup do banco
         #/docker-entrypoint-initdb.d/ijdb.sql inicializa a restauração do banco
         #- ./dumps/mvc.sql:/docker-entrypoint-initdb.d/shareposts.sql modelo
-        - /www/mvc/bd/mvc.sql:/docker-entrypoint-initdb.d/mvc.sql  
+        - /www/mvc/bd/shareposts.sql:/docker-entrypoint-initdb.d/shareposts.sql  
     networks:
         #nome da rede de comunicação entre containers
         - default
@@ -89,7 +89,7 @@ services:
             - 8000:80
         environment:
         #dados de conexão com o banco de dados db
-            MYSQL_USER: mvc
+            MYSQL_USER: shareposts
             MYSQL_PASSWORD: mypassword
             MYSQL_ROOT_PASSWORD: rootadm
             restart: always

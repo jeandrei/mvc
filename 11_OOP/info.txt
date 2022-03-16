@@ -1,0 +1,24 @@
+Aula 23
+Vamos criar a classe Database que vai trabalhar com PDO
+Primeiro vamos definir os parâmetros do banco de dados
+No arquivo app\config\config.php
+Crie as constantes com os parâmetros de conexão com o banco de dados
+
+define('DB_HOST', 'mysql');
+define('DB_USER', 'root');
+define('DB_PASS', 'rootadm');
+define('DB_NAME', 'mvc');
+
+OBS.: se for docker DB_HOST é o nome do container
+
+Agora em app\libraries\Database.php
+Vamos criar nossa classe PDO
+
+Depois de criado a classe PDO vamos criar um model para testar
+Crie o arquivo \app\models\Post.php
+Model é sempre singular
+
+
+
+
+
