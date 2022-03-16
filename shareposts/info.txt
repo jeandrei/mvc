@@ -1,0 +1,21 @@
+Essa é só a parte do app shareposts
+Até o 13 fizemos só a parte do mvc
+
+Sempre a primeira coisa que tem que se fazer quando criar um novo projeto
+é atualizar os parâmetros de app\config\config.php
+Também deve ser atualizado o arquivo \public\.htacess
+e na linha RewriteBase /shareposts/public
+no lugar de shareposts colocar o nome da pasta do app atual
+
+Framework do bootstrap bem como, navbar e css está no arquivo
+/inc/header
+Footer está em 
+/inc/footer
+
+
+VALIDAÇÃO JQUERY VALIDATE exemplo views\users\register
+O form tem que ter id exemplo <form id="register"
+E esse id tem que ser o mesmo na configuração do jquery VALIDATE
+$('#register').validate({
+Para validação de cpf, telefone e email tem que colocar a classe no input exemplo
+class="form-control cpf 
