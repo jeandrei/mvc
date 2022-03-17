@@ -29,7 +29,7 @@ class User {
     }
 
     // Register User
-    public function updatepassword($data){
+    public function updatepassword($data){       
         $this->db->query('UPDATE users SET password =:password WHERE email=:email');
         // Bind values           
         $this->db->bind(':email',$data['email']);

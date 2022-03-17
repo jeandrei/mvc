@@ -315,14 +315,13 @@
                 ){  
                      // Hash Password criptografa o password
                      $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);                     
-                     $data['email'] = $_SESSION[SE. '_user_email'];                     
+                     $data['email'] = $_SESSION[SE. 'user_email'];                     
                      // Register User
-                     if($this->userModel->updatePassword($data)){
-                        var_dump($data);
+                     if($this->userModel->updatePassword($data)){                       
                        // Cria a menságem antes de chamar o view va para 
                        // views/users/login a segunda parte da menságem
-                       flash('mensagem', 'Senha atualizada com Sucesso');                        
-                       redirect('datausers/show');
+                       flash('post_message', 'Senha atualizada com Sucesso');                        
+                       redirect('posts');
                      } else {
                          die('Ops! Algo deu errado.');
                      }
