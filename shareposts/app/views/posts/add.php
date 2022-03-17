@@ -3,7 +3,7 @@
     <div class="card card-body bg-light mt-5">       
         <h2>Adicionar Postagem</h2>
         <p>Crie um Postagem</p>                               
-        <form action="<?php echo URLROOT; ?>/posts/add" method="post">  
+        <form id="addPost" action="<?php echo URLROOT; ?>/posts/add" method="post">  
                     
             <!--EMAIL-->
             <div class="form-group">   
@@ -13,6 +13,7 @@
                 <input 
                     type="text" 
                     name="title" 
+                    id="title" 
                     placeholder="Informe um título para o post",
                     class="form-control form-control-lg <?php echo (!empty($data['title_err'])) ? 'is-invalid' : ''; ?>"                             
                     value="<?php echo $data['title'];?>"
@@ -27,7 +28,7 @@
                 <label 
                     for="body"><b class="obrigatorio">*</b> Texto: 
                 </label>                        
-                <textarea name="body" class="form-control form-control-lg <?php echo (!empty($data['body_err'])) ? 'is-invalid' : ''; ?>"><?php echo $data['body'];?></textarea>
+                <textarea name="body" id="body" class="form-control form-control-lg <?php echo (!empty($data['body_err'])) ? 'is-invalid' : ''; ?>"><?php echo $data['body'];?></textarea>
                 
                 <span class="invalid-feedback">
                     <?php echo $data['body_err']; ?>
@@ -39,3 +40,30 @@
         </form>
     </div>          
 <?php require APPROOT . '/views/inc/footer.php'; ?>
+
+<script>  
+ $(document).ready(function(){
+	$('#addPost').validate({
+		rules : {
+			title : {
+				required : true,
+				minlength : 3
+			},
+            body : {
+				required : true,
+				minlength : 30
+			}   
+		},
+		messages : {
+			title : {
+				required : 'Por favor informe um título.',
+				minlength : 'O título deve ter no mínimo 3 caracteres.'
+			},
+            body : {
+				required : 'Por favor informe o corpo do post.',
+				minlength : 'O corpo do post deve ter no mínimo 30 caracteres.'
+			}
+        }
+    });
+});
+</script>
