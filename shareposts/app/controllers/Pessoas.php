@@ -5,19 +5,15 @@
         }
 
         public function index(){
-            echo "Carregou o index";
+            $this->view('pessoas/index');
         }
 
         public function add(){
-            echo "Carregou o add";
+            $this->view('pessoas/add');
         }
 
         public function edit(){
-            echo "Carregou o edit";
-        }
-
-        public function delete(){
-            echo "Carregou o delete";
-        }
+            $this->view('pessoas/edit');
+        }       
     }
 ?>

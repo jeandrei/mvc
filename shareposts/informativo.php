@@ -55,6 +55,17 @@
  * 9 - Na construct do controller carregue o model
  * $this->userModel = $this->model('Pessoa');
  * 10 - Teste para ver se não tem nenhum erro
+ * 11 - Crie os views para cada metodo index, add, edits
+ * views/pessoas/index
+ * views/pessoas/add
+ * views/pessoas/edit
+ * Coloque algo dentro só para ver se vc consegue acessar 
+ * como por exemplo em index HOME
+ * 12 - Retorne ao controller de pessoas e carregue o view correspondente
+ * para cada método
+ * $this->view('pessoas/index');
+ * 13 - Teste para ver se apareceu o conteúdo do view
+ * 
  * 
  * 
  * 
