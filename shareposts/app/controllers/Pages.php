@@ -6,7 +6,7 @@
 */
 class Pages extends Controller{
     public function __construct(){
-               
+
     }
 
     // Lá no arquivo libraries/Core.php definimos que o metodo padrão é index
@@ -40,9 +40,5 @@ class Pages extends Controller{
         
         $this->view('pages/about', $data);
     } 
-
-
-
-    
     
 }

@@ -4,12 +4,10 @@
             <div class="card card-body bg-light mt-2">
                 <h2>Alterar a Senha</h2>
                 <p>Por favor informe sua nova senha</p> 
-                <form action="<?php echo URLROOT; ?>/users/alterasenha" method="post" enctype="multipart/form-data" onsubmit="return validation(
-                                                                                                                                               [noempty=['name']],
-                                                                                                                                             )">   
+                <form action="<?php echo URLROOT; ?>/users/alterasenha" method="post" enctype="multipart/form-data" onsubmit="return validation()">   
                                          
-                     <!--PASSWORD-->
-                     <div class="form-group">   
+                    <!--PASSWORD-->
+                    <div class="form-group">   
                         <label 
                             for="password">Senha: <sup>*</sup>
                         </label>                        

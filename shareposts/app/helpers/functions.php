@@ -2,7 +2,6 @@
 
 //Funções de validação back end
 
-
 function imprimeuf($ufsec){
     $arrayEstados = array(
         'AC',
@@ -51,9 +50,6 @@ function imprimeuf($ufsec){
     }
 
 
-
-
-
     function validaCPF($cpf) {
  
         // Extrai somente os números
@@ -80,9 +76,6 @@ function imprimeuf($ufsec){
         return true;
       }
 
-
-
-
       
       function validacelular($celular){
         if (preg_match('/(\(?\d{2}\)?) ?9?\d{4}-?\d{4}/', $celular)) {
@@ -91,8 +84,6 @@ function imprimeuf($ufsec){
             return false;
         }
       }
-
-
 
             
       function validanascimento($data){
@@ -120,8 +111,7 @@ function imprimeuf($ufsec){
           $data = stripslashes($data);
           $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
           return $data;
-      }
-      
+      }      
 
 
       function htmlout($text)
@@ -129,7 +119,6 @@ function imprimeuf($ufsec){
           echo html($text);
       }
       
-
 
       function valida($data){  
         
@@ -148,16 +137,13 @@ function imprimeuf($ufsec){
         } else {
           return false;
         }  
-      }
-      
+      }      
       
       
       function formatadata($data){  
         $result = date('d/m/Y', strtotime($data));    
         return $result;
-      }
-      
-
+      }    
 
       
       function validaemail($email){
@@ -174,11 +160,6 @@ function imprimeuf($ufsec){
       function RandomPassword($length = 6){
         $chars = "0123456789bcdfghjkmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ";
         return substr(str_shuffle($chars),0,$length);
-      }
-      
-      
-      
-      
-      
+      }  
       
 ?>

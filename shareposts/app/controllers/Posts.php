@@ -138,7 +138,6 @@
 
             $this->view('posts/edit', $data);
             }
-
         }
     
     
@@ -154,7 +153,7 @@
 
             $this->view('posts/show' ,$data);
         }
-        
+
 
         public function delete($id){           
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -181,6 +180,5 @@
     
     
     }
-
 
 ?>

@@ -6,7 +6,8 @@
  */
 
  class Controller{
-     //Load models
+     
+    //Load models
      public function model($model){
          // Require model file
          require_once '../app/models/' . $model . '.php';

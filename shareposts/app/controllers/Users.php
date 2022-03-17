@@ -24,9 +24,7 @@
                     'email_err' => '',
                     'password_err' => '',
                     'confirm_password_err' => ''
-                ];                
-
-                
+                ];                    
 
                 // Validate Email
                 if(empty($data['email'])){
@@ -78,7 +76,7 @@
                         flash('register_success', 'Você está registrado e pode realizar o login agora');                        
                         redirect('users/login');
                       } else {
-                          die('Something went wrong');
+                          die('Algo deu errado!');
                       }
                       
 
@@ -277,7 +275,6 @@
         
     //enviasenha()
     } 
-
     
     
     public function alterasenha(){

@@ -103,10 +103,7 @@ class Core{
         */
         call_user_func_array([$this->currentController,$this->currentMethod], $this->params);
         //**********************FIM CAPTURAR O PARÂMETRO DA URL**************************
-
-
-
-        }//construct
+    }//construct
 
    
     // 2.1) EXTRAIMOS E PREPARAMOS A URL

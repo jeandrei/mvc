@@ -17,6 +17,7 @@
                         <input 
                             type="text" 
                             name="email" 
+                            placeholder="Informe seu email",
                             class="form-control form-control-lg <?php echo (!empty($data['email_err'])) ? 'is-invalid' : ''; ?>"                             
                             value="<?php echo $data['email'];?>"
                         >
@@ -33,6 +34,7 @@
                         <input 
                             type="password" 
                             name="password" 
+                            placeholder="Informe sua senha",
                             class="form-control form-control-lg <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>"                             
                             value="<?php echo $data['password'];?>"
                         >

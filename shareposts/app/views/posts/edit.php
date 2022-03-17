@@ -5,8 +5,8 @@
         <p>Create a post with this form</p>                               
         <form action="<?php echo URLROOT; ?>/posts/edit/<?php echo $data['id']; ?>" method="post">  
                     
-                <!--EMAIL-->
-                <div class="form-group">   
+            <!--EMAIL-->
+            <div class="form-group">   
                 <label 
                     for="title">Title: <sup>*</sup>
                 </label>                        
@@ -21,18 +21,20 @@
                 </span>
             </div>
 
-                <!--Body-->
-                <div class="form-group">   
+            <!--Body-->
+            <div class="form-group">   
                 <label 
                     for="password">Body: <sup>*</sup>
                 </label>                        
                 <textarea name="body" class="form-control form-control-lg <?php echo (!empty($data['body_err'])) ? 'is-invalid' : ''; ?>"><?php echo $data['body'];?></textarea>
-               
+                
                 <span class="invalid-feedback">
                     <?php echo $data['body_err']; ?>
                 </span>
             </div>
-        <input type="submit" class="btn btn-success" value="Submit">
+
+            <input type="submit" class="btn btn-success" value="Submit">
+            
         </form>
     </div>          
 <?php require APPROOT . '/views/inc/footer.php'; ?>
