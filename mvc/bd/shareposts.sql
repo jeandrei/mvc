@@ -56,6 +56,44 @@ CREATE TABLE `users` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `bairro` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Despejando dados para a tabela `bairro`
+--
+
+INSERT INTO `bairro` (`id`, `nome`) VALUES
+(5, 'Armação'),
+(6, 'Gravata'),
+(7, 'Santa Lídia'),
+(8, 'Praia Alegre'),
+(9, 'Centro'),
+(10, 'São Nicolau'),
+(11, 'NSra de Fátima'),
+(12, 'São Cristovão'),
+(13, 'São Francisco de Assis');
+
+
+CREATE TABLE `pessoas` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `telefone` varchar(16) NOT NULL,
+  `celular` varchar(16) DEFAULT NULL,
+  `municipio` varchar(255) DEFAULT NULL,
+  `bairro_id` int(11) DEFAULT NULL,  
+  `logradouro` varchar(255) DEFAULT NULL,
+  `numero` int(11) DEFAULT NULL,
+  `uf` char(2) DEFAULT NULL,
+  `nascimento` date NOT NULL,
+  `deficiencia` varchar(1) NOT NULL DEFAULT '0',
+  `cpf` varchar(15) DEFAULT NULL,
+  `cnpj` varchar(15) DEFAULT NULL,
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Despejando dados para a tabela `users`
 --
