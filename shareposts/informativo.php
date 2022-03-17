@@ -26,13 +26,13 @@
  *  e no script: $('#register').validate({
  * 
  * 
- * CRIANDO UMA NOVA CLASSE PESSOAS COMO EXEMPLO
- * Criando uma nova classe neste caso pessoas deixei como exemplo
- * 1 - Crie um controller controllers\Pessoas.php
- * 2 - Crie um model models\Pessoa.php
- * 3 - Crie um view views\pessoas\index
+ * CRIANDO UMA NOVA CLASSE CADASTROS COMO EXEMPLO
+ * Criando uma nova classe neste caso cadastros deixei como exemplo
+ * 1 - Crie um controller controllers\Cadastros.php
+ * 2 - Crie um model models\Cadastro.php
+ * 3 - Crie um view views\cadastros\index
  * 4 - Crie a classe no controller 
- * não esqueça de extender ao main controller class Pessoas extends Controller
+ * não esqueça de extender ao main controller class Cadastros extends Controller
  * deixe a construct em branco ou comentado no carregamento do model
  * 5 - Crie um método index e de início apenas de um echo
  * public function index(){
@@ -45,7 +45,7 @@
  * app/delete
  * 8 - Crie o Model
  * iniciando o banco de dados na construct
- * class Pessoa {
+ * class Cadastro {
  *      private $db;
  * 
  *      public function __construct(){
@@ -53,17 +53,17 @@
  *      }
  * }
  * 9 - Na construct do controller carregue o model
- * $this->userModel = $this->model('Pessoa');
+ * $this->userModel = $this->model('Cadastro');
  * 10 - Teste para ver se não tem nenhum erro
  * 11 - Crie os views para cada metodo index, add, edits
- * views/pessoas/index
- * views/pessoas/add
- * views/pessoas/edit
+ * views/cadastros/index
+ * views/cadastros/add
+ * views/cadastros/edit
  * Coloque algo dentro só para ver se vc consegue acessar 
  * como por exemplo em index HOME
- * 12 - Retorne ao controller de pessoas e carregue o view correspondente
+ * 12 - Retorne ao controller de cadastros e carregue o view correspondente
  * para cada método
- * $this->view('pessoas/index');
+ * $this->view('cadastros/index');
  * 13 - Teste para ver se apareceu o conteúdo do view
  * 
  * 
