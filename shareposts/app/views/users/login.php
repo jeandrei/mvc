@@ -7,7 +7,7 @@
                 ?>
                 <h2>Login</h2>
                 <p>Por favor informe suas credenciais</p>                               
-                <form action="<?php echo URLROOT; ?>/users/login" method="post">  
+                <form id="login" action="<?php echo URLROOT; ?>/users/login" method="post">  
                          
                      <!--EMAIL-->
                      <div class="form-group">   
@@ -17,6 +17,7 @@
                         <input 
                             type="text" 
                             name="email" 
+                            id="email" 
                             placeholder="Informe seu email",
                             class="form-control form-control-lg <?php echo (!empty($data['email_err'])) ? 'is-invalid' : ''; ?>"                             
                             value="<?php echo $data['email'];?>"
@@ -34,6 +35,7 @@
                         <input 
                             type="password" 
                             name="password" 
+                            id="password" 
                             placeholder="Informe sua senha",
                             class="form-control form-control-lg <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>"                             
                             value="<?php echo $data['password'];?>"
@@ -64,3 +66,28 @@
         </div>
     </div>
 <?php require APPROOT . '/views/inc/footer.php'; ?>
+
+<script>  
+ $(document).ready(function(){
+	$('#login').validate({
+		rules : {			
+			email : {
+				required : true,
+				email : true
+			},
+			password : {
+				required : true				
+			}			  
+		},
+		messages : {			
+			email : {
+				required : 'Por favor informe o seu e-mail.',
+				email : 'Informe um e-mail válido.'
+			},
+			password : {
+				required : 'Por favor informe sua senha.'
+			}			
+        }
+    });
+});
+</script>

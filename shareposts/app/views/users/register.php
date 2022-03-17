@@ -32,6 +32,7 @@
                         <input 
                             type="text" 
                             name="email" 
+                            id="email" 
                             class="form-control form-control-lg <?php echo (!empty($data['email_err'])) ? 'is-invalid' : ''; ?>"                             
                             value="<?php echo $data['email'];?>"
                         >
@@ -47,7 +48,8 @@
                         </label>                        
                         <input 
                             type="password" 
-                            name="password" 
+                            name="password"
+                            id="password" 
                             class="form-control form-control-lg <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>"                             
                             value="<?php echo $data['password'];?>"
                         >
@@ -64,6 +66,7 @@
                         <input 
                             type="password" 
                             name="confirm_password" 
+                            id="confirm_password"
                             class="form-control form-control-lg <?php echo (!empty($data['confirm_password'])) ? 'is-invalid' : ''; ?>"                             
                             value="<?php echo $data['password'];?>"
                         >
@@ -92,7 +95,12 @@
     Para funcionar a validação pelo jquery validator 
     O id lá do formulário tem que ser igual a classe aqui
     exemplo formulário: <form id="register"
-    e aqui no script: $('#register').validate({
+    e aqui no script: $('#register').validate({      
+    IMPORTANTE PARA FUNCIONAR O CONFIRM_PASSWORD 
+    TANTO O INPUT DO PASSWORD COMO O INPUT DO CONFIRM PASSWORD
+    TEM QUE TER ID
+    É BOM COLOCAR ID EM TUDO
+
 -->
 <script>  
  $(document).ready(function(){
@@ -127,7 +135,7 @@
 			},
 			password : {
 				required : 'Por favor informe sua senha.',
-				minlength : 'A senha deve ter, no mínimo, 3 caracteres.',
+				minlength : 'A senha deve ter, no mínimo, 6 caracteres.',
 				maxlength : 'A senha deve ter, no máximo, 20 caracteres.'
 			},
 			confirm_password : {

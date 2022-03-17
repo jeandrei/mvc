@@ -7,7 +7,7 @@
             ?>
             <h2>Recuperação de senha</h2>
             <p>Por favor informe seu email</p>
-            <form action="<?php echo URLROOT; ?>/users/enviasenha" method="post" enctype="multipart/form-data">
+            <form id="enviarSenha" action="<?php echo URLROOT; ?>/users/enviasenha" method="post" enctype="multipart/form-data">
                 
                 <!--EMAIL-->
                 <div class="form-group">   
@@ -17,6 +17,7 @@
                     <input 
                         type="text" 
                         name="email" 
+                        id="email" 
                         class="form-control form-control-lg <?php echo (!empty($data['email_err'])) ? 'is-invalid' : ''; ?>"                             
                         placeholder="Informe seu email",
                         value="<?php echo $data['email'];?>"
@@ -38,3 +39,22 @@
     </div>
 </div>        
 <?php require APPROOT . '/views/inc/footer.php'; ?>
+
+<script>  
+ $(document).ready(function(){
+	$('#enviarSenha').validate({
+		rules : {			
+			email : {
+				required : true,
+				email : true
+			}		  
+		},
+		messages : {			
+			email : {
+				required : 'Por favor informe o seu e-mail.',
+				email : 'Informe um e-mail válido.'
+			}		
+        }
+    });
+});
+</script>
