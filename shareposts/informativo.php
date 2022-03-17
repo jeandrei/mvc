@@ -26,11 +26,38 @@
  *  e no script: $('#register').validate({
  * 
  * 
+ * CRIANDO UMA NOVA CLASSE PESSOAS COMO EXEMPLO
+ * Criando uma nova classe neste caso pessoas deixei como exemplo
+ * 1 - Crie um controller controllers\Pessoas.php
+ * 2 - Crie um model models\Pessoa.php
+ * 3 - Crie um view views\pessoas\index
+ * 4 - Crie a classe no controller 
+ * não esqueça de extender ao main controller class Pessoas extends Controller
+ * deixe a construct em branco ou comentado no carregamento do model
+ * 5 - Crie um método index e de início apenas de um echo
+ * public function index(){
+ * echo "Carregou o index";
+ * }
+ * 6 - Já crie todas as rotas no controller add, edit, delete
+ * 7 - Cada uma delas
+ * app/add
+ * app/edit
+ * app/delete
+ * 8 - Crie o Model
+ * iniciando o banco de dados na construct
+ * class Pessoa {
+ *      private $db;
+ * 
+ *      public function __construct(){
+ *          $this->db = new Database;
+ *      }
+ * }
+ * 9 - Na construct do controller carregue o model
+ * $this->userModel = $this->model('Pessoa');
+ * 10 - Teste para ver se não tem nenhum erro
  * 
  * 
  * 
  */
 
 
-    
-   
