@@ -9,7 +9,7 @@
                     <!--PASSWORD-->
                     <div class="form-group">   
                         <label 
-                            for="password">Senha: <sup>*</sup>
+                            for="password"><b class="obrigatorio">*</b> Senha: 
                         </label>                        
                         <input 
                             type="password" 
@@ -26,7 +26,7 @@
                     <!--CONFIRM PASSWORD-->
                     <div class="form-group">   
                         <label 
-                            for="confirm_password">Confirme a Nova Senha: <sup>*</sup>
+                            for="confirm_password"><b class="obrigatorio">*</b> Confirma Senha: 
                         </label>                        
                         <input 
                             type="password" 

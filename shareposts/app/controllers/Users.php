@@ -235,7 +235,7 @@
                 ){
                   //ENVIA O EMAIL
                   
-                  // CRIA UMA NOVA SENHA RANDOMICAMENTE
+                  // CRIA UMA NOVA SENHA RANDOMICAMENTE RandomPassword está em helpers functions.php
                   $password = RandomPassword();
 
                   // Hash Password CRIPTOGRAFA O PASSWORD

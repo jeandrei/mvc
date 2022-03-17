@@ -4,12 +4,12 @@
             <div class="card card-body bg-light mt-2">
                 <h2>Create An Account</h2>
                 <p>Please fill out this form to register with us</p>                               
-                <form action="<?php echo URLROOT; ?>/users/register" method="post">  
+                <form id="register" action="<?php echo URLROOT; ?>/users/register" method="post">  
                     
                     <!--NAME-->
                     <div class="form-group">   
                         <label 
-                            for="name">Nome: <sup>*</sup>
+                            for="name"><b class="obrigatorio">*</b> Nome: 
                         </label>                        
                         <input 
                             type="text" 
@@ -27,7 +27,7 @@
                      <!--EMAIL-->
                      <div class="form-group">   
                         <label 
-                            for="email">Email: <sup>*</sup>
+                            for="email"><b class="obrigatorio">*</b> Email: 
                         </label>                        
                         <input 
                             type="text" 
@@ -43,7 +43,7 @@
                      <!--PASSWORD-->
                      <div class="form-group">   
                         <label 
-                            for="password">Senha: <sup>*</sup>
+                            for="password"><b class="obrigatorio">*</b> Senha: 
                         </label>                        
                         <input 
                             type="password" 
@@ -59,7 +59,7 @@
                      <!--CONFIRM PASSWORD-->
                      <div class="form-group">   
                         <label 
-                            for="confirm_password">Confirma Senha: <sup>*</sup>
+                            for="confirm_password"><b class="obrigatorio">*</b> Confirma Senha: 
                         </label>                        
                         <input 
                             type="password" 
@@ -87,3 +87,54 @@
         </div>
     </div>
 <?php require APPROOT . '/views/inc/footer.php'; ?>
+
+<!-- 
+    Para funcionar a validação pelo jquery validator 
+    O id lá do formulário tem que ser igual a classe aqui
+    exemplo formulário: <form id="register"
+    e aqui no script: $('#register').validate({
+-->
+<script>  
+ $(document).ready(function(){
+	$('#register').validate({
+		rules : {
+			name : {
+				required : true,
+				minlength : 3
+			},
+			email : {
+				required : true,
+				email : true
+			},
+			password : {
+				required : true,
+				minlength : 6,
+				maxlength : 30
+			},
+			confirm_password : {
+				required : true,
+				equalTo : '#password'
+            }   
+		},
+		messages : {
+			name : {
+				required : 'Por favor informe seu nome.',
+				minlength : 'O seu nome deve ter no mínimo 3 caracteres.'
+			},
+			email : {
+				required : 'Por favor informe o seu e-mail.',
+				email : 'Informe um e-mail válido.'
+			},
+			password : {
+				required : 'Por favor informe sua senha.',
+				minlength : 'A senha deve ter, no mínimo, 3 caracteres.',
+				maxlength : 'A senha deve ter, no máximo, 20 caracteres.'
+			},
+			confirm_password : {
+				required : 'Confirme a sua senha.',
+				equalTo : 'As senhas não se correspondem.'
+            }
+        }
+    });
+});
+</script>

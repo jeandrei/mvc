@@ -1,4 +1,62 @@
+/**
+ * Função para validar o cpf pelo jqueryvalidator é só colocar na classe
+ * do input class="cnpj"
+ */
+jQuery.validator.addMethod("cnpj", function (value, element) {
 
+	var numeros, digitos, soma, i, resultado, pos, tamanho, digitos_iguais;
+	if (value.length == 0) {
+		return false;
+	}
+
+	value = value.replace(/\D+/g, '');
+	digitos_iguais = 1;
+
+	for (i = 0; i < value.length - 1; i++)
+		if (value.charAt(i) != value.charAt(i + 1)) {
+			digitos_iguais = 0;
+			break;
+		}
+	if (digitos_iguais)
+		return false;
+
+	tamanho = value.length - 2;
+	numeros = value.substring(0, tamanho);
+	digitos = value.substring(tamanho);
+	soma = 0;
+	pos = tamanho - 7;
+	for (i = tamanho; i >= 1; i--) {
+		soma += numeros.charAt(tamanho - i) * pos--;
+		if (pos < 2)
+			pos = 9;
+	}
+	resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+	if (resultado != digitos.charAt(0)) {
+		return false;
+	}
+	tamanho = tamanho + 1;
+	numeros = value.substring(0, tamanho);
+	soma = 0;
+	pos = tamanho - 7;
+	for (i = tamanho; i >= 1; i--) {
+		soma += numeros.charAt(tamanho - i) * pos--;
+		if (pos < 2)
+			pos = 9;
+	}
+
+	resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+
+	return (resultado == digitos.charAt(1));
+})
+
+
+
+
+
+/**
+ * Função para validar o cpf pelo jqueryvalidator é só colocar na classe
+ * do input class="cpf"
+ */
 jQuery.validator.addMethod("cpf", function(value, element) {
   value = jQuery.trim(value);
 
@@ -27,37 +85,43 @@ jQuery.validator.addMethod("cpf", function(value, element) {
 
 }, "Informe um CPF válido");
 
-
-
-
-// FUNÇÃO PARA ADICIONAR CLASSE
-// função para adicionar nova classe a objetos
-// exemplo para adicionar a classe cpf que tem a mascara do cpf
-// no final do formulário basta colocar
-// <script>  addclass('cpf','cpf'); </script>
-// onde id é o id do campo e new class é a nova classe a ser adicionada neste caso cpfmask que coloca mascara no cpf
+/**
+ * 
+ * FUNÇÃO PARA ADICIONAR CLASSE
+ * função para adicionar nova classe a objetos
+ * exemplo para adicionar a classe cpf que tem a mascara do cpf
+ * no final do formulário basta colocar
+ * <script>  addclass('cpf','cpf'); </script>
+ * onde id é o id do campo e new class é a nova classe a ser adicionada neste
+ * caso cpfmask que coloca mascara no cpf
+ * 
+ */
 function addclass(id,newclass){
   var element = document.getElementById(id);
   var addclass = newclass;
   element.classList.add(addclass);
 }
 
-// FUNÇÃO PARA COLOCAR TUDO EM MAIÚSCULO
-// onkeydown="upperCaseF(this)" 
+/**
+ * 
+ * FUNÇÃO PARA COLOCAR TUDO EM MAIÚSCULO
+ * onkeydown="upperCaseF(this)" 
+ */
 function upperCaseF(a){
   setTimeout(function(){
       a.value = a.value.toUpperCase();
   }, 1);
 }
 
-function alerta(){
-	alert('oi');
-}
-
-//FUNÇÃO PARA PERMITIR APENAS NÚMEROS
-//PARA USAR BASTA COLOCAR O CAMPO COMO CLASSE onlynumbers
-//E PARA EXIBIR A MENSAGEM COLOCAR UM <span id="errmsg"></span>
-//USE TAMBÉM O TIPO NUMBER NO INPUT type="number" 
+/**
+ * 
+ * FUNÇÃO PARA PERMITIR APENAS NÚMEROS
+ * PARA USAR BASTA COLOCAR O CAMPO COMO CLASSE onlynumbers
+ * E PARA EXIBIR A MENSAGEM COLOCAR UM <span id="errmsg"></span>
+ * USE TAMBÉM O TIPO NUMBER NO INPUT type="number"
+ * 
+ * 
+ */
 $(document).ready(function () {
 	//called when key is pressed in textbox
 	$(".onlynumbers").keypress(function (e) {
@@ -68,22 +132,60 @@ $(document).ready(function () {
 				 return false;
 	  }
 	 });
-  });
+});
 
-
-
-
-//mascaras para os formulários todas se aplicam a classe
-// no caso de aplicar mascara a telefone é só 
-//fazer <input type="tel" class="telefone"
-//vai aplicar somente depois de carregar o documento 
-//por isso esta dentro da (document).ready()
-//tem que colocar o footer que está neste projeto para lincar com maskedinput.min.js
+/**
+ * 
+ * mascaras para os formulários todas se aplicam a classe
+ * no caso de aplicar mascara a telefone é só 
+ * fazer <input type="tel" class="telefone"
+ * vai aplicar somente depois de carregar o documento
+ * por isso esta dentro da (document).ready()
+ * tem que colocar o footer que está neste projeto para lincar com maskedinput.min.js
+ * 
+ */
 $(document).ready(function() {
 	$('.cpf').mask('000.000.000-00', {reverse: true});
 	$(".telefone").mask("(00) 00000-0009");
-	});
-//********************fim mascaras**************** */
+});
+
+/**
+ * 
+ * Função para dar o foco em um campo
+ * 
+ */
+ function focofield(field)
+ {
+	 document.getElementById(field).focus();
+ }
+
+/**
+ * 
+ * Funçõ que retorna true se confirmar e false se não confirmar uma pergunta
+ * 
+ */
+ function question(ask)
+{
+	return confirm (ask);
+}	
+
+
+
+
+
+
+
+
+
+
+/**
+ * 
+ * 
+ * DAQUI PARA BAIXO TEM QUE TESTAR
+ * 
+ * 
+ * 
+ */
 
 
 function CheckForm(id){
@@ -114,10 +216,7 @@ function checkedRadioBtn(sGroupName)
         }
 		}
 		
-	function focofield(field)
-	{
-		document.getElementById(field).focus();
-	}
+	
 
 
 //função para o botão avançar do formulário
@@ -163,10 +262,7 @@ $('.custom-file input').change(function (e) {
 	$(this).next('.custom-file-label').html(e.target.files[0].name);
 });
 
-function question(ask)
-{
-	return confirm (ask);
-}	
+
 
 //fileValidation(campo tipo field,id do span para apresentar o erro);"
 // onchange="return fileValidation('comprovante_residencia','res_erro');"

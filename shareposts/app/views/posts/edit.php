@@ -8,7 +8,7 @@
             <!--EMAIL-->
             <div class="form-group">   
                 <label 
-                    for="title">Title: <sup>*</sup>
+                    for="title"><b class="obrigatorio">*</b> Título: 
                 </label>                        
                 <input 
                     type="text" 
@@ -24,7 +24,7 @@
             <!--Body-->
             <div class="form-group">   
                 <label 
-                    for="password">Body: <sup>*</sup>
+                    for="password"><b class="obrigatorio">*</b> Texto: 
                 </label>                        
                 <textarea name="body" class="form-control form-control-lg <?php echo (!empty($data['body_err'])) ? 'is-invalid' : ''; ?>"><?php echo $data['body'];?></textarea>
                 

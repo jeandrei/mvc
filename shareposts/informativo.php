@@ -9,6 +9,7 @@
  * RewriteBase /site/public
  * 
  * 
+ * ENVIO DE EMAIL
  * Arquivos relacionados com o envio do email de recuperação de senha
  * config/config.php
  * helpers/functions.php função validaemail
@@ -17,5 +18,19 @@
  * views/users/enviasenha.php
  * inc\PHPMailer-master
  * 
+ * 
+ * JQUERY VALIDATOR
+ * Para funcionar o jquery validator o formulário tem que ter id e no script tem que
+ * ser o mesmo id exemplo veja \views\users\register
+ * exemplo formulário: <form id="register"
+ *  e no script: $('#register').validate({
+ * 
+ * 
+ * 
+ * 
+ * 
  */
 
+
+    
+   

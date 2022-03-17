@@ -1,8 +1,8 @@
-.obrigatorio_temp { 
-    color: red;
-    font-size: 20px;
-    vertical-align: middle;
-  }
+.obrigatorio{
+    color:red;
+    font-size: 15px;
+    letter-spacing: 3px;
+}
 
 /*Deixa o texto e a borda do erro jquery em vermelho*/
 .error{
@@ -23,11 +23,6 @@ textarea.error{
     border-color: red;
 }
 
-.obrigatorio{
-    color:red;
-    font-size: 15px;
-    letter-spacing: 3px;
-}
 /****************************************************/
 
 

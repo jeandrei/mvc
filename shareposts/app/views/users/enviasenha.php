@@ -12,7 +12,7 @@
                 <!--EMAIL-->
                 <div class="form-group">   
                     <label 
-                        for="email">Email: <sup>*</sup>
+                        for="email"><b class="obrigatorio">*</b> Email: 
                     </label>                        
                     <input 
                         type="text" 
