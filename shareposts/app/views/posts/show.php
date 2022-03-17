@@ -6,7 +6,7 @@
  Escrito por <?php echo $data['user']->name;?> on <?php echo date('d/m/Y h:i:s', strtotime($data['post']->created_at)); ?> 
 </div>
 <p><?php echo $data['post']->body; ?></p>
-<?php if($data['post']->user_id == $_SESSION['user_id']) : ?>
+<?php if($data['post']->user_id == $_SESSION[SE.'user_id']) : ?>
 <hr>
 <a href="<?php echo URLROOT; ?>/posts/edit/<?php echo $data['post']->id; ?>" class="btn btn-dark">Editar</a>
     <form class="pull-right" action="<?php echo URLROOT; ?>/posts/delete/<?php echo $data['post']->id; ?>" method="post">

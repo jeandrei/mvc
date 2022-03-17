@@ -19,3 +19,10 @@ define('SITENAME', 'SharePosts');
 
 //APP VERSION
 define('APPVERSION', '1.0.0');
+
+//CONSTANTE DE SESSAO PARA EVITAR QUE SISTEMAS DIFERENTES FIQUEM LOGADOS COM A MESMA SESSÃO
+define('SE','mysis');
+
+//RECUPERAÇÃO DE SENHA arquivo models\Users.php sendemail
+define('APPEMAIL', 'sisurpe@educapenha.com.br');
+define('EMAILPASSWORD', 'penha@sis');

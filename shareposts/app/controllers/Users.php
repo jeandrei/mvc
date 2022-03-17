@@ -155,15 +155,14 @@
                       
                       if($loggedInUser){
                         // Create Session 
-                        // função no final desse arquivo
+                        // função no final desse arquivo                        
                         $this->createUserSession($loggedInUser);
                       } else {
-                          $data['password_err'] = 'Senha incorreta';
-
+                          $data['password_err'] = 'Senha incorreta';                         
                           $this->view('users/login', $data);
                       }
                     } else {
-                      // Load the view with errors
+                      // Load the view with errors                      
                       $this->view('users/login', $data);
                     }               
 
@@ -187,17 +186,19 @@
 
     public function createUserSession($user){
         // $user->id vem do model na função login() retorna a row com todos os campos
-        // da consulta na tabela users        
-        $_SESSION['user_id'] = $user->id;
-        $_SESSION['user_email'] = $user->email;
-        $_SESSION['user_name'] = $user->name;      
+        // da consulta na tabela users 
+        // SE é uma constante que vem lá do config\config.php
+        // para evitar que dois sistemas diferentes fiquem logados com o mesmo login       
+        $_SESSION[SE.'user_id'] = $user->id;
+        $_SESSION[SE.'user_email'] = $user->email;
+        $_SESSION[SE.'user_name'] = $user->name; 
         redirect('posts');
     }
 
     public function logout(){
-        unset($_SESSION['user_id']);
-        unset($_SESSION['user_email']);
-        unset($_SESSION['user_name']);
+        unset($_SESSION[SE.'user_id']);
+        unset($_SESSION[SE.'user_email']);
+        unset($_SESSION[SE.'user_name']);
         session_destroy();
         redirect('pages/login'); 
     }   
@@ -282,7 +283,7 @@
     public function alterasenha(){
         // Check for POST            
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            
+           
             //init data
             $data = [                
                 'password' => trim($_POST['password']),
@@ -290,6 +291,7 @@
                 'password_err' => '',
                 'confirm_password_err' => ''               
             ]; 
+           
 
             // Validate Password
             if(empty($data['password'])){
@@ -310,12 +312,13 @@
             if(  
                 empty($data['password_err']) &&
                 empty($data['confirm_password_err']) 
-                ){
+                ){  
                      // Hash Password criptografa o password
                      $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);                     
-                     $data['email'] = $_SESSION[DB_NAME . '_user_email'];                     
+                     $data['email'] = $_SESSION[SE. '_user_email'];                     
                      // Register User
                      if($this->userModel->updatePassword($data)){
+                        var_dump($data);
                        // Cria a menságem antes de chamar o view va para 
                        // views/users/login a segunda parte da menságem
                        flash('mensagem', 'Senha atualizada com Sucesso');                        

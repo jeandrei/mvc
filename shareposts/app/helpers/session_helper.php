@@ -5,6 +5,7 @@
     // Flash message helper
     // EXAMPLE - flash('register_success', 'You are now registered', 'alert alert-danger');
     /// DISPLAY IN VIEW - echo flash('register_success');
+    // register_success é o nome então no view basta chamar pelo nome para exibir a mensagem echo flash('register_success');
     function flash($name = '', $message = '', $class = 'alert alert-success'){
         if(!empty($name)){
             if(!empty($message) && empty($_SESSION[$name])){
@@ -27,13 +28,16 @@
         }
     }
 
+    // VERIFICA SE O USUÁRIO ESTÁ LOGADO
     function isLoggedIn(){
-        if(isset($_SESSION[DB_NAME . '_user_id'])){       
-           return true;
+        if(isset($_SESSION[SE.'user_id'])){
+            return true;
         } else {
             return false;
         }
-       }
+    }
+
+
 
 
 ?>

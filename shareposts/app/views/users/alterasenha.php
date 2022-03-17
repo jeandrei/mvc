@@ -47,7 +47,7 @@
                     <!--BUTTONS-->
                     <div class="row">
                         <div class="col">                            
-                           <?php  submit('Salvar'); ?>                           
+                            <button type="submit" class="btn btn-success btn-block">Salvar</button>                       
                         </div>                        
                     </div>
 
@@ -56,7 +56,3 @@
         </div>
     </div>   
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-<script>  
-    //ADICIONA MASCARA DE CPF
-    addclass('cpf','cpfmask');     
-</script>

@@ -24,12 +24,12 @@ class Pages extends Controller{
         $data = [
            'title' => 'SharePosts',
            'description' => 'Uma Simples Rede Social construida em MVC'
-       ];    
-       
+       ];  
      
        //método view está em /libraries/Controller
        $this->view('pages/index' ,$data);
     }
+
 
     //url /mvc/pages/about
     public function about(){
@@ -40,5 +40,9 @@ class Pages extends Controller{
         
         $this->view('pages/about', $data);
     } 
+
+
+
+    
     
 }

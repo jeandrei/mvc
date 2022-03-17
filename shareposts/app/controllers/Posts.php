@@ -5,8 +5,8 @@
         
         public function __construct(){
             //IMPEDE O ACESSO A POSTS SE NÃO ESTIVER LOGADO
-            // isLoggedIn está no arquivo session_helper
-            if(!isLoggedIn()){
+            // isLoggedIn está no arquivo session_helper            
+            if(!isLoggedIn()){               
                 redirect('users/login');
             }
 
@@ -40,7 +40,7 @@
                 $data = [
                     'title' => trim($_POST['title']),
                     'body' => trim($_POST['body']),
-                    'user_id' => $_SESSION['user_id'],
+                    'user_id' => $_SESSION[SE.'user_id'],
                     'title_err' => '',
                     'body_err' => ''
                 ];
@@ -91,7 +91,7 @@
                     'id' => $id,
                     'title' => trim($_POST['title']),
                     'body' => trim($_POST['body']),
-                    'user_id' => $_SESSION['user_id'],
+                    'user_id' => $_SESSION[SE.'user_id'],
                     'title_err' => '',
                     'body_err' => ''
                 ];
@@ -126,7 +126,7 @@
             
             // Check for owner
             // se não for dono do post ele redireciona para o posts
-            if($post->user_id != $_SESSION['user_id']){
+            if($post->user_id != $_SESSION[SE.'user_id']){
                 redirect('posts');
             }
             $data = [
@@ -154,6 +154,7 @@
 
             $this->view('posts/show' ,$data);
         }
+        
 
         public function delete($id){           
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -162,7 +163,7 @@
             $post = $this->postModel->getPostById($id);            
             // Check for owner
             // se não for dono do post ele redireciona para o posts
-            if($post->user_id != $_SESSION['user_id']){
+            if($post->user_id != $_SESSION[SE.'user_id']){
                 redirect('posts');
             }                
                 if($this->postModel->deletePost($id)){
