@@ -2,6 +2,7 @@
     class Pessoas extends Controller{
         public function __construct(){            
             $this->pessoaModel = $this->model('Pessoa');
+            $this->bairroModel = $this->model('Bairro');
         }
 
         public function index(){
@@ -13,12 +14,30 @@
             }
             
             // Pego os registros do banco de dados
-            $pessoas = $this->pessoaModel->getPessoas();
-        
-            $data = [
-                'pessoas' => $pessoas
-            ]; 
-             
+            $results = $this->pessoaModel->getPessoas();
+            
+            //faço um foreach passando os dados que quero
+            //essa parte é importante posis podemos executar
+            //metodos aqui por exemplo em bairro ao invés de passar o id
+            //podemos executar um método antes getBairroById() e passar o nome do bairro
+            if(!empty($results)){
+                foreach($results as $result){
+                    $data['results'][]=[
+                        'pessoaId' => $result->pessoaId,
+                        'pessoaNome' => $result->pessoaNome,
+                        'pessoaNascimento' => date('d/m/Y', strtotime($result->pessoaNascimento)),
+                        'pessoaMunicipio' => $result->pessoaMunicipio,
+                        'pessoaLogradouro' => $result->pessoaLogradouro,
+                        'pessoaBairro' => $this->bairroModel->getBairroById($result->bairroId),
+                        'pessoaDeficiencia' => ($result->pessoaDeficiencia == 0) ? 'Não' : 'Sim'
+                        ];
+                }
+            } else {
+                $data['results'] = false;
+            }
+            
+            $data['titulo'] = "Exemplo de Cadastro";
+
             $this->view('pessoas/index', $data);
         }
 

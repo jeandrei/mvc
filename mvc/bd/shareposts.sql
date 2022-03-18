@@ -107,15 +107,15 @@ INSERT INTO `posts` (`id`, `user_id`, `title`, `body`, `created_at`) VALUES
 --
 
 INSERT INTO `bairro` (`bairroId`, `bairroNome`) VALUES
-(5, 'Armação'),
-(6, 'Gravata'),
-(7, 'Santa Lídia'),
-(8, 'Praia Alegre'),
-(9, 'Centro'),
-(10, 'São Nicolau'),
-(11, 'NSra de Fátima'),
-(12, 'São Cristovão'),
-(13, 'São Francisco de Assis');
+(1, 'Armação'),
+(2, 'Gravata'),
+(3, 'Santa Lídia'),
+(4, 'Praia Alegre'),
+(5, 'Centro'),
+(6, 'São Nicolau'),
+(7, 'NSra de Fátima'),
+(8, 'São Cristovão'),
+(9, 'São Francisco de Assis');
 
 --
 -- Despejando dados para a tabela `pessoa`

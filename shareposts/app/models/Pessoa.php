@@ -10,7 +10,7 @@ class Pessoa {
     public function getPessoas(){
         $this->db->query('SELECT *                          
                           FROM pessoa                         
-                          ORDER BY pessoa.pessoaNome DESC
+                          ORDER BY pessoa.pessoaNome ASC
                           ');
         $results = $this->db->resultSet(); 
         return $results;           
