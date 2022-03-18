@@ -1,3 +1,11 @@
-</div>
+</main>  
+<footer class="footer bg-dark py-3 mt-auto">
+    <div class="container">
+        <samp class="text-muted">
+            &copy YelpCamp 2020
+        </samp>
+    </div>
+</footer>
+
 </body>
 </html>

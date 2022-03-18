@@ -30,6 +30,8 @@
         // Ceate PDO instance
         try{
             $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
+            //Essa linha é para impedir aparecer caracteres estranhos no lugar de acentos
+            $this->dbh->exec('SET NAMES "utf8"'); 
         } catch(PDOException $e){
             $this->error = $e->getMessage();
             echo $this->error;

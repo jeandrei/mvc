@@ -66,9 +66,28 @@
  * $this->view('cadastros/index');
  * 13 - Teste para ver se apareceu o conteúdo do view
  * 
+ * CODIFICAÇÃO
+ * Todo o banco de dados tem que ser definido com utf8
+ * CREATE DATABASE shareposts CHARACTER SET utf8 COLLATE utf8_general_ci;
+ * as tabelas tem que colocar codificação utf8
+ * ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ * No php no header tem que setar como default utf8
+ * HEADER <?php ini_set('default_charset', 'utf-8');?>
+ * A classe Database tem que definir utf8
+ * libraries\Database
+ * Em Ceate PDO instance no try tem que colocar essa linha
+ * $this->dbh->exec('SET NAMES "utf8"'); 
  * 
  * 
+ * IMPEDIR O ACESSO SEM ESTAR LOGADO
+ * Colocar no início do método no controller
+ * if(!isLoggedIn()){
+ *    redirect('users/login'); 
+ * }
+ * Essa função está em helpers\session_helper.php
+ * se não estiver logado vai redirecionar para o login
  * 
  */
+
 
 

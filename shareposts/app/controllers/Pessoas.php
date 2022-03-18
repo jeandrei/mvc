@@ -1,11 +1,25 @@
 <?php 
     class Pessoas extends Controller{
         public function __construct(){            
-            $this->userModel = $this->model('Pessoa');
+            $this->pessoaModel = $this->model('Pessoa');
         }
 
         public function index(){
-            $this->view('pessoas/index');
+
+            //IMPEDE O ACESSO A POSTS SE NÃO ESTIVER LOGADO
+            // isLoggedIn está no arquivo session_helper            
+            if(!isLoggedIn()){               
+                redirect('users/login');  
+            }
+            
+            // Pego os registros do banco de dados
+            $pessoas = $this->pessoaModel->getPessoas();
+        
+            $data = [
+                'pessoas' => $pessoas
+            ]; 
+             
+            $this->view('pessoas/index', $data);
         }
 
         public function add(){
