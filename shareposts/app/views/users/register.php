@@ -1,7 +1,7 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
     <div class="row">
         <div class="col-md-6 mx-auto">
-            <div class="card card-body bg-light mt-2">
+            <div class="card card-body bg-light mt-2 mb-2">
                 <h2>Create An Account</h2>
                 <p>Please fill out this form to register with us</p>                               
                 <form id="register" action="<?php echo URLROOT; ?>/users/register" method="post">  
@@ -25,7 +25,7 @@
                 
                     
                      <!--EMAIL-->
-                     <div class="form-group">   
+                     <div class="form-group mt-2">   
                         <label 
                             for="email"><b class="obrigatorio">*</b> Email: 
                         </label>                        
@@ -42,7 +42,7 @@
                     </div>
 
                      <!--PASSWORD-->
-                     <div class="form-group">   
+                     <div class="form-group mt-2">   
                         <label 
                             for="password"><b class="obrigatorio">*</b> Senha: 
                         </label>                        
@@ -59,7 +59,7 @@
                     </div>
 
                      <!--CONFIRM PASSWORD-->
-                     <div class="form-group">   
+                     <div class="form-group mt-2">   
                         <label 
                             for="confirm_password"><b class="obrigatorio">*</b> Confirma Senha: 
                         </label>                        
@@ -76,7 +76,7 @@
                     </div>
 
                     <!--BUTTONS-->
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col">
                             <input type="submit" value="Registrar-se" class="btn btn-success btn-block">                           
                         </div>

@@ -28,7 +28,7 @@
                     </div>
 
                      <!--PASSWORD-->
-                     <div class="form-group">   
+                     <div class="form-group mt-2">   
                         <label 
                             for="password"><b class="obrigatorio">*</b> Senha: 
                         </label>                        
@@ -46,16 +46,16 @@
                     </div>                     
 
                     <!--BUTTONS-->
-                    <div class="row">
-                        <div class="col">
+                    <div class="row mt-3">
+                        <div class="col-5">
                             <input type="submit" value="Login" class="btn btn-success btn-block">                           
                         </div>
-                        <div class="col">
-                            <a href="<?php echo URLROOT ;?>/users/register" class="btn btn-light btn-block">Não tem uma conta? Registre-se</a>
+                        <div class="col-7">
+                            <a href="<?php echo URLROOT ;?>/users/register" class="btn btn-light">Não tem uma conta? Registre-se</a>
                         </div>
                     </div>
 
-                    <div class="row mt-3">
+                    <div class="row mt-1">
                         <div class="col">
                             Esqueceu a senha? clique <a href="<?php echo (URLROOT.'/users/enviasenha');?>">aqui</a>
                         </div>

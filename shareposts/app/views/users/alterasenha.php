@@ -7,7 +7,7 @@
                 <form id="alterarSenha" action="<?php echo URLROOT; ?>/users/alterasenha" method="post" enctype="multipart/form-data" onsubmit="return validation()">   
                                          
                     <!--PASSWORD-->
-                    <div class="form-group">   
+                    <div class="form-group mt-2">   
                         <label 
                             for="password"><b class="obrigatorio">*</b> Senha: 
                         </label>                        
@@ -25,7 +25,7 @@
                     </div>
 
                     <!--CONFIRM PASSWORD-->
-                    <div class="form-group">   
+                    <div class="form-group mt-2">   
                         <label 
                             for="confirm_password"><b class="obrigatorio">*</b> Confirma Senha: 
                         </label>                        
@@ -41,11 +41,9 @@
                             <?php echo $data['confirm_password_err']; ?>
                         </span>
                     </div>
-
-
-                    
+                                        
                     <!--BUTTONS-->
-                    <div class="row">
+                    <div class="row mt-2">
                         <div class="col">                            
                             <button type="submit" class="btn btn-success btn-block">Salvar</button>                       
                         </div>                        
