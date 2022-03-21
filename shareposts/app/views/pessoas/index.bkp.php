@@ -4,11 +4,6 @@
 <?php flash('pessoa_message'); ?>
 <!-- mb-3 marging bottom -->
 
-<form id="filtrar" action="<?php echo URLROOT; ?>/pessoas/index" method="post" enctype="multipart/form-data">
-  <input type="text" name="buscar" id="buscar" value="<?php echo $data['buscar'];?>">
-  <input type="submit" value="Buscar">
-</form>
-
 <div class="row mb-3">
     <div class="col-md-6">
         <h1><?php echo $data['titulo']; ?></h1>
