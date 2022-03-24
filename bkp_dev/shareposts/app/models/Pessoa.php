@@ -4,7 +4,7 @@ class Pessoa {
 
     public function __construct(){
         //inicia a classe Database
-        $this->db = new Database('pessoa');
+        $this->db = new Database;
     }
 
     public function getPessoas(){
@@ -59,11 +59,6 @@ class Pessoa {
             "paginacao" => $html            
         ];
         return $data;           
-    }
-
-    //Insere com sql builder e retorna o último id
-    public function insert($data){
-        return $this->db->insert($data);        
     }
 }
 ?>

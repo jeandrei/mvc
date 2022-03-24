@@ -18,17 +18,7 @@
     private $stmt;
     private $error;
 
-    //Tebela a ser manipulada no query builder
-    private $table;
-
-    //define a tabela a ser manipulada e estabelece a conexão com o banco de dados
-    public function __construct($table = null) {
-        $this->table = $table;
-        $this->setConnection();
-        
-    }
-
-    public function setConnection(){
+    public function __construct() {
         // Set DSN DATABASE SERVER NAME
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;       
         $options = array(
@@ -36,7 +26,7 @@
             PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         );
-
+    
         // Ceate PDO instance
         try{
             $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
@@ -47,8 +37,6 @@
             echo $this->error;
         }
     }
-
-
 
     // Prepare statement with query
     public function query($sql) {
@@ -96,39 +84,5 @@
     // Get row count
     public function rowCount(){
         return $this->stmt->rowCount();
-    }
-
-
-
-    /*****************************SQL BUILDER************************** */
-
-    public function insert($values){          
-        //DADOS DA QUERY array_keys traz as chaves de um array
-        $fields = array_keys($values);       
-        //array_pad cria um array com x posições
-        //caso não tenha o número de posições desejadas o array_pad
-        //cria colocando o valor que queremos
-        //exemplo array_pad([], 3, '?'). iria criar um array de 
-        //3 posições todos com ? dentro
-        //logo na linha abaixo estamos criando um array com o número
-        //de posições constantes no array $field, logo se no array
-        //$field tiver 3 posições irá criar um arrai com ?,?,?
-        $binds = array_pad([], count($fields),'?'); 
-              
-        //MONTA A QUERY
-        //implode pega os valores do array $fields e separa com virgula
-        $query = 'INSERT INTO ' .$this->table. ' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';        
-        $this->stmt = $this->dbh->prepare($query);
-        //executa o insert
-
-        try{
-            $this->stmt->execute(array_values($values));
-            //Retorna o id inserido
-            return $this->dbh->lastInsertId();
-        } catch(PDOException $e){
-            $this->error = $e->getMessage();
-            return false;
-        }         
-       
     }
 }

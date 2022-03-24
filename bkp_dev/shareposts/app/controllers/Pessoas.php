@@ -54,22 +54,6 @@
 
         public function edit(){
             $this->view('pessoas/edit');
-        }  
-        
-        public function register(){
-            $data = [                
-                'pessoaNome' => 'Teste',
-                'pessoaNascimento' => '1980-10-02',
-                'pessoaMunicipio' => 'Piçarras',
-                'pessoaLogradouro' => 'Manoel tolentino',
-                'bairroId' => 2,
-                'pessoaEmail' => 'jean@gmail.com',
-                'pessoaTelefone'=> '47854564545',
-                'pessoaDeficiencia' => 'n'
-                ];
-            
-            $lastId = $this->pessoaModel->insert($data);
-            echo($lastId);
-        }
+        }       
     }
 ?>
