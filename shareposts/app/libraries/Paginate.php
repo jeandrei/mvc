@@ -1,7 +1,7 @@
 <?php
 class Paginate extends Database{
     
-    //MONTA A PAGINAÇÃO
+    //02 MONTA A PAGINAÇÃO
     public function returnpag($page,$limit,$sql,$parametros){ 
         //var_dump($parametros);
         //Pega o total de registros do banco de dados com base na consulta
@@ -18,21 +18,25 @@ class Paginate extends Database{
         //Retorna o total de páginas         
         $total_pages = ceil($total_relults/$limit);
 
+        //monta os links dos parametros ex &nome='valor'
         $links='';
         foreach($parametros as $key =>$par){        
             $links .= '&'.$key.'='.$par;
         }   
         
-        $html = "<nav aria-label='Page navigation example'>";
+        //Inicia a montagem dos botóes de paginação
+        $html = "<nav aria-label='paginacao'>";
         $html .= "<ul class='pagination'>";
         
         
+        //impede que o usuário retorne a pagina menor que zero
         if($page>0){
             $anterior = $page - 1;
         } else {
             $anterior = 1;
         }
 
+        //impede que o usuário avance a uma página maior que a última página
         if($total_pages>$page+1){
             $proximo=$page+1;
         } else {
@@ -40,6 +44,7 @@ class Paginate extends Database{
         }
               
 
+        //monta o html da paginaçao
         $html .= "<li class='page-item'><a class='page-link' href='?page=$anterior".$links."' class='links'>Anterior</a></li>";
         for($i=1; $i <= $total_pages; $i++){            
             $ativo = ($i==$page)?"active":"";
@@ -48,17 +53,19 @@ class Paginate extends Database{
         $html .= "<li class='page-item'><a class='page-link' href='?page=$proximo".$links."' class='links'>Próximo</a></li>";
         $html .= "</ul></nav>";
 
+        //monto um array com todas as informações necessárias inclusive com a paginação
         $data = [
             "results" => $results,
             "totalResults" => $total_relults,
             "total_pages" => $total_pages,
             "paginacao" => $html            
         ];
+        //retorno o array
         return $data;  
     }
 
 
-    //RETORNA O NÚMERO DE LINHAS DA CONSULTA
+    //03 RETORNA O NÚMERO DE LINHAS DA CONSULTA
     public function getTotalRows($sql){  
         $this->query($sql);      
         $this->resultSet();      
@@ -71,7 +78,7 @@ class Paginate extends Database{
 
 
 
-    //RETORNA A PAGINAÇÃO
+    //01 RETORNA A PAGINAÇÃO
     public function paginac($pag,$limit,$parametros,$tabela,$orderby){         
         $limit = $limit;
         $sql = 'SELECT * FROM ' . $tabela . ' WHERE 1';   
