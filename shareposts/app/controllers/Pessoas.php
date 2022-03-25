@@ -5,7 +5,7 @@
             $this->bairroModel = $this->model('Bairro');
         }
 
-        public function index(){
+        public function index(){           
 
             //IMPEDE O ACESSO A POSTS SE NÃO ESTIVER LOGADO
             // isLoggedIn está no arquivo session_helper            
@@ -13,14 +13,18 @@
                 redirect('users/login');  
             }
             
-            // Pego os registros do banco de dados
-            //$results = $this->pessoaModel->getPessoas();
-            //var_dump($_POST['buscar']);
-            $results = $this->pessoaModel->getPessoasPag(!empty($_GET['page'])?(($_GET['page'])):(1));
+            
+            //pega atual passada pelo get caso contrário pega o post do buscar
+            $parametros=[
+                "pessoaNome" => (!empty($_GET['pessoaNome'])?(($_GET['pessoaNome'])):''),
+                "bairroId" => (!empty($_GET['bairroId'])?(($_GET['bairroId'])):'')               
+            ];            
+            $page = (!empty($_GET['page'])?(($_GET['page'])):(1));
+            //aqui passo a pagina atual, os parametros do filtro tudo tem que ser igual o nome da tabela
+            //e com método get, o nome da tabela e o campo que quero ordenar            
+            $results = $this->pessoaModel->getPessoasPag($page,5,$parametros,'pessoa','pessoaNome');
+                                
            
-            
-            
-            echo $results['paginacao'];
 
             
             //faço um foreach passando os dados que quero
@@ -43,7 +47,8 @@
                 $data['results'] = false;
             }
             
-            $data['titulo'] = "Exemplo de Cadastro";         
+            $data['titulo'] = "Exemplo de Cadastro";
+            $data['paginacao'] = $results['paginacao'];
 
             $this->view('pessoas/index', $data);
         }
@@ -54,22 +59,6 @@
 
         public function edit(){
             $this->view('pessoas/edit');
-        }  
-        
-        public function register(){
-            $data = [                
-                'pessoaNome' => 'Teste',
-                'pessoaNascimento' => '1980-10-02',
-                'pessoaMunicipio' => 'Piçarras',
-                'pessoaLogradouro' => 'Manoel tolentino',
-                'bairroId' => 2,
-                'pessoaEmail' => 'jean@gmail.com',
-                'pessoaTelefone'=> '47854564545',
-                'pessoaDeficiencia' => 'n'
-                ];
-            
-            $lastId = $this->pessoaModel->insert($data);
-            echo($lastId);
-        }
+        }       
     }
 ?>

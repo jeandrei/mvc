@@ -4,8 +4,11 @@
 <?php flash('pessoa_message'); ?>
 <!-- mb-3 marging bottom -->
 
-<form id="filtrar" action="<?php echo URLROOT; ?>/pessoas/index" method="post" enctype="multipart/form-data">
-  <input type="text" name="buscar" id="buscar" value="<?php echo $data['buscar'];?>">
+<form id="filtrar" action="<?php echo URLROOT; ?>/pessoas/index" method="get" enctype="multipart/form-data">
+  Nome:
+  <input type="text" name="pessoaNome" id="pessoaNome" value="<?php echo $_GET['pessoaNome'];?>">
+  Bairro ID:
+  <input type="text" name="bairroId" id="bairroId" value="<?php echo $_GET['bairroId'];?>">
   <input type="submit" value="Buscar">
 </form>
 
@@ -44,10 +47,10 @@
       <td><?php echo $pessoa['pessoaBairro']; ?></td>
       <td><?php echo $pessoa['pessoaDeficiencia']; ?></td>      
     </tr> 
-  <?php endforeach; ?>  
+  <?php endforeach; ?> 
   </tbody>
 </table>
-
+<?php echo $data['paginacao'];?> 
 
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>

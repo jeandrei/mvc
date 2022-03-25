@@ -1,13 +1,15 @@
 <?php
 class Pessoa {
     private $db;
+    private $pag;
 
     public function __construct(){
         //inicia a classe Database
-        $this->db = new Database('pessoa');
+        $this->db = new Database;
+        $this->pag = new Paginate;
     }
 
-    public function getPessoas(){
+    public function getPessoas(){      
         $this->db->query('SELECT *                          
                           FROM pessoa                                                
                           ORDER BY pessoa.pessoaNome ASC
@@ -28,7 +30,37 @@ class Pessoa {
     }
 
 
-    public function getPessoasPag($page){        
+
+
+    //RETORNA A PAGINAÇÃO
+    public function getPessoasPag($pag,$limit,$parametros,$tabela,$orderby){  
+    $paginacao = $this->pag->paginac($pag,$limit,$parametros,$tabela,$orderby);
+    return $paginacao;        
+    }
+
+    //RETORNA A PAGINAÇÃO
+    public function getPessoasPag1($pag,$parametros,$tabela,$orderby){         
+        $limit = 5;
+        $sql = 'SELECT * FROM ' . $tabela;   
+        
+        //MONTA O WHERE
+        foreach($parametros as $key =>$par){
+            if(!empty($par)){
+                $where .= $key.'='."'".$par."'";
+            } 
+        }   
+        
+        //MONTA ORDERBY
+        $order = $tabela.'.'.$orderby;  
+        (!empty($where)) ? $sql .= ' WHERE '.$where:'';
+        (!empty($order)) ? $sql .= ' ORDER BY '. $order:'';
+        //die(var_dump($sql))          ;
+        $paginacao = $this->pag->returnpag($pag,$limit,$sql,$parametros);  
+        return $paginacao;       
+        
+    }
+
+    public function getPessoasPag_bkp($page){               
         $limit = 5;
         $sql = 'SELECT *                          
                 FROM pessoa                         
@@ -59,11 +91,6 @@ class Pessoa {
             "paginacao" => $html            
         ];
         return $data;           
-    }
-
-    //Insere com sql builder e retorna o último id
-    public function insert($data){
-        return $this->db->insert($data);        
     }
 }
 ?>
