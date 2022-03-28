@@ -1,7 +1,16 @@
+<!-- HEADER -->
 <?php require APPROOT . '/views/inc/header.php';?>
 
-<script>
 
+
+
+<script>
+/**
+ * Funções para manipulação do formulário
+ * limpar - limpa os campos com valores do formulário
+ * focofield - seta o foco em um campo do formulário
+ * 
+ */
 function limpar(){
         document.getElementById('pessoaNome').value = "";                
         focofield("pessoaNome");
@@ -14,10 +23,17 @@ function limpar(){
 </script>
 
 
+
+
+<!-- FLASH MESSAGE -->
 <!-- pessoa_message é o nome da menságem está lá no controller -->
 <?php flash('pessoa_message'); ?>
 <!-- mb-3 marging bottom -->
 
+
+
+
+<!-- FORMULÁRIO -->
 <form id="filtrar" action="<?php echo URLROOT; ?>/pessoas/index" method="get" enctype="multipart/form-data">
   <div class="row mt-2">
     <div class="col-md-3">
@@ -48,6 +64,7 @@ function limpar(){
 
 
 
+<!-- ADD NEW -->
 <div class="row mb-3">
     <div class="col-md-6">
         <h1><?php echo $data['titulo']; ?></h1>
@@ -58,6 +75,34 @@ function limpar(){
         </a>
     </div>
 </div>
+
+
+<?php 
+
+
+/* $results = '';
+if(!empty($data['results']){
+  foreach($data['results'] as $row){
+    $results.=' <tr>
+                  <td>'.$row['pessoaNome'].'</td>
+                  <td>'.$pessoa['pessoaNascimento'].'</td>
+                  <td>'.$pessoa['pessoaMunicipio'].'</td>
+                  <td>'.$pessoa['pessoaLogradouro'].'</td>
+                  <td>'.$pessoa['pessoaBairro'];.'</td>
+                  <td>'.$pessoa['pessoaDeficiencia'].'</td>
+                  <td>'..'</td>
+                  <td>'..'</td>
+                </tr>
+              ';
+  }
+}
+ */
+
+?>
+
+
+
+<!-- TABELA -->
 <table class="table table-striped">
   <thead>
     <tr>
@@ -90,11 +135,9 @@ function limpar(){
 
 
 
-
+<!-- PAGINAÇÃO -->
 <?php
-
-    $pagination = $data['pagination']; 
-   
+    $pagination = $data['pagination'];     
     // no index a parte da paginação é só essa    
     echo '<p>'.$pagination->links_html.'</p>';   
     echo '<p style="clear: left; padding-top: 10px;">Total de Registros: '.$pagination->total_results.'</p>';   
@@ -103,4 +146,6 @@ function limpar(){
 ?>
 
 
+
+<!-- FOOTER -->
 <?php require APPROOT . '/views/inc/footer.php'; ?>

@@ -44,7 +44,7 @@
             
             /** 03
              * 
-             * Chamo o método da paginação
+             * Chamo o método da paginação que está no model
              */
             $pagination = $this->pessoaModel->getPessoasPag($page,$options);           
 
