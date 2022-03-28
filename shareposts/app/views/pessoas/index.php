@@ -80,23 +80,35 @@ function limpar(){
 <?php 
 
 
-/* $results = '';
-if(!empty($data['results']){
+$results = '';
+if(!empty($data['results'])){
   foreach($data['results'] as $row){
     $results.=' <tr>
                   <td>'.$row['pessoaNome'].'</td>
-                  <td>'.$pessoa['pessoaNascimento'].'</td>
-                  <td>'.$pessoa['pessoaMunicipio'].'</td>
-                  <td>'.$pessoa['pessoaLogradouro'].'</td>
-                  <td>'.$pessoa['pessoaBairro'];.'</td>
-                  <td>'.$pessoa['pessoaDeficiencia'].'</td>
-                  <td>'..'</td>
-                  <td>'..'</td>
+                  <td>'.$row['pessoaNascimento'].'</td>
+                  <td>'.$row['pessoaMunicipio'].'</td>
+                  <td>'.$row['pessoaLogradouro'].'</td>
+                  <td>'.$row['pessoaBairro'].'</td>
+                  <td>'.$row['pessoaDeficiencia'].'</td>
+                  <td>
+                    <a href="'.URLROOT.'/pessoas/edit/'.$row['pessoaId'].'">
+                      <buton type="button" class="btn btn-primary">Editar</button>
+                    </a>
+                    <a href="'.URLROOT.'/pessoas/delete/'.$row['pessoaId'].'">
+                      <buton type="button" class="btn btn-danger">Excluir</button>
+                    </a>
+                  </td>
+                 
                 </tr>
               ';
   }
-}
- */
+}else {
+  $results = '<tr>
+  <td colspan="6" class="text-center">
+      Nenhuma vaga encontrada
+  </td>';  
+}   
+ 
 
 ?>
 
@@ -105,30 +117,18 @@ if(!empty($data['results']){
 <!-- TABELA -->
 <table class="table table-striped">
   <thead>
-    <tr>
-      <th scope="col">#</th>
+    <tr>      
       <th scope="col">Nome</th>
       <th scope="col">Nascimento</th>
       <th scope="col">Municipio</th>
       <th scope="col">Logradouro</th>
       <th scope="col">Bairro</th>
       <th scope="col">PCD</th>
+      <th scope="col">Ações</th>
     </tr>
   </thead>
   <tbody>
-  <?php
-  $i=0; 
-  foreach($data['results'] as $pessoa) : ?>
-    <tr>
-      <th scope="row"><?php $i++; echo $i;?></th>
-      <td><?php echo $pessoa['pessoaNome']; ?></td>
-      <td><?php echo $pessoa['pessoaNascimento'];?></td>
-      <td><?php echo $pessoa['pessoaMunicipio']; ?></td>
-      <td><?php echo $pessoa['pessoaLogradouro']; ?></td>
-      <td><?php echo $pessoa['pessoaBairro']; ?></td>
-      <td><?php echo $pessoa['pessoaDeficiencia']; ?></td>      
-    </tr> 
-  <?php endforeach; ?>  
+      <?php echo $results; ?>
   </tbody>
 </table>
 
