@@ -87,7 +87,38 @@
  * Essa função está em helpers\session_helper.php
  * se não estiver logado vai redirecionar para o login
  * 
+ * 
+ * 
+ * PAGINAÇÃO
+ * IMPORTANTE O FORMULÁRIO TEM QUE TER O MÉTODO GET
+ * O CAMPO DE BUSCA TEM QUE TER O MESMO NOME DO CAMPO NO BANCO DE DADOS
+ * 1ª COISA MONTE O FORMULÁRIO COM O CAMPO DE BUSCA
+ * 2º MONTE O CONTROLLER 
+ * VERIFICANDO SE A PÁGINA FOI PASSADA PELO GET
+ * PASSANDO O ARRAY OPTIONS
+ * AINDA NO CONTROLLER CHAME O MÉTODO QUE IRÁ BUSCAR OS DADOS NO BANCO DE DADOS
+ * ESSE MÉTODO UTILIZA A CONEXÃO DO PAGINATION
+ * 3º NO MODEL UTILIZA A SQL BUILDER NESTE EXEMPLO getPessoasPag
+ * QUE IRÁ RETORNAR A PAGINAÇÃO
+ * 4º RETORNE AO CONTROLLER
+ * RETORNE O RESULTADO DA PAGINATION PARA UMA VARIAVEL
+ * $pagination = $this->pessoaModel->getPessoasPag($page,$options);
+ * 5º VERIFIQUE SE OBTEVE SUCESSO E PASSE OS VALORES DOS DADOS E PAGINAÇÃO PARA
+ * OUTROS DOIS ARRAYS
+ * if($pagination->success == true){
+ *     $data['pagination'] = $pagination; 
+ *     $results = $pagination->resultset->fetchAll();
+ * AGORA É SÓ PASSAR OS DADOS FORMATADOS PARA O ARRAY  $data['results'][] 
+ * E PASSAR $data PARA O VIEW
+ * ASSIM TEMOS ACESSO A  $data['pagination'] E  $data['results'] no view
+ * 6º MONTE A PAGINAÇÃO AO FINAL DA PÁGINA
+ * $pagination = $data['pagination']; 
+ * echo '<p>'.$pagination->links_html.'</p>';   
+ * echo '<p style="clear: left; padding-top: 10px;">Total de Registros: '.$pagination->total_results.'</p>';   
+ * echo '<p>Total de Paginas: '.$pagination->total_pages.'</p>';
+ * echo '<p style="clear: left; padding-top: 10px; padding-bottom: 10px;">-----------------------------------</p>';
+ * 
+ * 
  */
 
-
-
+   

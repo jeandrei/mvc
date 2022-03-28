@@ -1,16 +1,52 @@
 <?php require APPROOT . '/views/inc/header.php';?>
 
+<script>
+
+function limpar(){
+        document.getElementById('pessoaNome').value = "";                
+        focofield("pessoaNome");
+    }    
+    
+    window.onload = function(){
+        focofield("pessoaNome");
+    }     
+
+</script>
+
+
 <!-- pessoa_message é o nome da menságem está lá no controller -->
 <?php flash('pessoa_message'); ?>
 <!-- mb-3 marging bottom -->
 
 <form id="filtrar" action="<?php echo URLROOT; ?>/pessoas/index" method="get" enctype="multipart/form-data">
-  Nome:
-  <input type="text" name="pessoaNome" id="pessoaNome" value="<?php echo $_GET['pessoaNome'];?>">
-  Bairro ID:
-  <input type="text" name="bairroId" id="bairroId" value="<?php echo $_GET['bairroId'];?>">
-  <input type="submit" value="Buscar">
+  <div class="row mt-2">
+    <div class="col-md-3">
+      <label for="pessoaNome">
+        Buscar por Nome:
+      </label>
+      <input
+        type="text"
+        name="pessoaNome"
+        id="pessoaNome"
+        class="form-control"
+        value="<?php echo $_GET['pessoaNome'];?>"
+      >
+      <span class="invalid-feedback">
+
+      </span>
+    </div>
+  </div> 
+  
+  <div class="col-md-6 align-self-end mt-2" style="padding-left:5;">
+           
+      <input type="submit" class="btn btn-primary" value="Atualizar">                   
+      <input type="button" class="btn btn-primary" value="Limpar" onClick="limpar()">       
+                                                       
+  </div> 
 </form>
+
+
+
 
 <div class="row mb-3">
     <div class="col-md-6">
@@ -47,10 +83,24 @@
       <td><?php echo $pessoa['pessoaBairro']; ?></td>
       <td><?php echo $pessoa['pessoaDeficiencia']; ?></td>      
     </tr> 
-  <?php endforeach; ?> 
+  <?php endforeach; ?>  
   </tbody>
 </table>
-<?php echo $data['paginacao'];?> 
+
+
+
+
+
+<?php
+
+    $pagination = $data['pagination']; 
+   
+    // no index a parte da paginação é só essa    
+    echo '<p>'.$pagination->links_html.'</p>';   
+    echo '<p style="clear: left; padding-top: 10px;">Total de Registros: '.$pagination->total_results.'</p>';   
+    echo '<p>Total de Paginas: '.$pagination->total_pages.'</p>';
+    echo '<p style="clear: left; padding-top: 10px; padding-bottom: 10px;">-----------------------------------</p>';
+?>
 
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>

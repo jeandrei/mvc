@@ -5,11 +5,10 @@ class Pessoa {
 
     public function __construct(){
         //inicia a classe Database
-        $this->db = new Database;
-        $this->pag = new Paginate;
+        $this->db = new Database;       
     }
 
-    public function getPessoas(){      
+    public function getPessoas(){
         $this->db->query('SELECT *                          
                           FROM pessoa                                                
                           ORDER BY pessoa.pessoaNome ASC
@@ -29,68 +28,29 @@ class Pessoa {
         } 
     }
 
+    //Monta a SQL conforme os parâmetros passados por $options['named_params']
+    //que vem lá do controller, executa a query e retorna a paginação
+    public function getPessoasPag($page,$options){         
+        $sql .= 'SELECT * FROM pessoa WHERE 1';
+        $order = ' ORDER BY pessoa.pessoaNome ASC ';
+               
+        foreach($options['named_params'] as $key=>$value){
+            if(!empty($value)){
+                $where .= ' AND ' . $key.'='."'".$value."'";
+            }    
+        }    
 
-
-
-    //RETORNA A PAGINAÇÃO
-    public function getPessoasPag($pag,$limit,$parametros,$tabela,$orderby){  
-    $paginacao = $this->pag->paginac($pag,$limit,$parametros,$tabela,$orderby);
-    return $paginacao;        
-    }
-
-    //RETORNA A PAGINAÇÃO
-    public function getPessoasPag1($pag,$parametros,$tabela,$orderby){         
-        $limit = 5;
-        $sql = 'SELECT * FROM ' . $tabela;   
+        $query = $sql . $where . $order;
         
-        //MONTA O WHERE
-        foreach($parametros as $key =>$par){
-            if(!empty($par)){
-                $where .= $key.'='."'".$par."'";
-            } 
-        }   
-        
-        //MONTA ORDERBY
-        $order = $tabela.'.'.$orderby;  
-        (!empty($where)) ? $sql .= ' WHERE '.$where:'';
-        (!empty($order)) ? $sql .= ' ORDER BY '. $order:'';
-        //die(var_dump($sql))          ;
-        $paginacao = $this->pag->returnpag($pag,$limit,$sql,$parametros);  
-        return $paginacao;       
-        
+        try{
+            return $this->pag = new Pagination($page,$query,$options);
+
+        }catch(paginationException $e)
+        {
+            echo $e;
+            exit();
+        }           
     }
-
-    public function getPessoasPag_bkp($page){               
-        $limit = 5;
-        $sql = 'SELECT *                          
-                FROM pessoa                         
-                ORDER BY pessoa.pessoaNome ASC
-                ';
-        $total_relults = $this->getTotalRows($sql);
-
-        $starting_limit = ($page-1)*$limit;        
-        $sql .= 'LIMIT :starting_limit, :limit';
-        $this->db->query($sql); 
-        $this->db->bind(':starting_limit', $starting_limit);    
-        $this->db->bind(':limit', $limit); 
-              
-        $results = $this->db->resultSet();         
-        $total_pages = ceil($total_relults/$limit);
-
-        $html = "<nav aria-label='Page navigation example'>";
-        $html .= "<ul class='pagination'>";
-        for($page=1; $page <= $total_pages; $page++){
-            $html .= "<li class='page-item'><a class='page-link' href='?page=$page' class='links'>$page</a></li>";   
-        }
-        $html .= "</ul></nav>";
-
-        $data = [
-            "results" => $results,
-            "totalResults" => $total_relults,
-            "total_pages" => $total_pages,
-            "paginacao" => $html            
-        ];
-        return $data;           
-    }
+    
 }
 ?>

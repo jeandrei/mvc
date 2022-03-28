@@ -5,7 +5,7 @@
             $this->bairroModel = $this->model('Bairro');
         }
 
-        public function index(){           
+        public function index(){
 
             //IMPEDE O ACESSO A POSTS SE NÃO ESTIVER LOGADO
             // isLoggedIn está no arquivo session_helper            
@@ -13,42 +13,78 @@
                 redirect('users/login');  
             }
             
-            
-            //pega atual passada pelo get caso contrário pega o post do buscar
-            $parametros=[
-                "pessoaNome" => (!empty($_GET['pessoaNome'])?(($_GET['pessoaNome'])):''),
-                "bairroId" => (!empty($_GET['bairroId'])?(($_GET['bairroId'])):'')               
-            ];            
-            $page = (!empty($_GET['page'])?(($_GET['page'])):(1));
-            //aqui passo a pagina atual, os parametros do filtro tudo tem que ser igual o nome da tabela
-            //e com método get, o nome da tabela e o campo que quero ordenar            
-            $results = $this->pessoaModel->getPessoasPag($page,5,$parametros,'pessoa','pessoaNome');
-                                
            
+            /** 01
+             * IMPORTANTE O MÉTODO DO FORMULÁRIO TEM QUE SER GET
+             * E O **NOME DOCAMPO DE BUSCA TEM QUE SER IGUAL AO DO BANCO DE DADOS**
+             * verifica a página que está passando se não tiver
+             * página no get vai passar pagina 1
+             */
+            if(isset($_GET['page']))  
+            {  
+                $page = $_GET['page'];  
+            }  
+            else  
+            {  
+                $page = 1;  
+            }  
 
+            /** 02
+             * 
+             * passo o array com as opções 
+             * 
+             */            
+            $options = array(
+                'results_per_page' => 10,
+                'url' => URLROOT . '/pessoas/index.php?page=*VAR*&pessoaNome=' . $_GET['pessoaNome'],
+                'named_params' => array(
+                                        'pessoaNome' => $_GET['pessoaNome']                                
+                                    )     
+            );
             
-            //faço um foreach passando os dados que quero
-            //essa parte é importante posis podemos executar
-            //metodos aqui por exemplo em bairro ao invés de passar o id
-            //podemos executar um método antes getBairroById() e passar o nome do bairro
-            if(!empty($results)){
-                foreach($results['results'] as $result){
-                    $data['results'][]=[
-                        'pessoaId' => $result->pessoaId,
-                        'pessoaNome' => $result->pessoaNome,
-                        'pessoaNascimento' => date('d/m/Y', strtotime($result->pessoaNascimento)),
-                        'pessoaMunicipio' => $result->pessoaMunicipio,
-                        'pessoaLogradouro' => $result->pessoaLogradouro,
-                        'pessoaBairro' => $this->bairroModel->getBairroById($result->bairroId),
-                        'pessoaDeficiencia' => ($result->pessoaDeficiencia == 0) ? 'Não' : 'Sim'
+            /** 03
+             * 
+             * Chamo o método da paginação
+             */
+            $pagination = $this->pessoaModel->getPessoasPag($page,$options);           
+
+            /** 04
+             * 
+             * Verifico se obteve sucesso
+             */
+            if($pagination->success == true){
+                //Aqui passo apenas a paginação
+                $data['pagination'] = $pagination; 
+               
+                
+                //Aqui pego apenas os resultados do banco de dados
+                $results = $pagination->resultset->fetchAll();
+                
+                //Monto o array data['results'][] com os resultados
+                if(!empty($results)){
+                    foreach($results as $row){
+                        $data['results'][] = [
+                            'pessoaId' => $row['pessoaId'],
+                            'pessoaNome' => $row['pessoaNome'],
+                            'pessoaNascimento' => date('d/m/Y', strtotime($row['pessoaNascimento'])),
+                            'pessoaMunicipio' => $row['pessoaMunicipio'],
+                            'pessoaLogradouro' => $row['pessoaLogradouro'],
+                            'pessoaBairro' => $this->bairroModel->getBairroById($row['bairroId']),
+                            'pessoaDeficiencia' => ($row->pessoaDeficiencia == 0) ? 'Não' : 'Sim'                        
                         ];
+                    }
                 }
+                     
             } else {
                 $data['results'] = false;
             }
+            /**
+             * 05 
+             * Lá no final do view eu imprimo a paginação
+             * 
+             */       
             
-            $data['titulo'] = "Exemplo de Cadastro";
-            $data['paginacao'] = $results['paginacao'];
+            $data['titulo'] = "Exemplo de Cadastro com Paginação";         
 
             $this->view('pessoas/index', $data);
         }
@@ -59,6 +95,7 @@
 
         public function edit(){
             $this->view('pessoas/edit');
-        }       
+        }          
+       
     }
 ?>

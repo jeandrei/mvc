@@ -8,19 +8,22 @@
  */
 
  class Database { 
-    private $host = DB_HOST;
-    private $user = DB_USER;
-    private $pass = DB_PASS;
-    private $dbname = DB_NAME;
+    protected $host = DB_HOST;
+    protected $user = DB_USER;
+    protected $pass = DB_PASS;
+    protected $dbname = DB_NAME;
+    protected $options;
 
     //toda vez que preparamos um a sql vamos usar o dbh
-    private $dbh;
-    private $stmt;
-    private $error;
+    protected $dbh;
+    protected $stmt;
+    protected $error; 
+    protected $dsn;  
 
     public function __construct() {
-        // Set DSN DATABASE SERVER NAME
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;       
+        
+        // Set DSN DATABASE SERVER NAME       
+        $this->$dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;             
         $options = array(
             // persistent connections increase performance checking the connection to the database
             PDO::ATTR_PERSISTENT => true,
@@ -29,8 +32,7 @@
     
         // Ceate PDO instance
         try{
-            $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
-            //Essa linha é para impedir aparecer caracteres estranhos no lugar de acentos
+            $this->dbh = new PDO($this->$dsn, $this->user, $this->pass, $options);
             $this->dbh->exec('SET NAMES "utf8"'); 
         } catch(PDOException $e){
             $this->error = $e->getMessage();
@@ -43,7 +45,6 @@
         $this->stmt = $this->dbh->prepare($sql);
     }
 
-   
     //Bind values
      public function bind($param, $value, $type = null) {
         if(is_null($type)){
@@ -75,6 +76,13 @@
         $this->execute();
         return $this->stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    
+    public function resultSetArray(){
+        $this->execute();
+        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 
     //Get a single record as object $dados->nome
     public function single(){
