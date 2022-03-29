@@ -35,7 +35,7 @@
              * 
              */            
             $options = array(
-                'results_per_page' => 5,
+                'results_per_page' => 10,
                 'url' => URLROOT . '/pessoas/index.php?page=*VAR*&pessoaNome=' . $_GET['pessoaNome'] . $_GET['pessoaMunicipio'],
                 'using_bound_params' => true,
                 'named_params' => array(
@@ -48,7 +48,7 @@
              * 
              * Chamo o método da paginação que está no model
              */
-            $pagination = $this->pessoaModel->getPessoasPag($page,$options);           
+            $pagination = $this->pessoaModel->getPessoasPag4($page,$options);           
 
             /** 04
              * 

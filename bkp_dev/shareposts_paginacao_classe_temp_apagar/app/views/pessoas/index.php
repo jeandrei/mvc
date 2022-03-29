@@ -141,7 +141,7 @@ if(!empty($data['results'])){
       <th scope="col">Logradouro</th>
       <th scope="col">Bairro</th>
       <th scope="col">PCD</th>
-      <th scope="col">Ações</th>      
+      <th scope="col">Ações</th>
     </tr>
   </thead>
   <tbody>
