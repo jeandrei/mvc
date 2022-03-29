@@ -2,8 +2,6 @@
 <?php require APPROOT . '/views/inc/header.php';?>
 
 
-
-
 <script>
 /**
  * Funções para manipulação do formulário
@@ -30,6 +28,19 @@ function limpar(){
 <?php flash('pessoa_message'); ?>
 <!-- mb-3 marging bottom -->
 
+
+
+<!-- ADD NEW -->
+<div class="row mb-3">
+    <div class="col-md-6">
+        <h1><?php echo $data['titulo']; ?></h1>
+    </div>
+    <div class="col-md-6">
+        <a href="<?php echo URLROOT; ?>/pessoas/add" class="btn btn-primary pull-right">
+            <i class="fa fa-pencil"></i> Adicionar Pessoa
+        </a>
+    </div>
+</div>
 
 
 
@@ -76,22 +87,34 @@ function limpar(){
       <input type="button" class="btn btn-primary" value="Limpar" onClick="limpar()">       
                                                        
   </div> 
+  
+  <!-- Número de registros por página -->
+  <div class="row align-items-center">
+    <div class="col-11">
+     <span class="pull-right">Número de Linhas:</span>
+    </div>
+    <div class="col-1">
+      <select class="form-select" name="numRows">
+        <?php
+        for($i=1;$i<=50;$i++){
+          if($i == $_SESSION['numRows']){
+            echo "<option value='$i' selected>$i</option>";
+          } else {
+            echo "<option value='$i'>$i</option>";
+          }
+            
+        }
+        ?>
+      </select>     
+    </div>
+    
+  </div>
+
 </form>
 
 
 
 
-<!-- ADD NEW -->
-<div class="row mb-3">
-    <div class="col-md-6">
-        <h1><?php echo $data['titulo']; ?></h1>
-    </div>
-    <div class="col-md-6">
-        <a href="<?php echo URLROOT; ?>/pessoas/add" class="btn btn-primary pull-right">
-            <i class="fa fa-pencil"></i> Adicionar Pessoa
-        </a>
-    </div>
-</div>
 
 
 <?php 

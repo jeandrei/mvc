@@ -29,13 +29,20 @@
                 $page = 1;  
             }  
 
+            //Para permitir armazenar o número de linhas da paginação eu verifico
+            //se foi passado o numRows pelo get se sim armazeno no Session para não perder
+            //o valor quando clicado no link de paginação
+            if(isset($_GET['numRows'])){
+                $_SESSION['numRows'] = $_GET['numRows'];
+            }
+
             /** 02
              * 
              * passo o array com as opções 
              * 
              */            
             $options = array(
-                'results_per_page' => 5,
+                'results_per_page' => ($_GET['numRows'])?($_GET['numRows']):($_SESSION['numRows']),
                 'url' => URLROOT . '/pessoas/index.php?page=*VAR*&pessoaNome=' . $_GET['pessoaNome'] . $_GET['pessoaMunicipio'],
                 'using_bound_params' => true,
                 'named_params' => array(
@@ -92,7 +99,8 @@
         }
 
         public function add(){
-            $this->view('pessoas/add');
+            $data['titulo'] = "Exemplo adicionar novo";
+            $this->view('pessoas/add', $data);
         }
 
         public function edit(){
