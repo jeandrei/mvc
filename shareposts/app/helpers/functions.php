@@ -85,6 +85,15 @@ function imprimeuf($ufsec){
         }
       }
 
+      //valida telefone convencional e celular
+      function validatelefone($numero){       
+          if (preg_match('/^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/', $numero)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
             
       function validanascimento($data){
       $formatado = date('Y-m-d',strtotime($data));
@@ -107,8 +116,11 @@ function imprimeuf($ufsec){
       
       function html($data)
       {
+          //tira espaço em branco
           $data = trim($data);
+          //remove barras
           $data = stripslashes($data);
+          //transforma tags html exemplo <b> -> $b&gt dessa forma impede html injection
           $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
           return $data;
       }      

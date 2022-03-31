@@ -23,5 +23,17 @@ class Bairro {
         }
     }
 
+
+    //Retorna todos os bairros do banco de dados
+    public function getBairros(){
+        $this->db->query('SELECT * FROM bairro ORDER BY bairroNome ASC');
+        $result = $this->db->resultSet();
+        if($this->db->rowCount() > 0){
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
 }
 ?>

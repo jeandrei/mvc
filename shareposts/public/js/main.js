@@ -115,6 +115,17 @@ function upperCaseF(a){
 
 /**
  * 
+ * FUNÇÃO PARA COLOCAR TUDO EM minusculo
+ * onkeydown="lowerCaseF(this)" 
+ */
+ function lowerCaseF(a){
+	setTimeout(function(){
+		a.value = a.value.toLowerCase();
+	}, 1);
+  }
+
+/**
+ * 
  * FUNÇÃO PARA PERMITIR APENAS NÚMEROS
  * PARA USAR BASTA COLOCAR O CAMPO COMO CLASSE onlynumbers
  * E PARA EXIBIR A MENSAGEM COLOCAR UM <span id="errmsg"></span>
@@ -146,7 +157,9 @@ $(document).ready(function () {
  */
 $(document).ready(function() {
 	$('.cpf').mask('000.000.000-00', {reverse: true});
-	$(".telefone").mask("(00) 00000-0009");
+	$('.cnpj').mask('00.000.000/0000-00', {reverse: true});
+	$(".celular").mask("(00) 00000-0009");
+	$(".telefone").mask("(00) 0000-0009");
 });
 
 /**
