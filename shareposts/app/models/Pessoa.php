@@ -89,6 +89,52 @@ class Pessoa {
         return $this->pag;      
         
     } 
+
+
+    public function register($data){
+       $this->db->query('
+                            INSERT INTO pessoa SET
+                            pessoaNome          = :pessoaNome, 
+                            pessoaEmail         = :pessoaEmail, 
+                            pessoaTelefone      = :pessoaTelefone,
+                            pessoaCelular       = :pessoaCelular,
+                            pessoaMunicipio     = :pessoaMunicipio,
+                            bairroId            = :bairroId,
+                            pessoaLogradouro    = :pessoaLogradouro,
+                            pessoaNumero        = :pessoaNumero,
+                            pessoaUf            = :pessoaUf,
+                            pessoaNascimento    = :pessoaNascimento,
+                            pessoaDeficiencia   = :pessoaDeficiencia,
+                            pessoaCpf           = :pessoaCpf,
+                            pessoaCnpj          = :pessoaCnpj                        
+                        ');
+        $this->db->bind(':pessoaNome',$data['pessoaNome']);
+        $this->db->bind(':pessoaEmail',$data['pessoaEmail']);
+        $this->db->bind(':pessoaTelefone',$data['pessoaTelefone']);
+        $this->db->bind(':pessoaCelular',$data['pessoaCelular']);
+        $this->db->bind(':pessoaMunicipio',$data['pessoaMunicipio']);
+        $this->db->bind(':bairroId',$data['bairroId']);
+        $this->db->bind(':pessoaLogradouro',$data['pessoaLogradouro']);
+        $this->db->bind(':pessoaNumero',$data['pessoaNumero']);
+        $this->db->bind(':pessoaUf',$data['pessoaUf']);
+        $this->db->bind(':pessoaNascimento',$data['pessoaNascimento']);
+        
+        if(empty($data['pessoaDeficiencia'])){
+            $this->db->bind(':pessoaDeficiencia','n');
+        } else {
+            $this->db->bind(':pessoaDeficiencia',$data['pessoaDeficiencia']);
+        }        
+        
+        $this->db->bind(':pessoaCpf',$data['pessoaCpf']);
+        $this->db->bind(':pessoaCnpj',$data['pessoaCnpj']);       
+
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
            
     
 }

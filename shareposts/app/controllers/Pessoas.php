@@ -101,9 +101,7 @@
             $this->view('pessoas/index', $data);
         }
 
-        public function add(){
-            $data['titulo'] = "Exemplo adicionar novo";
-            $data['bairros'] = $this->bairroModel->getBairros(); 
+        public function add(){              
             
             // Check for POST            
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -113,19 +111,33 @@
                 //TRATO OS DADOS SE NECESSÁRIO POSSO EXECUTAR MÉTODOS NO MODEL PARA RETORNAR VALORES
                 //EXEMPLO "campoteste" => $this->model->getNome($id);
                 $data = [
-                    "pessoaNome"        => html($_POST['pessoaNome']),
-                    "pessoaEmail"       => html($_POST['pessoaEmail']),
-                    "pessoaTelefone"    => html($_POST['pessoaTelefone']),
-                    "pessoaCelular"     => html($_POST['pessoaCelular']),
-                    "pessoaMunicipio"   => html($_POST['pessoaMunicipio']),
-                    "bairroId"          => html($_POST['bairroId']),
-                    "pessoaLogradouro"  => html($_POST['pessoaLogradouro']),
-                    "pessoaNumero"      => html($_POST['pessoaNumero']),
-                    "pessoaUf"          => html($_POST['pessoaUf']),
-                    "pessoaNascimento"  => html(date('d-m-Y',strtotime($_POST['pessoaNascimento']))),
-                    "pessoaDeficiencia" => html($_POST['pessoaDeficiencia']),
-                    "pessoaCpf"         => html($_POST['pessoaCpf']),
-                    "pessoaCnpj"        => html($_POST['pessoaCnpj'])
+                    'titulo'                => 'Exemplo adicionar novo',
+                    'bairros'               => $this->bairroModel->getBairros(),
+                    'pessoaNome'            => html($_POST['pessoaNome']),
+                    'pessoaEmail'           => html($_POST['pessoaEmail']),
+                    'pessoaTelefone'        => html($_POST['pessoaTelefone']),
+                    'pessoaCelular'         => html($_POST['pessoaCelular']),
+                    'pessoaMunicipio'       => html($_POST['pessoaMunicipio']),
+                    'bairroId'              => html($_POST['bairroId']),
+                    'pessoaLogradouro'      => html($_POST['pessoaLogradouro']),
+                    'pessoaNumero'          => html($_POST['pessoaNumero']),
+                    'pessoaUf'              => html($_POST['pessoaUf']),
+                    'pessoaNascimento'      => html($_POST['pessoaNascimento']),                    
+                    'pessoaDeficiencia'     => html($_POST['pessoaDeficiencia']),
+                    'pessoaCpf'             => html($_POST['pessoaCpf']),
+                    'pessoaCnpj'            => html($_POST['pessoaCnpj']),
+                    'pessoaNome_err'        => '',
+                    'pessoaEmail_err'       => '',
+                    'pessoaTelefone_err'    => '',
+                    'pessoaCelular_err'     => '',
+                    'pessoaMunicipio_err'   => '',
+                    'bairroId_err'          => '',
+                    'pessoaLogradouro_err'  => '',
+                    'pessoaNumero_err'      => '',
+                    'pessoaUf_err'          => '',
+                    'pessoaNascimento_err'  => '',
+                    'pessoaCpf_err'         => '',
+                    'pessoaCnpj_err'        => '' 
                 ];
 
                 //VALIDAÇÃO PHP
@@ -156,6 +168,10 @@
                 //valida pessoaCelular
                 if(empty($data['pessoaCelular'])){
                     $data['pessoaCelular_err'] = 'Por favor informe o celular!';
+                }else {
+                    if(!validacelular($data['pessoaCelular'])){
+                        $data['pessoaCelular_err'] = 'Celular inválido!'; 
+                    }
                 }
 
                 //valida pessoaMunicipio
@@ -164,7 +180,7 @@
                 }
 
                 //valida bairroId
-                if(empty($data['bairroId'])){
+                if(($data['bairroId']=='null')){
                     $data['bairroId_err'] = 'Por favor informe o bairro!';
                 }
 
@@ -176,32 +192,44 @@
                 //valida pessoaNumero
                 if(empty($data['pessoaNumero'])){
                     $data['pessoaNumero_err'] = 'Por favor informe o número!';
+                } else {
+                    if($data['pessoaNumero'] < 1){
+                        $data['pessoaNumero_err'] = 'Número inválido!';
+                    }
                 }
 
                 //valida pessoaUf
-                if(empty($data['pessoaUf'])){
+                if($data['pessoaUf']=='null'){
                     $data['pessoaUf_err'] = 'Por favor informe a Unidade Federativa!';
                 }
 
                 //valida pessoaNascimento
                 if(empty($data['pessoaNascimento'])){
                     $data['pessoaNascimento_err'] = 'Por favor informe o nascimento!';
+                } else {
+                    if(idadeMinima($data['pessoaNascimento'],18)){
+                        $data['pessoaNascimento_err'] = 'Só é permitido cadastro de pessoas maiores de idade!';
+                    }
                 }
-
-                //valida pessoaDeficiencia
-                if(empty($data['pessoaDeficiencia'])){
-                    $data['pessoaDeficiencia_err'] = 'Por favor informe se é PCD!';
-                }
-
+               
                 //valida pessoaCpf
                 if(empty($data['pessoaCpf'])){
                     $data['pessoaCpf_err'] = 'Por favor informe o CPF!';
+                } else {                    
+                    if(!validaCPF($data['pessoaCpf'])){                        
+                        $data['pessoaCpf_err'] = 'CPF inválido!';
+                    }
                 }
 
                 //valida pessoaCnpj
                 if(empty($data['pessoaCnpj'])){
                     $data['pessoaCnpj_err'] = 'Por favor informe o CNPJ!';
+                } else {                    
+                    if(!validaCNPJ($data['pessoaCnpj'])){                        
+                        $data['pessoaCnpj_err'] = 'CNPJ inválido!';
+                    }
                 }
+                
 
                 //https://github.com/jeandrei/sisurpe/blob/master/sisurpe/app/controllers/Datausers.php
 
@@ -210,20 +238,66 @@
                 if(
                     empty($data['pessoaNome_err'])&&
                     empty($data['pessoaEmail_err'])&&
-                    empty($data['pessoaTelefone_err'])
+                    empty($data['pessoaTelefone_err'])&&
+                    empty($data['pessoaCelular_err'])&&
+                    empty($data['pessoaMunicipio_err'])&&
+                    empty($data['bairroId_err'])&&
+                    empty($data['pessoaLogradouro_err'])&&
+                    empty($data['pessoaNumero_err'])&&
+                    empty($data['pessoaUf_err'])&&
+                    empty($data['pessoaNascimento_err'])&&
+                    empty($data['pessoaCpf_err'])&&
+                    empty($data['pessoaCnpj_err'])
                 ){
-                    //register
+                    //se passar a validação registra no banco de dados                    
+                    if($this->pessoaModel->register($data)){
+                        flash('mensagem', 'Cadastro realizado com sucesso!');                     
+                        $this->view('pessoas/add',$data);
+                    } else {
+                        flash('mensagem', 'Erro ao efetuar o cadastro!','alert alert-danger');                     
+                        $this->view('pessoas/add',$data);
+                    }
                 } else {
                     //Validação falhou
-                    flash('mensagem', 'Erro ao efetuar o cadastro, verifique os dados informados!','alert alert-danger'); 
+                    flash('mensagem', 'Erro ao efetuar o cadastro, verifique os dados informados!','alert alert-danger');                     
                     $this->view('pessoas/add',$data);
                 }
-
-                //var_dump($data);
-                die("você submeteu");
+                
+                
+            } else {//Se não for POST é a primeira vez que o formulário está sendo carregado
+                $data = [
+                    "titulo"                => 'Exemplo adicionar novo',
+                    "bairros"               => $this->bairroModel->getBairros(),
+                    "pessoaNome"            => '',
+                    "pessoaEmail"           => '',
+                    "pessoaTelefone"        => '',
+                    "pessoaCelular"         => '',
+                    "pessoaMunicipio"       => '',
+                    "bairroId"              => '',
+                    "pessoaLogradouro"      => '',
+                    "pessoaNumero"          => '',
+                    "pessoaUf"              => '',
+                    "pessoaNascimento"      => '',
+                    "pessoaDeficiencia"     => '',
+                    "pessoaCpf"             => '',
+                    "pessoaCnpj"            => '',
+                    'pessoaNome_err'        => '',
+                    'pessoaEmail_err'       => '',
+                    'pessoaTelefone_err'    => '',
+                    'pessoaCelular_err'     => '',
+                    'pessoaMunicipio_err'   => '',
+                    'bairroId_err'          => '',
+                    'pessoaLogradouro_err'  => '',
+                    'pessoaNumero_err'      => '',
+                    'pessoaUf_err'          => '',
+                    'pessoaNascimento_err'  => '',
+                    'pessoaCpf_err'         => '',
+                    'pessoaCnpj_err'        => '' 
+                ];
+                $this->view('pessoas/add', $data);
             }
-
-            $this->view('pessoas/add', $data);
+            
+            
         }
 
         public function edit(){

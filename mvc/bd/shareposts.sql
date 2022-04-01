@@ -78,7 +78,7 @@ CREATE TABLE `pessoa` (
   `pessoaNascimento` date NOT NULL,
   `pessoaDeficiencia` ENUM ('n', 's') DEFAULT 'n',
   `pessoaCpf` varchar(15) DEFAULT NULL,
-  `pessoaCnpj` varchar(15) DEFAULT NULL
+  `pessoaCnpj` varchar(21) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

@@ -76,6 +76,49 @@ function imprimeuf($ufsec){
         return true;
       }
 
+
+      function validaCNPJ($cnpj)
+      {
+        $cnpj = preg_replace('/[^0-9]/', '', (string) $cnpj);
+
+        // Verifica se todos os digitos são iguais
+        //para evitar 000000000000 ou 999999999999
+        if (preg_match('/(\d)\1{13}/', $cnpj))
+        return false;
+        
+        // Valida tamanho
+        if (strlen($cnpj) != 14)
+          return false;
+
+        // Verifica se todos os digitos são iguais
+        if (preg_match('/(\d)\1{13}/', $cnpj))
+          return false;	
+
+        // Valida primeiro dígito verificador
+        for ($i = 0, $j = 5, $soma = 0; $i < 12; $i++)
+        {
+          $soma += $cnpj[$i] * $j;
+          $j = ($j == 2) ? 9 : $j - 1;
+        }
+
+        $resto = $soma % 11;
+
+        if ($cnpj[12] != ($resto < 2 ? 0 : 11 - $resto))
+          return false;
+
+        // Valida segundo dígito verificador
+        for ($i = 0, $j = 6, $soma = 0; $i < 13; $i++)
+        {
+          $soma += $cnpj[$i] * $j;
+          $j = ($j == 2) ? 9 : $j - 1;
+        }
+
+        $resto = $soma % 11;
+
+        return $cnpj[13] == ($resto < 2 ? 0 : 11 - $resto);
+      }
+
+
       
       function validacelular($celular){
         if (preg_match('/(\(?\d{2}\)?) ?9?\d{4}-?\d{4}/', $celular)) {
@@ -94,13 +137,21 @@ function imprimeuf($ufsec){
         }
       }
 
+
+
+      
+
             
-      function validanascimento($data){
+      //função que verifíca se a a data informada tem uma idade mínima
+      //retorna true or false
+      //idadeMinima('12-03-2020',5) verifica se a data informada tem no mínimo 5 anos
+      //também retorna false se for informado uma data maior que a data atual
+      function idadeMinima($data,$minima){
       $formatado = date('Y-m-d',strtotime($data));
       $ano = date('Y', strtotime($formatado));
       $mes = date('m', strtotime($formatado));
       $dia = date('d', strtotime($formatado));
-      $anominimo = date('Y', strtotime('-5 year'));
+      $anominimo = date('Y', strtotime('-'.$minima.'years'));      
       
       if ( !checkdate( $mes , $dia , $ano )                   // se a data for inválida
            || $ano < $anominimo                                // ou o ano menor que a data mínima

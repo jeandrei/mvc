@@ -32,7 +32,7 @@
                         name="pessoaNome" 
                         id="pessoaNome" 
                         class="form-control <?php echo (!empty($data['pessoaNome_err'])) ? 'is-invalid' : ''; ?>"                             
-                        value="<?php echo $data['pessoaNome'];?>"
+                        value="<?php echo htmlout($data['pessoaNome']);?>"
                         onkeydown="upperCaseF(this)" 
                     >
                     <span class="invalid-feedback">
@@ -52,7 +52,7 @@
                         name="pessoaEmail" 
                         id="pessoaEmail" 
                         class="form-control <?php echo (!empty($data['pessoaEmail_err'])) ? 'is-invalid' : ''; ?>"                             
-                        value="<?php echo $data['pessoaEmail'];?>"
+                        value="<?php htmlout($data['pessoaEmail']);?>"
                         onkeydown="lowerCaseF(this)"
                     >
                     <span class="invalid-feedback">
@@ -76,7 +76,7 @@
                         name="pessoaTelefone" 
                         id="pessoaTelefone" 
                         class="form-control telefone <?php echo (!empty($data['pessoaTelefone_err'])) ? 'is-invalid' : ''; ?>"                             
-                        value="<?php echo $data['pessoaTelefone'];?>"
+                        value="<?php htmlout($data['pessoaTelefone']);?>"
                     >
                     <span class="invalid-feedback">
                         <?php echo $data['pessoaTelefone_err']; ?>
@@ -95,7 +95,7 @@
                         name="pessoaCelular" 
                         id="pessoaCelular" 
                         class="form-control celular <?php echo (!empty($data['pessoaCelular_err'])) ? 'is-invalid' : ''; ?>"                             
-                        value="<?php echo $data['pessoaCelular'];?>"
+                        value="<?php htmlout($data['pessoaCelular']);?>"
                     >
                     <span class="invalid-feedback">
                         <?php echo $data['pessoaCelular_err']; ?>
@@ -114,7 +114,7 @@
                         name="pessoaMunicipio" 
                         id="pessoaMunicipio" 
                         class="form-control <?php echo (!empty($data['pessoaMunicipio_err'])) ? 'is-invalid' : ''; ?>"                             
-                        value="<?php echo $data['pessoaMunicipio'];?>"
+                        value="<?php htmlout($data['pessoaMunicipio']);?>"
                         onkeydown="upperCaseF(this)"
                     >
                     <span class="invalid-feedback">
@@ -139,14 +139,14 @@
                         id="bairroId"
                         class="form-select <?php echo (!empty($data['bairroId_err'])) ? 'is-invalid' : ''; ?>"
                     >
-                        <option value="">Selecione o Bairro</option>
+                        <option value="null">Selecione o Bairro</option>
 
                         <?php foreach($data['bairros'] as $bairro) : ?>
                         <option 
-                            value="<?php echo $bairro->bairroId; ?>"
-                            <?php echo $data['bairroId'] == $bairro->bairroId ? 'selected' : '';?>
+                            value="<?php htmlout($bairro->bairroId); ?>"
+                            <?php echo ($data['bairroId']) == $bairro->bairroId ? 'selected' : '';?>
                         >
-                        <?php echo $bairro->bairroNome; ?>
+                        <?php htmlout($bairro->bairroNome); ?>
                         </option>
                         <?php endforeach; ?>  
                     </select>
@@ -167,7 +167,7 @@
                         name="pessoaLogradouro" 
                         id="pessoaLogradouro" 
                         class="form-control <?php echo (!empty($data['pessoaLogradouro_err'])) ? 'is-invalid' : ''; ?>"                             
-                        value="<?php echo $data['pessoaLogradouro'];?>"
+                        value="<?php htmlout($data['pessoaLogradouro']);?>"
                         onkeydown="upperCaseF(this)"
                     >
                     <span class="invalid-feedback">
@@ -187,7 +187,7 @@
                         name="pessoaNumero" 
                         id="pessoaNumero" 
                         class="form-control <?php echo (!empty($data['pessoaNumero_err'])) ? 'is-invalid' : ''; ?>"                             
-                        value="<?php echo $data['pessoaNumero'];?>"
+                        value="<?php htmlout($data['pessoaNumero']);?>"
                     >
                     <span class="invalid-feedback">
                         <?php echo $data['pessoaNumero_err']; ?>
@@ -206,7 +206,7 @@
                         name="pessoaUf"
                         id="pessoaUf"
                     >
-                    <option value="">UF</option> 
+                    <option value="null">UF</option> 
                     <!-- essa funcao imprimeuf está no arquivo helpers\functions.php -->               
                     <?php echo imprimeuf($data['pessoaUf']); ?>                
                     </select>                
@@ -227,7 +227,7 @@
                         name="pessoaNascimento" 
                         id="pessoaNascimento" 
                         class="form-control <?php echo (!empty($data['pessoaNascimento_err'])) ? 'is-invalid' : ''; ?>"                             
-                        value="<?php echo $data['pessoaNascimento'];?>"
+                        value="<?php htmlout($data['pessoaNascimento']);?>"
                     >
                     <span class="invalid-feedback">
                         <?php echo $data['pessoaNascimento_err']; ?>
@@ -246,7 +246,7 @@
                         name="pessoaCpf" 
                         id="pessoaCpf" 
                         class="form-control cpf <?php echo (!empty($data['pessoaCpf_err'])) ? 'is-invalid' : ''; ?>"                             
-                        value="<?php echo $data['pessoaCpf'];?>"
+                        value="<?php htmlout($data['pessoaCpf']);?>"
                     >
                     <span class="invalid-feedback">
                         <?php echo $data['pessoaCpf_err']; ?>
@@ -255,7 +255,7 @@
             </div><!-- col -->
 
             <!--pessoaCnpj-->
-            <div class="col-md-2">            
+            <div class="col-md-3">            
                 <div class="mb-3">   
                     <label 
                         for="pessoaCnpj"><b class="obrigatorio">*</b> CNPJ: 
@@ -265,7 +265,7 @@
                         name="pessoaCnpj" 
                         id="pessoaCnpj" 
                         class="form-control cnpj <?php echo (!empty($data['pessoaCnpj_err'])) ? 'is-invalid' : ''; ?>"                             
-                        value="<?php echo $data['pessoaCnpj'];?>"
+                        value="<?php htmlout($data['pessoaCnpj']);?>"
                     >
                     <span class="invalid-feedback">
                         <?php echo $data['pessoaCnpj_err']; ?>
@@ -296,7 +296,7 @@
     <div class="form-group mt-3 mb-3">
         <button type="submit" class="btn btn-success">Enviar</button>
         <a href="<?php echo URLROOT ?>/pessoas">
-            <button type="button" class="btn bg-warning">Cancelar</button>
+            <button type="button" class="btn bg-warning">Voltar</button>
         </a>
     </div>     
     
