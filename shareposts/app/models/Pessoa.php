@@ -90,6 +90,26 @@ class Pessoa {
         
     } 
 
+    public function getPessoaById($id){
+        $this->db->query('
+                        SELECT
+                                *
+                        FROM
+                                pessoa
+                        WHERE 
+                                pessoaId = :id
+                        ');
+        $this->db->bind(':id', $id);
+
+        $row = $this->db->single();
+        //verificq se teve algum resultado
+        if($this->db->rowCount() > 0){
+            return $row;
+        } else {
+            return false;
+        }         
+    }
+
 
     public function register($data){
        $this->db->query('
@@ -135,6 +155,74 @@ class Pessoa {
         }
         
     }
+
+
+    public function update($data){
+        $this->db->query('
+                             UPDATE pessoa SET
+                             pessoaNome          = :pessoaNome, 
+                             pessoaEmail         = :pessoaEmail, 
+                             pessoaTelefone      = :pessoaTelefone,
+                             pessoaCelular       = :pessoaCelular,
+                             pessoaMunicipio     = :pessoaMunicipio,
+                             bairroId            = :bairroId,
+                             pessoaLogradouro    = :pessoaLogradouro,
+                             pessoaNumero        = :pessoaNumero,
+                             pessoaUf            = :pessoaUf,
+                             pessoaNascimento    = :pessoaNascimento,
+                             pessoaDeficiencia   = :pessoaDeficiencia,
+                             pessoaCpf           = :pessoaCpf,
+                             pessoaCnpj          = :pessoaCnpj  
+                             WHERE pessoaId = :pessoaId                      
+                         ');
+         $this->db->bind(':pessoaId',$data['pessoaId']);                
+         $this->db->bind(':pessoaNome',$data['pessoaNome']);
+         $this->db->bind(':pessoaEmail',$data['pessoaEmail']);
+         $this->db->bind(':pessoaTelefone',$data['pessoaTelefone']);
+         $this->db->bind(':pessoaCelular',$data['pessoaCelular']);
+         $this->db->bind(':pessoaMunicipio',$data['pessoaMunicipio']);
+         $this->db->bind(':bairroId',$data['bairroId']);
+         $this->db->bind(':pessoaLogradouro',$data['pessoaLogradouro']);
+         $this->db->bind(':pessoaNumero',$data['pessoaNumero']);
+         $this->db->bind(':pessoaUf',$data['pessoaUf']);
+         $this->db->bind(':pessoaNascimento',$data['pessoaNascimento']);
+         
+         if(empty($data['pessoaDeficiencia'])){
+             $this->db->bind(':pessoaDeficiencia','n');
+         } else {
+             $this->db->bind(':pessoaDeficiencia',$data['pessoaDeficiencia']);
+         }        
+         
+         $this->db->bind(':pessoaCpf',$data['pessoaCpf']);
+         $this->db->bind(':pessoaCnpj',$data['pessoaCnpj']);       
+ 
+         if($this->db->execute()){
+             return true;
+         } else {
+             return false;
+         }
+         
+     }
+
+     public function delete($id){
+       $this->db->query('
+                            DELETE
+                            FROM
+                                pessoa
+                            WHERE
+                                pessoaId = :pessoaId   
+                        ');
+        $this->db->bind(':pessoaId', $id);
+
+        $row = $this->db->execute();
+
+        // Check row
+        if($this->db->rowCount() > 0){
+            return true;
+        } else {
+            return false;
+        }
+     }
            
     
 }
