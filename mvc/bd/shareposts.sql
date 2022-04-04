@@ -78,7 +78,38 @@ CREATE TABLE `pessoa` (
   `pessoaNascimento` date NOT NULL,
   `pessoaDeficiencia` ENUM ('n', 's') DEFAULT 'n',
   `pessoaCpf` varchar(15) DEFAULT NULL,
-  `pessoaCnpj` varchar(21) DEFAULT NULL
+  `pessoaCnpj` varchar(21) DEFAULT NULL,  
+  `pessoaTermo` ENUM ('n', 's') DEFAULT 'n'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+--
+-- Estrutura para tabela `interesses`
+--
+
+CREATE TABLE `interesses` (
+  `interesseId` int(11) NOT NULL,
+  `interesse` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `interesses` (
+                          `interesseId`, `interesse`
+                          ) 
+                          VALUES                           
+                          (1, 'Filmes'),
+                          (2, 'Músicas'),
+                          (3, 'Educação'),
+                          (4, 'Moda');
+
+--
+-- Estrutura para tabela `pessoaInteresses`
+--
+
+CREATE TABLE `pessoaInteresses` (
+  `interesseId` int(11) NOT NULL,
+  `pessoaId` int(11) NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

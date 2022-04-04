@@ -303,38 +303,68 @@
                 </label>
                 
                 <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Filmes" name="interesses[]" id="filmes">
+                <input class="form-check-input" type="checkbox" value="Filmes" name="pessoaInteresses[]" id="filmes">
                 <label class="form-check-label" for="filmes">
                     Filmes.
                 </label>
                 </div>
                 
                 <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Musicas" name="interesses[]" id="musicas">
+                <input class="form-check-input" type="checkbox" value="Musicas" name="pessoaInteresses[]" id="musicas">
                 <label class="form-check-label" for="musicas">
                     Músicas.
                 </label>
                 </div>   
                 
                 <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Educacao" name="interesses[]" id="educacao">
+                <input class="form-check-input" type="checkbox" value="Educacao" name="pessoaInteresses[]" id="educacao">
                 <label class="form-check-label" for="educacao">
                     Educação.
                 </label>
                 </div>   
                 
                 <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Moda" name="interesses[]" id="moda">
+                <input class="form-check-input" type="checkbox" value="Moda" name="pessoaInteresses[]" id="moda">
                 <label class="form-check-label" for="moda">
                     Moda.
                 </label>
                 </div> 
                 <!-- ONDE QUERO QUE APAREÇA O ERRO -->
-                <label for="interesses[]" class="error"></label>             
+                <label for="pessoaInteresses[]" class="error"></label>             
             
             </div><!-- col -->
 
-        </div><!-- row -->    
+        </div><!-- row -->
+        
+        <!-- SEXTA LINHA -->
+        <div class="row">
+            
+            <!--termos-->
+            <div class="form-group col-md-12">               
+                
+                <strong>Aceita os termos?</strong>
+               
+
+                <div class="form-check">
+                <input class="form-check-input" type="radio" name="termos" id="termos1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Sim
+                </label>
+                </div>
+                
+                <div class="form-check">
+                <input class="form-check-input" type="radio" name="termos" id="termos2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Não
+                </label>
+                </div>
+
+                <!-- ONDE QUERO QUE APAREÇA O ERRO -->
+                <label for="termos" class="error"></label>  
+
+            </div><!-- col -->
+
+        </div><!-- row --> 
 
     </fieldset><!-- fim do grup de dados 1 -->
 
@@ -351,7 +381,6 @@
 <!-- FOOTER -->
 <?php require APPROOT . '/views/inc/footer.php'; ?>
 <script> 
-
 
  $(document).ready(function(){
 	$('#pessoa').validate({
@@ -393,9 +422,12 @@
             pessoaNascimento : {
                 required : true
             },
-            'interesses[]' : {
+            'pessoaInteresses[]' : {
                 required: true,
                 maxlength: 2
+            },
+            termos : {
+                required: true
             }
 
 		},
@@ -437,11 +469,18 @@
             pessoaNascimento : {
                 required : 'Data de nascimento inválida!'
             },
-            'interesses[]' : {
+            'pessoaInteresses[]' : {
                 required : 'Você deve selecinar ao menos um interesse!',
                 maxlength : 'Só é permitido selecioar {0} ítens'
+            },
+            termos : {
+                required : 'Aceita os termos?'
             }			
         }
     });
 });
 </script>
+
+
+
+
