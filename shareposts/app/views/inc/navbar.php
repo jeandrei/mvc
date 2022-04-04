@@ -24,8 +24,8 @@
                 Cadastros
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="<?php echo URLROOT; ?>/pessoas">Exemplo de Cadastro</a>
-                <a class="dropdown-item" href="#">Atendimento</a>
+                <a class="dropdown-item" href="<?php echo URLROOT; ?>/pessoas">Exemplo de Cadastro Paginação Classe</a>
+                <a class="dropdown-item" href="<?php echo URLROOT; ?>/minhapags">Minha Paginação</a>
                 <a class="dropdown-item" href="#">Filas</a>               
               </div>
             </li>
