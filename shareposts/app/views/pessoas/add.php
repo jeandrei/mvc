@@ -274,7 +274,8 @@
             </div><!-- col -->       
         
         </div><!-- row -->
-
+        
+        
         <!-- QUARTA LINHA -->
         <div class="row">
             
@@ -286,6 +287,51 @@
                 <label for="pessoaDeficiencia">
                     <strong>Pessoa com nnecessidades especiais?</strong>
                 </label>
+            </div><!-- col -->
+
+        </div><!-- row --> 
+        
+        
+        <!-- QUINTA LINHA -->
+        <div class="row">
+            
+            <!--pessoaDeficiencia-->
+            <div class="form-group col-md-12">
+                
+                <label for="pessoaDeficiencia">
+                    <strong>Que assuntos são de seu interesse?</strong>
+                </label>
+                
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="Filmes" name="interesses[]" id="filmes">
+                <label class="form-check-label" for="filmes">
+                    Filmes.
+                </label>
+                </div>
+                
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="Musicas" name="interesses[]" id="musicas">
+                <label class="form-check-label" for="musicas">
+                    Músicas.
+                </label>
+                </div>   
+                
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="Educacao" name="interesses[]" id="educacao">
+                <label class="form-check-label" for="educacao">
+                    Educação.
+                </label>
+                </div>   
+                
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="Moda" name="interesses[]" id="moda">
+                <label class="form-check-label" for="moda">
+                    Moda.
+                </label>
+                </div> 
+                <!-- ONDE QUERO QUE APAREÇA O ERRO -->
+                <label for="interesses[]" class="error"></label>             
+            
             </div><!-- col -->
 
         </div><!-- row -->    
@@ -304,7 +350,9 @@
 
 <!-- FOOTER -->
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-<script>  
+<script> 
+
+
  $(document).ready(function(){
 	$('#pessoa').validate({
 		rules : {			
@@ -344,7 +392,11 @@
             },
             pessoaNascimento : {
                 required : true
-            }        
+            },
+            'interesses[]' : {
+                required: true,
+                maxlength: 2
+            }
 
 		},
 		messages : {			
@@ -384,6 +436,10 @@
             },
             pessoaNascimento : {
                 required : 'Data de nascimento inválida!'
+            },
+            'interesses[]' : {
+                required : 'Você deve selecinar ao menos um interesse!',
+                maxlength : 'Só é permitido selecioar {0} ítens'
             }			
         }
     });

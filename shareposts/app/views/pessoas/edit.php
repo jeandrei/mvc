@@ -14,7 +14,7 @@
 
 
 <!-- FORMULÁRIO nonvalidate é para impedir a validação direta do navegador-->
-<form id="edit" action="<?php echo URLROOT; ?>/pessoas/edit/<?php echo $data['pessoaId'];?>" method="POST" novalidate enctype="multipart/form-data">
+<form id="pessoa" action="<?php echo URLROOT; ?>/pessoas/edit/<?php echo $data['pessoaId'];?>" method="POST" novalidate enctype="multipart/form-data">
 
     <legend>Dados da Pessoa</legend>
     <fieldset class="bg-light p-2"><!-- grupo de dados -->
@@ -308,3 +308,88 @@
 
 <!-- FOOTER -->
 <?php require APPROOT . '/views/inc/footer.php'; ?>
+<script>  
+ $(document).ready(function(){
+	$('#pessoa').validate({
+		rules : {			
+			pessoaNome : {
+				required : true,				
+			},
+            pessoaEmail : {
+				required : true,
+				email : true
+			},
+			pessoaTelefone : {
+				required : true				
+			},
+            pessoaCelular : {
+				required : true				
+			},
+            pessoaMunicipio : {
+				required : true				
+			},
+            bairroId : {
+				selectone: "null"			
+			},
+            pessoaLogradouro : {
+				required : true				
+			},
+            pessoaNumero : {
+				required : true				
+			},
+            pessoaUf : {
+				selectone: "null"			
+			},
+            pessoaCpf : {
+                required : true
+            },
+            pessoaCnpj : {
+                required : true
+            },
+            pessoaNascimento : {
+                required : true
+            }        
+
+		},
+		messages : {			
+			pessoaNome : {
+				required : 'Por favor informe o nome!',				
+			},
+            pessoaEmail : {
+				required : 'Por favor informe o seu e-mail!',
+				email : 'Informe um e-mail válido.'
+			},
+			pessoaTelefone : {
+				required : 'Por favor informe o telefone!'
+			},
+            pessoaCelular : {
+				required : 'Por favor informe o Celular!'
+			},
+            pessoaMunicipio : {
+				required : 'Por favor informe o Município!'
+			},
+            bairroId : {
+				selectone: 'Por favor selecione um bairro!'
+			},
+            pessoaLogradouro : {
+				required : 'Por favor informe o Logradouro!'
+			},
+            pessoaNumero : {
+				required : 'Por favor informe o Número!'
+			},
+            pessoaUf : {
+				selectone: 'Por favor selecione uma Unidade Federativa!'
+			},
+            pessoaCpf : {
+                required : 'CPF inválido!'
+            },
+            pessoaCnpj : {
+                required : 'CNPJ inválido!'
+            },
+            pessoaNascimento : {
+                required : 'Data de nascimento inválida!'
+            }			
+        }
+    });
+});
+</script>
