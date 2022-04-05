@@ -2,6 +2,7 @@
 <?php require APPROOT . '/views/inc/header.php';?>
 
 
+
 <!-- FLASH MESSAGE -->
 <!-- pessoa_message é o nome da menságem está lá no controller -->
 <?php flash('mensagem'); ?>
@@ -14,7 +15,7 @@
 
 
 <!-- FORMULÁRIO nonvalidate é para impedir a validação direta do navegador-->
-<form id="pessoa" action="<?php echo URLROOT; ?>/pessoas/add" method="POST" novalidate enctype="multipart/form-data">
+<form id="pessoa_temp" action="<?php echo URLROOT; ?>/pessoas/add" method="POST" novalidate enctype="multipart/form-data">
 
     <legend>Dados da Pessoa</legend>
     <fieldset class="bg-light p-2"><!-- grupo de dados -->
@@ -283,7 +284,7 @@
             <div class="form-group col-md-12">
                 <div class="alert alert-warning" role="alert">
                 <div class="checkbox checkbox-primary checkbox-inline">
-                <input id="pessoaDeficiencia" type="checkbox" name="pessoaDeficiencia" value="s" >
+                <input id="pessoaDeficiencia" type="checkbox" name="pessoaDeficiencia" value="s" <?php echo ($data['pessoaDeficiencia']=='s') ? 'checked' : '';?>>
                 <label for="pessoaDeficiencia">
                     <strong>Pessoa com nnecessidades especiais?</strong>
                 </label>
@@ -303,35 +304,37 @@
                 </label>
                 
                 <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Filmes" name="pessoaInteresses[]" id="filmes">
+                <input class="form-check-input" type="checkbox" value="1" <?php checked(1, $data['pessoaInteresses']); ?> name="pessoaInteresses[]" id="filmes">
                 <label class="form-check-label" for="filmes">
                     Filmes.
                 </label>
                 </div>
                 
                 <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Musicas" name="pessoaInteresses[]" id="musicas">
+                <input class="form-check-input" type="checkbox" value="2" <?php checked(2, $data['pessoaInteresses']); ?> name="pessoaInteresses[]" id="musicas">
                 <label class="form-check-label" for="musicas">
                     Músicas.
                 </label>
                 </div>   
                 
                 <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Educacao" name="pessoaInteresses[]" id="educacao">
+                <input class="form-check-input" type="checkbox" value="3" <?php checked(3, $data['pessoaInteresses']); ?> name="pessoaInteresses[]" id="educacao">
                 <label class="form-check-label" for="educacao">
                     Educação.
                 </label>
                 </div>   
                 
                 <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Moda" name="pessoaInteresses[]" id="moda">
+                <input class="form-check-input" type="checkbox" value="4" <?php checked(4, $data['pessoaInteresses']); ?> name="pessoaInteresses[]" id="moda">
                 <label class="form-check-label" for="moda">
                     Moda.
                 </label>
                 </div> 
-                <!-- ONDE QUERO QUE APAREÇA O ERRO -->
-                <label for="pessoaInteresses[]" class="error"></label>             
-            
+                <!-- ONDE QUERO QUE APAREÇA O ERRO  TENHO QUE ARRUMAR AQUI-->
+                <label for="pessoaInteresses[]" class="invalid-feedback">
+                        <?php echo 'erro ' . $data['pessoaInteresses_err']; ?>
+                </label>  
+                
             </div><!-- col -->
 
         </div><!-- row -->
@@ -346,15 +349,15 @@
                
 
                 <div class="form-check">
-                <input class="form-check-input" type="radio" name="termos" id="termos1">
-                <label class="form-check-label" for="flexRadioDefault1">
+                <input class="form-check-input" type="radio" name="pessoaTermo" id="sim" value='s' <?php echo ($data['pessoaTermo']=='s') ? 'checked' : '';?>>
+                <label class="form-check-label" for="sim">
                     Sim
                 </label>
                 </div>
                 
                 <div class="form-check">
-                <input class="form-check-input" type="radio" name="termos" id="termos2">
-                <label class="form-check-label" for="flexRadioDefault2">
+                <input class="form-check-input" type="radio" name="pessoaTermo" id="nao" value='n'<?php echo ($data['pessoaTermo']=='n') ? 'checked' : '';?>>
+                <label class="form-check-label" for="nao">
                     Não
                 </label>
                 </div>

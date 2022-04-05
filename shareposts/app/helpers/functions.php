@@ -202,7 +202,7 @@ function imprimeuf($ufsec){
         }  
       }      
       
-      
+      //função para formatar a data no padrão brasileiro
       function formatadata($data){  
         $result = date('d/m/Y', strtotime($data));    
         return $result;
@@ -224,5 +224,15 @@ function imprimeuf($ufsec){
         $chars = "0123456789bcdfghjkmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ";
         return substr(str_shuffle($chars),0,$length);
       }  
+
+
+      //função para dar o checked em check fields exemplo em editar de pessoas
+      function checked($value, $array){
+        if(!empty($array)){
+          if(in_array($value, $array)){
+            echo 'checked';
+          }
+        }        
+      }
       
 ?>

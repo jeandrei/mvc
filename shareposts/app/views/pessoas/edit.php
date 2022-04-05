@@ -2,6 +2,7 @@
 <?php require APPROOT . '/views/inc/header.php';?>
 
 
+
 <!-- FLASH MESSAGE -->
 <!-- pessoa_message é o nome da menságem está lá no controller -->
 <?php flash('mensagem'); ?>
@@ -14,7 +15,7 @@
 
 
 <!-- FORMULÁRIO nonvalidate é para impedir a validação direta do navegador-->
-<form id="pessoa" action="<?php echo URLROOT; ?>/pessoas/edit/<?php echo $data['pessoaId'];?>" method="POST" novalidate enctype="multipart/form-data">
+<form id="pessoa_temp" action="<?php echo URLROOT; ?>/pessoas/edit/<?php echo $data['pessoaId'];?>" method="POST" novalidate enctype="multipart/form-data">
 
     <legend>Dados da Pessoa</legend>
     <fieldset class="bg-light p-2"><!-- grupo de dados -->
@@ -288,7 +289,81 @@
                 </label>
             </div><!-- col -->
 
-        </div><!-- row -->    
+        </div><!-- row -->  
+        
+        <!-- QUINTA LINHA -->
+        <div class="row">
+            
+            <!--pessoaDeficiencia-->
+            <div class="form-group col-md-12">
+                
+                <label for="pessoaDeficiencia">
+                    <strong>Que assuntos são de seu interesse?</strong>
+                </label>
+                
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="1" <?php checked(1, $data['pessoaInteresses']); ?> name="pessoaInteresses[]" id="filmes">
+                <label class="form-check-label" for="filmes">
+                    Filmes.
+                </label>
+                </div>
+                
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="2" <?php checked(2, $data['pessoaInteresses']); ?> name="pessoaInteresses[]" id="musicas">
+                <label class="form-check-label" for="musicas">
+                    Músicas.
+                </label>
+                </div>   
+                
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="3" <?php checked(3, $data['pessoaInteresses']); ?> name="pessoaInteresses[]" id="educacao">
+                <label class="form-check-label" for="educacao">
+                    Educação.
+                </label>
+                </div>   
+                
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="4" <?php checked(4, $data['pessoaInteresses']); ?> name="pessoaInteresses[]" id="moda">
+                <label class="form-check-label" for="moda">
+                    Moda.
+                </label>
+                </div> 
+                <!-- ONDE QUERO QUE APAREÇA O ERRO -->
+                <label for="pessoaInteresses[]" class="error"></label>             
+            
+            </div><!-- col -->
+
+        </div><!-- row -->
+        
+        <!-- SEXTA LINHA -->
+        <div class="row">
+            
+            <!--termos-->
+            <div class="form-group col-md-12">               
+                
+                <strong>Aceita os termos?</strong>
+               
+
+                <div class="form-check">
+                <input class="form-check-input" type="radio" name="pessoaTermo" id="sim" value='s' <?php echo ($data['pessoaTermo']=='s') ? 'checked' : '';?>>
+                <label class="form-check-label" for="sim">
+                    Sim
+                </label>
+                </div>
+                
+                <div class="form-check">
+                <input class="form-check-input" type="radio" name="pessoaTermo" id="nao" value='n'<?php echo ($data['pessoaTermo']=='n') ? 'checked' : '';?>>
+                <label class="form-check-label" for="nao">
+                    Não
+                </label>
+                </div>
+
+                <!-- ONDE QUERO QUE APAREÇA O ERRO -->
+                <label for="termos" class="error"></label>  
+
+            </div><!-- col -->
+
+        </div><!-- row --> 
 
     </fieldset><!-- fim do grup de dados 1 -->
 

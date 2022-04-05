@@ -126,7 +126,8 @@ class Pessoa {
                             pessoaNascimento    = :pessoaNascimento,
                             pessoaDeficiencia   = :pessoaDeficiencia,
                             pessoaCpf           = :pessoaCpf,
-                            pessoaCnpj          = :pessoaCnpj                        
+                            pessoaCnpj          = :pessoaCnpj,
+                            pessoaTermo         = :pessoaTermo                      
                         ');
         $this->db->bind(':pessoaNome',$data['pessoaNome']);
         $this->db->bind(':pessoaEmail',$data['pessoaEmail']);
@@ -143,13 +144,24 @@ class Pessoa {
             $this->db->bind(':pessoaDeficiencia','n');
         } else {
             $this->db->bind(':pessoaDeficiencia',$data['pessoaDeficiencia']);
-        }        
+        } 
+        
+        if(empty($data['pessoaTermo'])){
+            $this->db->bind(':pessoaTermo','n');
+        } else {
+            $this->db->bind(':pessoaTermo',$data['pessoaTermo']);
+        }   
         
         $this->db->bind(':pessoaCpf',$data['pessoaCpf']);
         $this->db->bind(':pessoaCnpj',$data['pessoaCnpj']);       
 
-        if($this->db->execute()){
-            return true;
+        if($this->db->execute()){//$this->db->lastId vem lá do database execute armazena lastid como propriedade da classe
+            if($this->regInteresses($data['pessoaInteresses'],$this->db->lastId)){
+                return true;
+            } else {
+                return false;
+            }
+            
         } else {
             return false;
         }
@@ -172,7 +184,8 @@ class Pessoa {
                              pessoaNascimento    = :pessoaNascimento,
                              pessoaDeficiencia   = :pessoaDeficiencia,
                              pessoaCpf           = :pessoaCpf,
-                             pessoaCnpj          = :pessoaCnpj  
+                             pessoaCnpj          = :pessoaCnpj,
+                             pessoaTermo         = :pessoaTermo 
                              WHERE pessoaId = :pessoaId                      
                          ');
          $this->db->bind(':pessoaId',$data['pessoaId']);                
@@ -191,18 +204,113 @@ class Pessoa {
              $this->db->bind(':pessoaDeficiencia','n');
          } else {
              $this->db->bind(':pessoaDeficiencia',$data['pessoaDeficiencia']);
-         }        
+         }    
+         
+         if(empty($data['pessoaTermo'])){
+            $this->db->bind(':pessoaTermo','n');
+        } else {
+            $this->db->bind(':pessoaTermo',$data['pessoaTermo']);
+        }    
          
          $this->db->bind(':pessoaCpf',$data['pessoaCpf']);
          $this->db->bind(':pessoaCnpj',$data['pessoaCnpj']);       
  
-         if($this->db->execute()){
-             return true;
+         if($this->db->execute()){                
+            if($this->regInteresses($data['pessoaInteresses'],$data['pessoaId'])){
+                return true;
+            } else {
+                return false;
+            }                        
          } else {
              return false;
          }
          
      }
+
+     //função para gravar e atualizar os interesses de uma pessoa
+     public function regInteresses($interesses,$id){           
+       
+       //primeiro apago todos os registros dos interesses da pessoa
+       $this->db->query('
+                            DELETE
+                            FROM
+                            pessoaInteresses
+                            WHERE
+                            pessoaId = :pessoaId
+                        ');
+        $this->db->bind(':pessoaId', $id);
+        $this->db->execute();
+            
+        //depois gravo os interesses novamente
+        if(!empty($interesses)){    
+            $i=0;
+            //depois gravo cada um no banco
+            foreach($interesses as $row){
+                $i++;
+                $this->db->query('
+                                INSERT INTO pessoaInteresses SET
+                                interesseId	 = :interesseId,
+                                pessoaId	 = :pessoaId  
+                            ');
+                $this->db->bind(':interesseId',$row);
+                $this->db->bind(':pessoaId',$id);
+                $this->db->execute();
+            }
+            //se o número de interações feitas pelo foreach for igual ao número de ítens do array
+            //quer dizer que todos os ítens foram adicionados no banco de dados
+            //se todos os ítens foram adicionados retorno true caso contrário retorno false
+            if($i == count($interesses)){
+                return true;
+            } else {
+                return false;
+            }
+
+        } return true;
+             
+    }
+
+    public function getInteressesPessoa($id){
+            
+            $this->db->query('
+                                SELECT
+                                        interesseId
+                                FROM
+                                        pessoaInteresses
+                                WHERE 
+                                        pessoaId = :id
+                            ');
+            $this->db->bind(':id', $id);
+
+            $results = $this->db->resultSet();
+
+            //verificq se teve algum resultado
+            if($this->db->rowCount() > 0){
+                //crio um novo array para retornar apenas os ids
+                $interesses=[];
+                foreach($results as $row){
+                    array_push($interesses, $row->interesseId);               
+                } 
+                //retorna um array com apenas os ids dos interesses rray(4) { [0]=> string(1) "1" [1]=> string(1) "2" [2]=> string(1) "3" [3]=> string(1) "4" }   
+                return $interesses;
+            } else {
+                return [];
+            } 
+            
+            
+            
+                    
+            
+            
+    }
+
+
+
+
+
+
+
+
+
 
      public function delete($id){
        $this->db->query('

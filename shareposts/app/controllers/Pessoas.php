@@ -78,7 +78,7 @@
                         $data['results'][] = [
                             'pessoaId' => $row['pessoaId'],
                             'pessoaNome' => $row['pessoaNome'],
-                            'pessoaNascimento' => date('d/m/Y', strtotime($row['pessoaNascimento'])),
+                            'pessoaNascimento' => formatadata($row['pessoaNascimento']),
                             'pessoaMunicipio' => $row['pessoaMunicipio'],
                             'pessoaLogradouro' => $row['pessoaLogradouro'],
                             'pessoaBairro' => $this->bairroModel->getBairroById($row['bairroId']),
@@ -126,6 +126,8 @@
                     'pessoaDeficiencia'     => html($_POST['pessoaDeficiencia']),
                     'pessoaCpf'             => html($_POST['pessoaCpf']),
                     'pessoaCnpj'            => html($_POST['pessoaCnpj']),
+                    'pessoaInteresses'      => $_POST['pessoaInteresses'],
+                    'pessoaTermo'           => html($_POST['pessoaTermo']),
                     'pessoaNome_err'        => '',
                     'pessoaEmail_err'       => '',
                     'pessoaTelefone_err'    => '',
@@ -230,6 +232,11 @@
                     }
                 }
 
+                //valida os interesses
+                if($data['pessoaInteresses'] == NULL){
+                    $data['pessoaInteresses_err'] = 'Por favor informe ao menos um interesse!';
+                } 
+
                 if(
                     empty($data['pessoaNome_err'])&&
                     empty($data['pessoaEmail_err'])&&
@@ -242,7 +249,8 @@
                     empty($data['pessoaUf_err'])&&
                     empty($data['pessoaNascimento_err'])&&
                     empty($data['pessoaCpf_err'])&&
-                    empty($data['pessoaCnpj_err'])
+                    empty($data['pessoaCnpj_err'])&&
+                    empty($data['pessoaInteresses_err'])
                 ){
                     //se passar a validação registra no banco de dados                    
                     if($this->pessoaModel->register($data)){
@@ -261,21 +269,23 @@
                 
             } else {//Se não for POST é a primeira vez que o formulário está sendo carregado
                 $data = [
-                    "titulo"                => 'Exemplo adicionar novo',
-                    "bairros"               => $this->bairroModel->getBairros(),
-                    "pessoaNome"            => '',
-                    "pessoaEmail"           => '',
-                    "pessoaTelefone"        => '',
-                    "pessoaCelular"         => '',
-                    "pessoaMunicipio"       => '',
-                    "bairroId"              => '',
-                    "pessoaLogradouro"      => '',
-                    "pessoaNumero"          => '',
-                    "pessoaUf"              => '',
-                    "pessoaNascimento"      => '',
-                    "pessoaDeficiencia"     => '',
-                    "pessoaCpf"             => '',
-                    "pessoaCnpj"            => '',
+                    'titulo'                => 'Exemplo adicionar novo',
+                    'bairros'               => $this->bairroModel->getBairros(),
+                    'pessoaNome'            => '',
+                    'pessoaEmail'           => '',
+                    'pessoaTelefone'        => '',
+                    'pessoaCelular'        => '',
+                    'pessoaMunicipio'       => '',
+                    'bairroId'              => '',
+                    'pessoaLogradouro'      => '',
+                    'pessoaNumero'          => '',
+                    'pessoaUf'              => '',
+                    'pessoaNascimento'      => '',
+                    'pessoaDeficiencia'     => '',
+                    'pessoaCpf'             => '',
+                    'pessoaCnpj'            => '',
+                    'pessoaInteresses'      => '',
+                    'pessoaTermo'           => '',
                     'pessoaNome_err'        => '',
                     'pessoaEmail_err'       => '',
                     'pessoaTelefone_err'    => '',
@@ -320,6 +330,8 @@
                     'pessoaDeficiencia'     => html($_POST['pessoaDeficiencia']),
                     'pessoaCpf'             => html($_POST['pessoaCpf']),
                     'pessoaCnpj'            => html($_POST['pessoaCnpj']),
+                    'pessoaInteresses'      => $_POST['pessoaInteresses'],
+                    'pessoaTermo'           => html($_POST['pessoaTermo']),
                     'pessoaNome_err'        => '',
                     'pessoaEmail_err'       => '',
                     'pessoaTelefone_err'    => '',
@@ -439,7 +451,7 @@
                     empty($data['pessoaCnpj_err'])
                 ){ 
                     //se passar a validação registra no banco de dados                    
-                    if($this->pessoaModel->update($data)){
+                    if($this->pessoaModel->update($data)){                        
                         flash('mensagem', 'Dados atualizados com sucesso!');                     
                         $this->view('pessoas/edit',$data); 
                     } else {
@@ -470,22 +482,24 @@
                 }        
                 
                 $data = [
-                    "titulo"                => 'Exemplo Editando',
-                    "bairros"               => $this->bairroModel->getBairros(),
+                    'titulo'                => 'Exemplo Editando',
+                    'bairros'               => $this->bairroModel->getBairros(),
                     'pessoaId'              => $id,
-                    "pessoaNome"            => $pessoa->pessoaNome,
-                    "pessoaEmail"           => $pessoa->pessoaEmail,
-                    "pessoaTelefone"        => $pessoa->pessoaTelefone,
-                    "pessoaCelular"         => $pessoa->pessoaCelular,
-                    "pessoaMunicipio"       => $pessoa->pessoaMunicipio,
-                    "bairroId"              => $pessoa->bairroId,
-                    "pessoaLogradouro"      => $pessoa->pessoaLogradouro,
-                    "pessoaNumero"          => $pessoa->pessoaNumero,
-                    "pessoaUf"              => $pessoa->pessoaUf,
-                    "pessoaNascimento"      => $pessoa->pessoaNascimento,
-                    "pessoaDeficiencia"     => $pessoa->pessoaDeficiencia,
-                    "pessoaCpf"             => $pessoa->pessoaCpf,
-                    "pessoaCnpj"            => $pessoa->pessoaCnpj,
+                    'pessoaNome'            => $pessoa->pessoaNome,
+                    'pessoaEmail'           => $pessoa->pessoaEmail,
+                    'pessoaTelefone'        => $pessoa->pessoaTelefone,
+                    'pessoaCelular'         => $pessoa->pessoaCelular,
+                    'pessoaMunicipio'       => $pessoa->pessoaMunicipio,
+                    'bairroId'              => $pessoa->bairroId,
+                    'pessoaLogradouro'      => $pessoa->pessoaLogradouro,
+                    'pessoaNumero'          => $pessoa->pessoaNumero,
+                    'pessoaUf'              => $pessoa->pessoaUf,
+                    'pessoaNascimento'      => $pessoa->pessoaNascimento,
+                    'pessoaDeficiencia'     => $pessoa->pessoaDeficiencia,
+                    'pessoaCpf'             => $pessoa->pessoaCpf,
+                    'pessoaCnpj'            => $pessoa->pessoaCnpj,
+                    'pessoaInteresses'      => $this->pessoaModel->getInteressesPessoa($id),
+                    'pessoaTermo'           => $pessoa->pessoaTermo,
                     'pessoaNome_err'        => '',
                     'pessoaEmail_err'       => '',
                     'pessoaTelefone_err'    => '',
