@@ -18,6 +18,7 @@
 <form id="pessoa" action="<?php echo URLROOT; ?>/pessoas/add" method="POST" novalidate enctype="multipart/form-data">
 
     <legend>Dados da Pessoa</legend>
+    
     <fieldset class="bg-light p-2"><!-- grupo de dados -->
         <!-- PRIMEIRA LINHA -->
         <div class="row">
