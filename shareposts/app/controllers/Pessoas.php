@@ -237,6 +237,11 @@
                     $data['pessoaInteresses_err'] = 'Por favor informe ao menos um interesse!';
                 } 
 
+                //valida o termo
+                if($data['pessoaTermo'] == NULL){
+                    $data['pessoaTermo_err'] = 'Por favor informe se aceita os termos!';
+                }
+
                 if(
                     empty($data['pessoaNome_err'])&&
                     empty($data['pessoaEmail_err'])&&
@@ -250,7 +255,8 @@
                     empty($data['pessoaNascimento_err'])&&
                     empty($data['pessoaCpf_err'])&&
                     empty($data['pessoaCnpj_err'])&&
-                    empty($data['pessoaInteresses_err'])
+                    empty($data['pessoaInteresses_err'])&&
+                    empty($data['pessoaTermo_err'])
                 ){
                     //se passar a validação registra no banco de dados                    
                     if($this->pessoaModel->register($data)){

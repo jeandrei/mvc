@@ -15,7 +15,7 @@
 
 
 <!-- FORMULÁRIO nonvalidate é para impedir a validação direta do navegador-->
-<form id="pessoa_temp" action="<?php echo URLROOT; ?>/pessoas/add" method="POST" novalidate enctype="multipart/form-data">
+<form id="pessoa" action="<?php echo URLROOT; ?>/pessoas/add" method="POST" novalidate enctype="multipart/form-data">
 
     <legend>Dados da Pessoa</legend>
     <fieldset class="bg-light p-2"><!-- grupo de dados -->
@@ -36,7 +36,7 @@
                         value="<?php echo htmlout($data['pessoaNome']);?>"
                         onkeydown="upperCaseF(this)" 
                     >
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['pessoaNome_err']; ?>
                     </span>
                 </div>
@@ -56,7 +56,7 @@
                         value="<?php htmlout($data['pessoaEmail']);?>"
                         onkeydown="lowerCaseF(this)"
                     >
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['pessoaEmail_err']; ?>
                     </span>
                 </div>           
@@ -79,7 +79,7 @@
                         class="form-control telefone <?php echo (!empty($data['pessoaTelefone_err'])) ? 'is-invalid' : ''; ?>"                             
                         value="<?php htmlout($data['pessoaTelefone']);?>"
                     >
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['pessoaTelefone_err']; ?>
                     </span>
                 </div>           
@@ -98,7 +98,7 @@
                         class="form-control celular <?php echo (!empty($data['pessoaCelular_err'])) ? 'is-invalid' : ''; ?>"                             
                         value="<?php htmlout($data['pessoaCelular']);?>"
                     >
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['pessoaCelular_err']; ?>
                     </span>
                 </div>           
@@ -118,7 +118,7 @@
                         value="<?php htmlout($data['pessoaMunicipio']);?>"
                         onkeydown="upperCaseF(this)"
                     >
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['pessoaMunicipio_err']; ?>
                     </span>
                 </div>           
@@ -151,7 +151,7 @@
                         </option>
                         <?php endforeach; ?>  
                     </select>
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['bairroId_err']; ?>
                     </span>
                 </div>           
@@ -171,7 +171,7 @@
                         value="<?php htmlout($data['pessoaLogradouro']);?>"
                         onkeydown="upperCaseF(this)"
                     >
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['pessoaLogradouro_err']; ?>
                     </span>
                 </div>           
@@ -190,7 +190,7 @@
                         class="form-control <?php echo (!empty($data['pessoaNumero_err'])) ? 'is-invalid' : ''; ?>"                             
                         value="<?php htmlout($data['pessoaNumero']);?>"
                     >
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['pessoaNumero_err']; ?>
                     </span>
                 </div>           
@@ -211,7 +211,7 @@
                     <!-- essa funcao imprimeuf está no arquivo helpers\functions.php -->               
                     <?php echo imprimeuf($data['pessoaUf']); ?>                
                     </select>                
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['pessoaUf_err']; ?>
                     </span>
                 </div>           
@@ -230,7 +230,7 @@
                         class="form-control databr <?php echo (!empty($data['pessoaNascimento_err'])) ? 'is-invalid' : ''; ?>"                             
                         value="<?php htmlout($data['pessoaNascimento']);?>"
                     >
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['pessoaNascimento_err']; ?>
                     </span>
                 </div>           
@@ -249,7 +249,7 @@
                         class="form-control cpf <?php echo (!empty($data['pessoaCpf_err'])) ? 'is-invalid' : ''; ?>"                             
                         value="<?php htmlout($data['pessoaCpf']);?>"
                     >
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['pessoaCpf_err']; ?>
                     </span>
                 </div>           
@@ -268,7 +268,7 @@
                         class="form-control cnpj <?php echo (!empty($data['pessoaCnpj_err'])) ? 'is-invalid' : ''; ?>"                             
                         value="<?php htmlout($data['pessoaCnpj']);?>"
                     >
-                    <span class="invalid-feedback">
+                    <span class="text-danger">
                         <?php echo $data['pessoaCnpj_err']; ?>
                     </span>
                 </div>           
@@ -330,10 +330,8 @@
                     Moda.
                 </label>
                 </div> 
-                <!-- ONDE QUERO QUE APAREÇA O ERRO  TENHO QUE ARRUMAR AQUI-->
-                <label for="pessoaInteresses[]" class="invalid-feedback">
-                        <?php echo 'erro ' . $data['pessoaInteresses_err']; ?>
-                </label>  
+                <!-- ONDE QUERO QUE APAREÇA O ERRO  TENHO QUE ARRUMAR AQUI-->                 
+                <label for="pessoaInteresses[]" class="error text-danger"><?php echo $data['pessoaInteresses_err'];?></label>                   
                 
             </div><!-- col -->
 
@@ -363,7 +361,7 @@
                 </div>
 
                 <!-- ONDE QUERO QUE APAREÇA O ERRO -->
-                <label for="termos" class="error"></label>  
+                <label for="pessoaTermo" class="error text-danger"><?php echo $data['pessoaTermo_err'];?></label>  
 
             </div><!-- col -->
 
@@ -429,7 +427,7 @@
                 required: true,
                 maxlength: 2
             },
-            termos : {
+            pessoaTermo : {
                 required: true
             }
 
@@ -476,8 +474,8 @@
                 required : 'Você deve selecinar ao menos um interesse!',
                 maxlength : 'Só é permitido selecioar {0} ítens'
             },
-            termos : {
-                required : 'Aceita os termos?'
+            pessoaTermo : {
+                required : 'Por favor informe se aceita os termos!'
             }			
         }
     });
