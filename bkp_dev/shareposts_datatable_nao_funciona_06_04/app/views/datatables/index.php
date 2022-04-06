@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
 
+
 <!-- FLASH MESSAGE -->
 <!-- pessoa_message é o nome da menságem está lá no controller -->
 <?php flash('mensagem'); ?>
@@ -41,6 +42,15 @@
 	</div>
 
 
+DATATALES INDEX
+
+
+<button 
+    type="button" 
+    class="btn btn-success btn-sm gravar"   
+>                    
+Gravar
+</button>
 
 
 <!-- jquery.dataTable.min.js -->
@@ -48,14 +58,42 @@
 
 
 <script>
+$( document ).ready(function() {
+    $('.gravar').click(function(){        
+        var id=01;
+        console.log('o valor da id é ' + id);
+        $.ajax({
+            url: '<?php echo URLROOT; ?>/datatables/datatable',
+            method: 'GET',
+            data:{
+                id:id
+            },
+            success: function(retorno_php){
+                var responseObj = JSON.parse(retorno_php);
+                $("#messageBox")
+                        .removeClass()
+                        /* aqui em addClass adiciono a classe que vem do php se sucesso ou danger */
+                        /* pode adicionar mais classes se precisar ficaria assim .addClass("confirmbox "+responseObj.classe) */
+                        .addClass(responseObj.classe) 
+                        /* aqui a mensagem que vem la do php responseObj.mensagem */                       
+                        .html(responseObj.mensagem) 
+                        .fadeIn(2000).fadeOut(2000); 
+            }
+        });
+    });
+});
+
 
 $(document).ready(function() {   
     $('#jquery-datatable-ajax-php').DataTable({
         'processing': true,
         'serverSide': true,
-        'serverMethod': 'POST',
+        'serverMethod': 'post',
         'ajax': {
-            'url':'<?php echo URLROOT; ?>/datatables/datatable'//Arquivo php que faz a consulta no banco de dados                     
+            'url':'<?php echo URLROOT; ?>/datatables/datatable',//Arquivo php que faz a consulta no banco de dados
+            'success': function(retorno_php){
+                console.log(retorno_php);
+            }
         },
             "oLanguage": {//tradução para o português
             "sProcessing":      "Procesando...",

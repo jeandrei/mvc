@@ -4,31 +4,24 @@
             $this->dataModel = $this->model('Datatable');
         }
 
-        public function index(){             
-            
+        public function index(){                                 
             $this->view('datatables/index');         
-        }
-
-
-        public function teste(){
-            $teste = $_GET['teste'];
-
-            echo json_encode($teste); 
         }
 
         
         
         public function datatable(){           
 
-            $this->autoRender = false; 
-             // Reading value
-            $draw = $_REQUEST['draw'];
-            $row = intval($_POST['start']);
-            $rowperpage = intval($_POST['length']); // Rows display per page
-            $columnIndex = $_POST['order'][0]['column']; // Column index
-            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
-            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
-            $searchValue = $_POST['search']['value']; // Search value
+
+            $data = [
+                "draw" => $_POST['draw'],
+                "row" => $_POST['start'],
+                "rowperpage" => $_POST['length'],
+                "columnIndex" => $_POST['order'][0]['column'],
+                "columnName" => $_POST['columns'][$columnIndex]['data'],
+                "columnSortOrder" => $_POST['order'][0]['dir'],
+                "searchValue" => $_POST['search']['value']                
+            ];
 
             $searchArray = array();
 
@@ -51,8 +44,8 @@
 
             $totalRecordwithFilter = $this->dataModel->totalRecordwithFilter('pessoa',$searchArray);
 
-            $empRecords = $this->dataModel->empRecords('pessoa',$searchQuery,$columnName,$columnSortOrder,$row,$rowperpage);
-            //$empRecords = $this->dataModel->getAll();
+            $empRecords = $this->dataModel->empRecords('pessoa',$searchQuery,$columnName,$columnSortOrder,$data);
+            
        
             $data = array();
 

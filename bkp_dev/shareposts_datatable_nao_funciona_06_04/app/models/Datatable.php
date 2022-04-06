@@ -21,29 +21,21 @@ class Datatable {
         return $row->allcount;
     }
 
-    public function empRecords($tabela,$searchQuery,$columnName,$columnSortOrder,$row,$rowperpage){
-        //$sql = "SELECT * FROM ".$tabela." WHERE 1 ".$searchQuery;
+    public function empRecords($tabela,$searchQuery,$columnName,$columnSortOrder){
+        $sql = "SELECT * FROM ".$tabela." WHERE 1 ".$searchQuery;
         //$sql = "SELECT * FROM ".$tabela." WHERE 1 ".$searchQuery." ORDER BY ".$columnName." ".$columnSortOrder." LIMIT :limit,:offset";
-        $sql = "SELECT * FROM ".$tabela." WHERE 1 LIMIT :limit,:offset";
         $this->db->query($sql);
-        
+      
        
         // Bind values
-         /* foreach ($searchArray as $key=>$search) {
+       /*  foreach ($searchArray as $key=>$search) {
             $this->db->bind(':'.$key, $search);
-        }  */
+        } */
 
-        $this->db->bind(':limit', $row);
-        $this->db->bind(':offset', $rowperpage);
+        /* $this->db->bind(':limit', (int)$data['row']);
+        $this->db->bind(':limit', (int)$data['rowperpage']); */
         $empRecords = $this->db->resultSet();     
         return $empRecords;   
-    }
-
-    public function getAll(){
-        $sql = "SELECT * FROM pessoa";
-        $this->db->query($sql);
-        $result = $this->db->resultSet();
-        return $result;
     }
 }
 ?>
