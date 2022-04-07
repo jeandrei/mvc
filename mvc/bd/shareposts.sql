@@ -75,7 +75,7 @@ CREATE TABLE `pessoa` (
   `pessoaLogradouro` varchar(255) DEFAULT NULL,
   `pessoaNumero` int(11) DEFAULT NULL,
   `pessoaUf` char(2) DEFAULT NULL,
-  `pessoaNascimento` date NOT NULL,
+  `pessoaNascimento` date DEFAULT NULL,
   `pessoaDeficiencia` ENUM ('n', 's') DEFAULT 'n',
   `pessoaCpf` varchar(15) DEFAULT NULL,
   `pessoaCnpj` varchar(21) DEFAULT NULL,  

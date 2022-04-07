@@ -27,6 +27,7 @@
                 <a class="dropdown-item" href="<?php echo URLROOT; ?>/pessoas">Exemplo de Cadastro Paginação Classe</a>
                 <a class="dropdown-item" href="<?php echo URLROOT; ?>/datatables">Datatable MVC</a>
                 <a class="dropdown-item" href="<?php echo URLROOT; ?>/datatabledetails">Datatable MVC Detail Row</a>
+                <a class="dropdown-item" href="<?php echo URLROOT; ?>/ajaxs">Ajax</a>
                 <a class="dropdown-item" href="#">Filas</a>               
               </div>
             </li>
