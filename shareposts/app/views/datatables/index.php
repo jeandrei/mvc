@@ -4,7 +4,6 @@
 <!-- jquery.dataTable css -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
-
 <!-- FLASH MESSAGE -->
 <!-- pessoa_message é o nome da menságem está lá no controller -->
 <?php flash('mensagem'); ?>
@@ -15,24 +14,21 @@
     <h1><?php echo $data['titulo']; ?></h1>
 </div>
 
-
-
 <!-- Tabela com os campos de cabeçalho -->
 <div class="container mt-5 mb-3">
-		<h2 style="margin-bottom: 30px;">DataTable com dados do banco de dados em php</h2>
-		<table id="idDaTabela" class="display" style="width:100%">
-	        <thead>
-	            <tr>
-	                <th>Email</th>
-	                <th>Nome</th>
-	                <th>Municipio</th>
-	                <th>Logradouro</th>
-	            </tr>
-	        </thead>
-	    </table>
-	</div>
-
-
+    <h2 style="margin-bottom: 30px;">DataTable com dados do banco de dados em php</h2>
+    <table id="idDaTabela" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Nome</th>
+                <th>Municipio</th>
+                <th>Logradouro</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+    </table>
+</div>
 
 <!-- jquery.dataTable.min.js -->
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -71,7 +67,8 @@ $(document).ready(function() {
             { data: 'pessoaEmail' },
             { data: 'pessoaNome' },
             { data: 'pessoaMunicipio' },
-            { data: 'pessoaLogradouro' }
+            { data: 'pessoaLogradouro' },
+            { data: "pessoaAcoes" }
         ]
     });
 } );

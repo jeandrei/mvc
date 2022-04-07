@@ -4,7 +4,6 @@
 <!-- jquery.dataTable css -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
-
 <!-- FLASH MESSAGE -->
 <!-- pessoa_message é o nome da menságem está lá no controller -->
 <?php flash('mensagem'); ?>
@@ -15,25 +14,26 @@
     <h1><?php echo $data['titulo']; ?></h1>
 </div>
 
-
-
-<!-- Tabela com os campos de cabeçalho -->
+<!-- Tabela com os campos de cabeçalho 
+IMPORTANTE a primeira sempre tem que ficar vazio para acomodar o botão + <th></th>
+Atento também ao id da tabela tem que ser igual aqui e nas linhas:
+var table = $('#idDaTabela') e
+$('#idDaTabela tbody')
+-->
 <div class="container mt-5 mb-3">		
-		<table id="idDaTabela" class="display" style="width:100%">
-	        <thead>
-	            <tr>
-                    <th></th>
-	                <th>Nome</th>
-	                <th>Nascimento</th>
-	                <th>Município</th>
-	                <th>Email</th>
-                    <th>Ações</th>
-	            </tr>
-	        </thead>
-	    </table>
-	</div>
-
-
+    <table id="idDaTabela" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>Nascimento</th>
+                <th>Município</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+    </table>
+</div>
 
 <!-- jquery.dataTable.min.js -->
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -48,7 +48,7 @@ function format ( d ) {
     
    
     /**
-     * 3 Coloque os campos que irao aparecer no detalhe
+     * Coloque os campos que irao aparecer no detalhe
      * 
      */
     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
@@ -100,10 +100,10 @@ $(document).ready(function() {
                 "sPrevious": "Anterior"
             }
         },
-        /* colunas da tabela que queremos expandir vem lá do array.json */
+        
        
         /**
-         * 2 Atualize os campos que irão aparecer na tabela principal 
+         * Atualize os campos que irão aparecer na tabela principal 
          * depois aqui mesmo vá para o passo 3
          */
         "columns": [

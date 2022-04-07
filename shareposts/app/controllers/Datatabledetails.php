@@ -8,11 +8,8 @@
         public function index(){             
             
             $this->view('datatabledetails/index');         
-        }
-
-     
-        
-        
+        }   
+                
         //Método carregado lá no index no script do datatable url:
         public function datatable(){  
            
@@ -27,7 +24,9 @@
 
             $searchArray = array();
 
-            // Search
+            // Search 
+            //Atualize os campos devem ser os mesmos que estão no index
+            // columns { "data": "pessoaNome" },
             $searchQuery = " ";
             if($searchValue != ''){
                 $searchQuery = " AND (pessoaEmail LIKE :pessoaEmail OR 
@@ -54,7 +53,9 @@
        
             //Formata os dados para serem apresentados na tabela
             $data = array();
-
+            
+            //Aqui coloque todos os camopos do bd que deseja utilizar
+            //pessoaAcoes são os botões de editar e excluir
             foreach ($empRecords as $row) {
                 $data[] = array(
                     "pessoaEmail"=>$row->pessoaEmail,
@@ -89,20 +90,6 @@
             //Echo com os dados que serão apresentados
             echo json_encode($response); 
         }
-
-
-
-
-
-
-
-
-        public function add(){
-            $this->view('datatables/add');
-        }
-
-        public function edit(){            
-            $this->view('datatables/edit');
-        }       
+       
     }
 ?>
