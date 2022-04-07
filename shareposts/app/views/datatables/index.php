@@ -55,7 +55,7 @@ $(document).ready(function() {
             "sZeroRecords":     "Ops! Nada encontrado.",
             "sInfo":            "Mostrando de _START_ a _END_ de _TOTAL_ registros",
             "sInfoEmpty":       "Mostrando de 0 até 0 de 0 records",
-            "sInfoFiltered":    "(filtrado de _MAX_ total de registros)",
+            "sInfoFiltered":    "(filtrados de _MAX_ registros no total)",
             "sSearch":          "Buscar:",
             "sUrl":             "",
             "sInfoThousands":   ",",
