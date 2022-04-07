@@ -4,25 +4,20 @@
             $this->dataModel = $this->model('Datatable');
         }
 
+        //Carrega o view index
         public function index(){             
             
             $this->view('datatables/index');         
         }
 
-
-        public function teste(){
-            $teste = $_GET['teste'];
-
-            echo json_encode($teste); 
-        }
-
+     
         
         
-        public function datatable(){           
-
-            $this->autoRender = false; 
-             // Reading value
-            $draw = $_REQUEST['draw'];
+        //Método carregado lá no index no script do datatable url:
+        public function datatable(){  
+           
+             // Reading value vem lá do index
+            $draw = intval($_POST['draw']);
             $row = intval($_POST['start']);
             $rowperpage = intval($_POST['length']); // Rows display per page
             $columnIndex = $_POST['order'][0]['column']; // Column index
@@ -35,37 +30,41 @@
             // Search
             $searchQuery = " ";
             if($searchValue != ''){
-                $searchQuery = " AND (email LIKE :email OR 
-                    first_name LIKE :first_name OR
-                    last_name LIKE :last_name OR 
-                    address LIKE :address ) ";
+                $searchQuery = " AND (pessoaEmail LIKE :pessoaEmail OR 
+                    pessoaNome LIKE :pessoaNome OR
+                    pessoaMunicipio LIKE :pessoaMunicipio OR 
+                    pessoaLogradouro LIKE :pessoaLogradouro ) ";
                 $searchArray = array( 
-                    'email'=>"%$searchValue%",
-                    'first_name'=>"%$searchValue%",
-                    'last_name'=>"%$searchValue%",
-                    'address'=>"%$searchValue%"
+                    'pessoaEmail'=>"%$searchValue%",
+                    'pessoaNome'=>"%$searchValue%",
+                    'pessoaMunicipio'=>"%$searchValue%",
+                    'pessoaLogradouro'=>"%$searchValue%"
                 );
             }
 
+            //Retorna o total de registros da tabela
             $totalRecords = $this->dataModel->totalRecords('pessoa');
 
-            $totalRecordwithFilter = $this->dataModel->totalRecordwithFilter('pessoa',$searchArray);
+            //Retorna o total de registros da tabela aplicando o filtro do campo buscar
+            $totalRecordwithFilter = $this->dataModel->totalRecordwithFilter('pessoa',$searchQuery,$searchArray);
 
-            $empRecords = $this->dataModel->empRecords('pessoa',$searchQuery,$columnName,$columnSortOrder,$row,$rowperpage);
-            //$empRecords = $this->dataModel->getAll();
+            //Retorna os dados para serem apresentados na tabela, pode ser aplicado filtro do acmpo buscar
+            $empRecords = $this->dataModel->empRecords('pessoa',$searchQuery,$searchArray,$columnName,$columnSortOrder,$row,$rowperpage);
+            
        
+            //Formata os dados para serem apresentados na tabela
             $data = array();
 
             foreach ($empRecords as $row) {
                 $data[] = array(
-                    "email"=>$row->pessoaEmail,
-                    "first_name"=>$row->pessoaNome,
-                    "last_name"=>$row->pessoaMunicipio,
-                    "address"=>$row->pessoaLogradouro
+                    "pessoaEmail"=>$row->pessoaEmail,
+                    "pessoaNome"=>$row->pessoaNome,
+                    "pessoaMunicipio"=>$row->pessoaMunicipio,
+                    "pessoaLogradouro"=>$row->pessoaLogradouro
                 );
             }
             
-            // Response
+            // Array de resposta com todos os dados necessários
             $response = array(
                 "draw" => intval($draw),
                 "iTotalRecords" => $totalRecords,
@@ -73,7 +72,7 @@
                 "aaData" => $data
             );
              
-            
+            //Echo com os dados que serão apresentados
             echo json_encode($response); 
         }
 

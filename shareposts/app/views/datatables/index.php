@@ -15,26 +15,18 @@
     <h1><?php echo $data['titulo']; ?></h1>
 </div>
 
-<!-- LINHA PARA A MENSÁGEM DO JQUERY -->
-<div class="container">
-    <div class="row" style="height: 50px;  margin-bottom: 25px;">
-        <div class="col-12">
-            <div role="alert" id="messageBox" style="display:none"></div>
-        </div>
-    </div>
-</div>
 
 
 <!-- Tabela com os campos de cabeçalho -->
-<div class="container mt-5">
+<div class="container mt-5 mb-3">
 		<h2 style="margin-bottom: 30px;">DataTable com dados do banco de dados em php</h2>
-		<table id="jquery-datatable-ajax-php" class="display" style="width:100%">
+		<table id="idDaTabela" class="display" style="width:100%">
 	        <thead>
 	            <tr>
 	                <th>Email</th>
-	                <th>Firstname</th>
-	                <th>Lastname</th>
-	                <th>Address</th>
+	                <th>Nome</th>
+	                <th>Municipio</th>
+	                <th>Logradouro</th>
 	            </tr>
 	        </thead>
 	    </table>
@@ -42,20 +34,19 @@
 
 
 
-
 <!-- jquery.dataTable.min.js -->
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
-
+<!-- SCRIPT DATATABLE -->
 <script>
 
 $(document).ready(function() {   
-    $('#jquery-datatable-ajax-php').DataTable({
+    $('#idDaTabela').DataTable({
         'processing': true,
         'serverSide': true,
         'serverMethod': 'POST',
         'ajax': {
-            'url':'<?php echo URLROOT; ?>/datatables/datatable'//Arquivo php que faz a consulta no banco de dados                     
+            'url':'<?php echo URLROOT; ?>/datatables/datatable'//controller/método que vai buscar os dados datatable                    
         },
             "oLanguage": {//tradução para o português
             "sProcessing":      "Procesando...",
@@ -77,22 +68,15 @@ $(document).ready(function() {
             }
         },
         'columns': [ //Colunas onde os dados serão populados
-            { data: 'email' },
-            { data: 'first_name' },
-            { data: 'last_name' },
-            { data: 'address' }
+            { data: 'pessoaEmail' },
+            { data: 'pessoaNome' },
+            { data: 'pessoaMunicipio' },
+            { data: 'pessoaLogradouro' }
         ]
     });
 } );
 
-
-
-   
-
-
 </script>
-
-
 
 <!-- FOOTER -->
 <?php require APPROOT . '/views/inc/footer.php'; ?>
