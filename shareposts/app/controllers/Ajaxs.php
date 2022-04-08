@@ -24,45 +24,86 @@
                 $error['pessoaNome_err'] = 'Por favor informe o nome da pessoa!';
             }
 
-            if(!empty($error['pessoaNome_err'])){
-                $json_ret = array(
-                                    'classe'=>'alert alert-danger', 
-                                    'mensagem'=>'Erro ao tentar gravar os dados',
-                                    'error'=>$error
-                                );
-                echo json_encode($json_ret);
-                exit() ;
+
+            //valida pessoaEmail
+            if(empty($data['pessoaEmail'])){
+                $error['pessoaEmail_err'] = 'Por favor informe o Email!';
+            } else {
+                if(!validaemail($data['pessoaEmail'])){
+                    $error['pessoaEmail_err'] = 'Email inválido!'; 
+                }
+            }
+
+            //valida pessoaTelefone
+            if(empty($data['pessoaTelefone'])){
+                $error['pessoaTelefone_err'] = 'Por favor informe o telefone!';
+            } else {
+                if(!validatelefone($data['pessoaTelefone'])){
+                    $error['pessoaTelefone_err'] = 'Telefone inválido!'; 
+                }
+            }
+
+            //valida pessoaCelular
+            if(empty($data['pessoaCelular'])){
+                $error['pessoaCelular_err'] = 'Por favor informe o celular!';
+            }else {
+                if(!validacelular($data['pessoaCelular'])){
+                    $error['pessoaCelular_err'] = 'Celular inválido!'; 
+                }
+            }
+
+             //valida pessoaTelefone
+             if(empty($data['pessoaMunicipio'])){
+                $error['pessoaMunicipio_err'] = 'Por favor informe seu município!';
             }
 
 
 
-            try{
 
-                if($this->ajaxModel->gravaPessoa($data)){
-                    $json_ret = array(
-                                        'classe'=>'alert alert-success', 
-                                        'mensagem'=>'Dados gravados com sucesso',
-                                        'error'=>$data
-                                    );                     
-                    
-                    echo json_encode($json_ret); 
-                } else {
+            if(
+                empty($error['pessoaNome_err'])&&
+                empty($error['pessoaEmail_err'])&&
+                empty($error['pessoaTelefone_err'])&&
+                empty($error['pessoaCelular_err'])&&
+                empty($error['pessoaMunicipio_err'])                
+                
+                )
+            {
+                //Se não teve nenhum erro grava os dados
+                try{
+
+                    if($this->ajaxModel->gravaPessoa($data)){
+                        $json_ret = array(
+                                            'classe'=>'alert alert-success', 
+                                            'mensagem'=>'Dados gravados com sucesso',
+                                            'error'=>false
+                                        );                     
+                        
+                        echo json_encode($json_ret); 
+                    }     
+                } catch (Exception $e) {
                     $json_ret = array(
                             'classe'=>'alert alert-danger', 
-                            'mensagem'=>'Erro ao tentar gravar os dados',
+                            'mensagem'=>'Erro ao gravar os dados',
                             'error'=>$data
-                            );
+                            );                     
                     echo json_encode($json_ret); 
-                } 
+                }
 
-            } catch (Exception $e) {
+
+                
+            }   else {
                 $json_ret = array(
-                        'classe'=>'alert alert-danger', 
-                        'mensagem'=>'Erro ao gravar os dados',
-                        'error'=>$data
-                        );                     
-                echo json_encode($json_ret); 
-            }
+                    'classe'=>'alert alert-danger', 
+                    'mensagem'=>'Erro ao tentar gravar os dados',
+                    'error'=>$error
+                );
+                echo json_encode($json_ret);
+            } 
+
+
+
+            
 
 
            

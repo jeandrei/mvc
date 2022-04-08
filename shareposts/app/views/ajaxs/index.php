@@ -29,7 +29,7 @@
                     value="<?php echo htmlout($data['pessoaNome']);?>"
                     onkeydown="upperCaseF(this)" 
                 >
-                <span id="pessoaNome_err">
+                <span class="text-danger" id="pessoaNome_err">
                     <?php echo $data['pessoaNome_err']; ?>
                 </span>
             </div>
@@ -49,7 +49,7 @@
                     value="<?php htmlout($data['pessoaEmail']);?>"
                     onkeydown="lowerCaseF(this)"
                 >
-                <span class="text-danger">
+                <span class="text-danger" id="pessoaEmail_err">
                     <?php echo $data['pessoaEmail_err']; ?>
                 </span>
             </div>           
@@ -72,7 +72,7 @@
                     class="form-control telefone <?php echo (!empty($data['pessoaTelefone_err'])) ? 'is-invalid' : ''; ?>"                             
                     value="<?php htmlout($data['pessoaTelefone']);?>"
                 >
-                <span class="text-danger">
+                <span class="text-danger" id="pessoaTelefone_err">
                     <?php echo $data['pessoaTelefone_err']; ?>
                 </span>
             </div>           
@@ -91,7 +91,7 @@
                     class="form-control celular <?php echo (!empty($data['pessoaCelular_err'])) ? 'is-invalid' : ''; ?>"                             
                     value="<?php htmlout($data['pessoaCelular']);?>"
                 >
-                <span class="text-danger">
+                <span class="err text-danger" id="pessoaCelular_err">
                     <?php echo $data['pessoaCelular_err']; ?>
                 </span>
             </div>           
@@ -111,7 +111,7 @@
                     value="<?php htmlout($data['pessoaMunicipio']);?>"
                     onkeydown="upperCaseF(this)"
                 >
-                <span class="text-danger">
+                <span class="text-danger" id="pessoaMunicipio_err">
                     <?php echo $data['pessoaMunicipio_err']; ?>
                 </span>
             </div>           
@@ -161,19 +161,37 @@ Gravar
                 responseObj.classe e responseObj.mensagem
                   */                   
                 success: function(retorno_php){                     
-                    var responseObj = JSON.parse(retorno_php);
-                    console.log(responseObj.error);
+                    var responseObj = JSON.parse(retorno_php);  
+                    //console.log(responseObj.error);
                     
-                    //aqui faz a validação aplica o texto e a classe textdanger ao span de id=pessoaNome_err
-                    if(responseObj.error.pessoaNome_err){
-                        $("#pessoaNome_err").addClass("text-danger")
-                        .html(responseObj.error.pessoaNome_err)
-                        $("#pessoaNome").addClass("is-invalid")
-                    }else{
-                        $("#pessoaNome_err").addClass("text-success")
-                        .html("Parece bom!")
-                        $("#pessoaNome").addClass("is-valid")
-                    }
+                                       
+                    //se o status for true quer dizer que a validação passou
+                    //se for false a validação falhou
+                    if(responseObj.error!==false){                                              
+                        /**
+                        IMPORTANTE TEM QUE TER ID NO SPAN PARA FUNCIONAR
+                        aqui key traz a chave exemplo pessoaNome_err
+                        e value traz o erro exemplo Por favor informe o nome
+                        então na linha  $("#"+key) ele monta $("#pessoaNome_err")
+                        para cada erro que tiver no array responseObj.error que vem
+                        do controller
+                        */ 
+                        for (let [key, value] of entries(responseObj.error)) {                            
+                            $("#"+key) 
+                                .addClass("text-danger")
+                                .html(value)  
+                                .fadeIn(4000).fadeOut(4000)                                                                            
+                        }
+                    }                   
+                    
+                    
+                    //aqui o exemplo de como seria sem o for
+                    /* if(responseObj.error.pessoaNome_err){                        
+                        $("#pessoaNome_err")
+                            .addClass("text-danger")
+                            .html(responseObj.error.pessoaNome_err)  
+                            .fadeIn(4000).fadeOut(4000)                                
+                     */
 
                     //#messageBox é a id da <div role="alert" id="messageBox"
                     $("#messageBox")
@@ -188,6 +206,15 @@ Gravar
             });//Fecha o ajax
         });//Fecha o .gravar click
     });//Fecha document ready function
+
+
+
+    //Função necessária para rodar esse for  for (let [key, value] of entries(responseObj.error)) {
+    function* entries(obj) {
+        for (let key of Object.keys(obj)) {
+            yield [key, obj[key]];
+        }
+    }
 </script>
 
 
