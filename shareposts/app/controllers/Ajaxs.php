@@ -73,6 +73,8 @@
                 try{
 
                     if($this->ajaxModel->gravaPessoa($data)){
+                        //para acessar esses valores no jquery
+                        //exemplo responseObj.mensagem
                         $json_ret = array(
                                             'classe'=>'alert alert-success', 
                                             'mensagem'=>'Dados gravados com sucesso',
