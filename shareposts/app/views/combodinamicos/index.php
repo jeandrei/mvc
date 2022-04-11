@@ -11,7 +11,7 @@
             /* adiciona ao select de id  municipioId o option Selecione um Município
             toda vez que o regiaoId é alterado para que sempre os dois sequentes fiquem com
             o option Selecione.... */
-           $('#municipioId').html("<option>Selecione um Município</option");
+           $('#municipioId').html("<option>Selecione um Estado</option");
            /* Manda para o controller combodinamicos e método estadosRegiao o regiaoId
            selecionado, o que for retornado através do echo será incorporado ao select
            de id estadoId*/
@@ -19,7 +19,7 @@
         });
 
         //CARREGA OS MUNICÍPIOS
-        $('#estadoId').change(function(){  
+        $('#estadoId').change(function(){           
            $('#municipioId').load('<?php echo URLROOT; ?>/combodinamicos/municipiosEstado/'+$('#estadoId').val());
         });
     });
@@ -79,7 +79,7 @@
     <!-- SELECT DO MUNICÍPIO 3º SELECT DO COMBO -->
     <div class="row">
         <div class="col-sm-4">
-            <label for="municipioId">Estado</label>
+            <label for="municipioId">Município</label>
             <select name="municipioId" id="municipioId" class="form-control">
                 <option value="NULL">Selecione um Estado</option>
             </select>                
