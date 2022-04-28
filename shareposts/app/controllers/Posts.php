@@ -22,7 +22,7 @@
         public function index(){
 
             // Get posts
-            $posts = $this->postModel->getPosts();
+            $posts = $this->postModel->getPosts2();
             
             $data = [
                 'posts' => $posts
@@ -31,9 +31,10 @@
             $this->view('posts/index', $data);
         }
 
-        public function add(){
+        public function add(){           
 
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){ 
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){   
+
                 // Sanitize POST array
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 
@@ -54,11 +55,35 @@
                   if(empty($data['body'])){
                     $data['body_err'] = 'Por favor informe o texto';
                 }
+
+
+               /**
+                * Faz o upload do arquivo do input id=file_post 
+                * Utilizando a função upload_file que está no arquivo helpers/functions
+                * Se tiver erro vai retornar o erro em $file['error'];
+                */
+                $file = upload_file('file_post');
+
+                //se não tiver nenhum erro definimos os parâmetros do arquivo para inserir no bd
+                if(empty($file['error'])){
+                    $data['file_post_data'] = $file['data'];
+                    $data['file_post_name'] = $file['nome'];
+                    $data['file_post_type'] = $file['tipo'];
+                    $data['file_post_err'] = '';
+                //caso contrário retornamos o erro
+                } else {
+                    $data['file_post_err'] = $file['error'];
+                }               
                 
                 // Make sure no errors
-                if(empty($data['title_err']) && empty($data['body_err'])){
+                if(empty($data['title_err']) && empty($data['body_err']) && empty($data['file_post_err'])){
                    // Validate
-                   if($this->postModel->addPost($data)){
+                   if($lastId = $this->postModel->addPost($data)){                        
+                        if(isset($lastId)){
+                            if(!$this->postModel->addFilesPost($lastId,$data)){
+                                die('Erro ao tentar registraro arquivo!');
+                            }
+                        }
                     flash('post_message', 'Post Adicionado');
                     redirect('posts');
                    } else {

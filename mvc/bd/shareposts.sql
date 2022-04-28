@@ -36,6 +36,17 @@ CREATE TABLE `posts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE `file_post` (
+  `id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `title` varchar(255) NULL,
+  `body` text NULL,
+  `file` longblob NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `file_type` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 --
 -- Estrutura para tabela `users`
@@ -5859,6 +5870,12 @@ ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices de tabela `posts`
+--
+ALTER TABLE `file_post`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `users`
 --
 ALTER TABLE `users`
@@ -5910,6 +5927,12 @@ ALTER TABLE `municipios`
 --
 ALTER TABLE `posts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+
+--
+-- AUTO_INCREMENT de tabela `file_post`
+--
+ALTER TABLE `file_post`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;  
 
 --
 -- AUTO_INCREMENT de tabela `users`

@@ -1,4 +1,4 @@
-<?php require APPROOT . '/views/inc/header.php'; ?>
+<?php require APPROOT . '/views/inc/header.php';?>
 <!-- post_message é o nome da menságem está lá no controller -->
 <?php flash('post_message'); ?>
 <!-- mb-3 marging bottom -->
@@ -15,12 +15,16 @@
 
 <?php foreach($data['posts'] as $post) : ?>
     <div class="card card-body mb-3">
-        <h4 class="card-title"><?php echo $post->title; ?></h4>
+        <h4 class="card-title"><?php echo $post['title']; ?></h4>
         <div class="bg-light p-2 mb-3">
-          Escrito por <?php echo $post->name; ?> em <?php echo date('d/m/Y h:i:s', strtotime($post->postCreated)); ?>
+          Escrito por <?php echo $post['name']; ?> em <?php echo date('d/m/Y h:i:s', strtotime($post['created_at'])); ?>
         </div>
-        <p class="card-text"><?php echo $post->body; ?></p>
-        <a href="<?php echo URLROOT; ?>/posts/show/<?php echo $post->postId; ?>" class="btn btn-dark">
+        <p class="card-text"><?php echo $post['body']; ?></p>
+
+        <?php var_dump($post); ?>
+
+
+        <a href="<?php echo URLROOT; ?>/posts/show/<?php echo $post['id']; ?>" class="btn btn-dark">
         Mais</a>
     </div>
 <?php endforeach; ?>

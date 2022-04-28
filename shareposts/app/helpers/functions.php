@@ -234,5 +234,50 @@ function imprimeuf($ufsec){
           }
         }        
       }
+
+
+      //função para fazer upload do arquivo
+      // obs tem que ter enctype="multipart/form-data no cabeçalho do form para funcionar
+      // para fazer upload de arquivos tem que ter essa parte
+      function upload_file($myfile,$newname=null){ 
+          
+        $fileExtensions = ['jpeg','jpg','png','pdf']; // tipos de arquivos permitidos
+        $file     = $_FILES[$myfile]['tmp_name'];
+        $fileSize = $_FILES[$myfile]['size'];
+        $fileType = $_FILES[$myfile]['type'];
+        //se não for passado um novo nome utilizo o nome original do arquivo
+        $fileName = is_null($newname) ? $_FILES[$myfile]['name'] : $newname;      
+        
+        $strings =  explode('.',$fileName);
+        $fileExtension = strtolower(end($strings));
+
+        //$uploadPath = $currentDir . $uploadDirectory . basename($fileName); 
+
+        
+
+            if (! in_array($fileExtension,$fileExtensions)) {
+                $file_uploaded['error'] = "Por favor informe arquivos do tipo JPEG, PNG ou PDF.";            
+            }
+
+            if ($fileSize > 20971520) {
+                $file_uploaded['error'] = "Apenas arquivos até 20MB são permitidos";            
+            }
+            
+
+            if (empty($file_uploaded['error'])){
+                $file_uploaded = [
+                    'nome' => is_null($newname) ? $fileName : $newname,
+                    'extensao' => $fileExtension,
+                    'tipo' => $fileType,
+                    'data' => file_get_contents($file)
+                ];        
+                
+            } 
+            
+      return $file_uploaded;    
+      }//fim função upload
+
+
+
       
 ?>
