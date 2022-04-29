@@ -21,11 +21,43 @@
         </div>
         <p class="card-text"><?php echo $post['body']; ?></p>
 
-        <?php var_dump($post); ?>
-
+        <!-- ******************************************************************* -->
+        
+        <?php if($post['files']) : ?>
+            <!-- Gallery -->
+            <div class="row">                              
+                <?php foreach($post['files'] as $file) : ?> 
+                    <!-- col -->  
+                    <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">                        
+                        <!-- card -->
+                        <?php echo ($file['title']) ? "<div class='card mb-3'>":""?>                        
+                            <img
+                            src="data:image/jpeg;base64,<?php echo base64_encode($file["file"]); ?>" width="375" height="250"
+                            class="w-100 shadow-1-strong rounded mb-4"
+                            alt="Boat on Calm Water"
+                            />
+                            <?php if($file['title']) : ?>
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $file['title'];?></h5>
+                                    <p class="card-text"><?php echo $file['body'];?></p>
+                                </div>
+                                <!-- card body -->
+                            <?php endif; ?>                          
+                        <?php echo ($file['title']) ? "</div>":""?>
+                        <!-- card -->                        
+                    </div>
+                    <!-- col -->  
+                <?php endforeach; ?>  
+            </div>
+            <!-- row -->
+        <?php endif; ?>    
+       
 
         <a href="<?php echo URLROOT; ?>/posts/show/<?php echo $post['id']; ?>" class="btn btn-dark">
         Mais</a>
+
+        
     </div>
 <?php endforeach; ?>
 

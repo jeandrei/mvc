@@ -14,7 +14,7 @@
          <!-- Para funcionar o envio de arquivo aqui no form tem que ter enctype="multipart/form-data" -->
          <form id="addPost" action="<?php echo URLROOT; ?>/posts/add" method="post" enctype="multipart/form-data" onsubmit="return Validate();">  
                   
-            <!--EMAIL-->
+            <!--TITLE-->
             <div class="form-group">   
                 <label 
                     for="title"><b class="obrigatorio">*</b> Título: 
@@ -44,50 +44,23 @@
                 </span>
             </div>
 
-            <!-- Adicionar arquivo-->
-            <div class="row" style="margin:5px;">  
-                <!-- Mensagem -->    
-                <div class="alert alert-warning mt-2" role="alert">
-                    Arquivos permitidos com extenção <strong>jpg, png e pdf</strong>, e no máximo com <strong>20 MB</strong>.
-                </div>
-                <!-- Input file -->
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="file_post">Upload</label>
-                    <input 
-                        type="file" 
-                        class="form-control" 
-                        id="file_post"
-                        name="file_post"
-                    ><!-- A função fileValidation está no arquivo main.js-->                   
-                </div><!--onchange="return fileValidation('file_post','file_post_err');" -->
-                <!-- Span para caso tenha erros -->
-                <span id="file_post_err" name="file_post_err" class="text-danger">
-                    <?php echo $data['file_post_err']; ?>
-                </span>
+           
+            
 
-            </div><!-- row -->            
-            <!-- Fim Adicionar arquivo -->
-
-            <input type="submit" class="btn btn-success" value="Enviar">
+             <!-- SE JÁ EXISTE O POST DAMOS A OPÇÃO DE ADICIONAR ARQUIVOS -->
+            <?php if (isset($data['lastId'])) : ?>
+               <a href="<?php echo URLROOT;?>/posts/addfile/<?php echo $data['lastId'];?>" class="btn btn-success">Adicionar Arquivos</a>
+            <?php else:?>
+            <!-- CASO NÃO TENHA LASTID O USUÁRIO NÃO ADICIONOU O POST AINDA ENTÃO DAMOS A OPÇÃO DE EIVIAR -->
+             <input type="submit" class="btn btn-success" value="Enviar">
+            <?php endif; ?>
+          
             
         </form>
     </div>          
 <?php require APPROOT . '/views/inc/footer.php'; ?>
 
 <script> 
-/* valida apenas se não foi enviado nenhum arquivo, a validação do tipo do arquivo
-é feita no evento onchange do input  fileValidation('file_post','file_post_err')*/
-function Validate_temp(){
-   let file_post = document.getElementById('file_post').value;
-   if(file_post == ""){
-    document.getElementById("file_post_err").innerHTML = "Selecione um arquivo!";
-    return false;
-   } else {
-       return true;
-   }
-   
-}
-
  $(document).ready(function(){
 	$('#addPost').validate({
 		rules : {

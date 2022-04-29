@@ -9,7 +9,7 @@
         }
 
         
-        public function getPosts(){
+        public function getPosts2(){
             $this->db->query('SELECT *,
                               posts.id as postId,
                               users.id as userId,
@@ -24,7 +24,7 @@
             return $results;           
         }
 
-        public function getPosts2(){
+        public function getPosts(){
             $this->db->query('SELECT *,
                               posts.id as postId,
                               users.id as userId,
@@ -70,7 +70,7 @@
         }
 
         //Adiciona os arquivos na tabela file_post
-        public function addFilesPost($post_id,$data){
+        public function addFilesPost($post_id,$data){           
             
             $this->db->query('
                                 INSERT INTO 
@@ -94,8 +94,8 @@
                                     )'
                                 );
             $this->db->bind(':post_id',$post_id);
-            $this->db->bind(':title',$data['file_post_title']);
-            $this->db->bind(':body',$data['file_post_body']);
+            $this->db->bind(':title',$data['title']);
+            $this->db->bind(':body',$data['body']);
             $this->db->bind(':file',$data['file_post_data']);
             $this->db->bind(':file_name',$data['file_post_name']);
             $this->db->bind(':file_type',$data['file_post_type']);
@@ -149,7 +149,7 @@
                         'id' => $row->id,
                         'title' => $row->title,
                         'body' => $row->body,
-                        //'file' => $row->file,
+                        'file' => $row->file,
                         'file_name' => $row->file_name,
                         'file_type' => $row->file_type
                     );
