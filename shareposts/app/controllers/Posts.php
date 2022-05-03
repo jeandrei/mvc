@@ -238,6 +238,7 @@
             
             $data = [
                 'post' => $post,
+                'files'=> $this->postModel->getFilePostById($id),
                 'user' => $user
             ];
 
