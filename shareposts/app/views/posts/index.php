@@ -25,30 +25,35 @@
         
         <?php if($post['files']) : ?>
             <!-- Gallery -->
-            <div class="row">                              
-                <?php for($i=0;$i<=2;$i++) : ?> 
+            <div class="row">
+                <?php $i=0;?>                              
+                <?php foreach($post['files'] as $file) : ?>
+                  <?php $i++;?>
+                  <!-- Limitador para exibir apenas 3 imagens -->
+                  <?php if($i<=3) :?> 
                     <!-- col -->  
                     <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">                        
                         <!-- card -->
-                        <?php echo ($post['files'][$i]['title']) ? "<div class='card mb-3'>":""?>                        
+                        <?php echo ($file['title']) ? "<div class='card mb-3'>":""?>                        
                             <img
-                            src="data:image/jpeg;base64,<?php echo base64_encode($post['files'][$i]["file"]); ?>" width="375" height="250"
+                            src="data:image/jpeg;base64,<?php echo base64_encode($file["file"]); ?>" width="375" height="250"
                             class="w-100 shadow-1-strong rounded mb-4"
                             alt="Boat on Calm Water"
                             />
                             <?php if($file['title']) : ?>
                                 <!-- card body -->
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $post['files'][$i]['title'];?></h5>
-                                    <p class="card-text"><?php echo $post['files'][$i]['body'];?></p>
+                                    <h5 class="card-title"><?php echo $file['title'];?></h5>
+                                    <p class="card-text"><?php echo $file['body'];?></p>
                                 </div>
                                 <!-- card body -->
                             <?php endif; ?>                          
-                        <?php echo ($post['files'][$i]['title']) ? "</div>":""?>
+                        <?php echo ($file['title']) ? "</div>":""?>
                         <!-- card -->                        
                     </div>
                     <!-- col -->  
-                <?php endfor; ?>  
+                  <?php endif;?>
+                <?php endforeach; ?>  
             </div>
             <!-- row -->
         <?php endif; ?>    
