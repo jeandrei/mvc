@@ -1,4 +1,4 @@
-<?php require APPROOT . '/views/inc/header.php'; ?>
+<?php require APPROOT . '/views/inc/header.php';?>
 <a href="<?php echo URLROOT; ?>/posts" class="btn btn-light"><i class="fa fa-backward"></i>Voltar</a>
 <br>
 <h1><?php echo $data['post']->title; ?></h1>
@@ -8,10 +8,16 @@
 <p><?php echo $data['post']->body; ?></p>
 <?php if($data['post']->user_id == $_SESSION[SE.'user_id']) : ?>
 <hr>
-<a href="<?php echo URLROOT; ?>/posts/edit/<?php echo $data['post']->id; ?>" class="btn btn-dark">Editar</a>
-    <form class="pull-right" action="<?php echo URLROOT; ?>/posts/delete/<?php echo $data['post']->id; ?>" method="post">
-        <input type="submit" value="Deletar" class="btn btn-danger">
-    </form>
+
+
+
+<form class="pull-right" action="<?php echo URLROOT; ?>/posts/delete/<?php echo $data['post']->id; ?>" method="post">
+    <a href="<?php echo URLROOT; ?>/posts/edit/<?php echo $data['post']->id; ?>" class="btn btn-dark">Editar</a>
+    <input type="submit" value="Deletar" class="btn btn-danger">
+</form>
+
+    
+
 <?php endif; ?>
 <?php require APPROOT . '/views/inc/footer.php'; ?>
 

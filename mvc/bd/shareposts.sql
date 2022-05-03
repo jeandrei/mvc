@@ -1,11 +1,5 @@
 -- phpMyAdmin SQL Dump
 -- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Oct 01, 2021 at 03:37 PM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -17,66 +11,49 @@ CREATE DATABASE shareposts CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 use shareposts;
 
---
--- Banco de dados: `shareposts`
---
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `posts`
---
 
 CREATE TABLE `posts` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `user_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `body` text NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) auto_increment=0,
+  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `file_post` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `post_id` int(11) NOT NULL,
   `title` varchar(255) NULL,
   `body` text NULL,
   `file` longblob NOT NULL,
   `file_name` varchar(255) NOT NULL,
-  `file_type` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `file_type` varchar(255) NOT NULL 
+) auto_increment=0,
+  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
---
--- Estrutura para tabela `users`
---
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) auto_increment=0,
+  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
---
--- Estrutura para tabela `bairro`
---
 
 CREATE TABLE `bairro` (
-  `bairroId` int(11) NOT NULL,
+  `bairroId` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `bairroNome` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) auto_increment=0,
+  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
---
--- Estrutura para tabela `pessoa`
---
 
 CREATE TABLE `pessoa` (
-  `pessoaId` int(11) NOT NULL,
+  `pessoaId` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `pessoaNome` varchar(255) NOT NULL,
   `pessoaEmail` varchar(255) NOT NULL,
   `pessoaTelefone` varchar(16) NOT NULL,
@@ -91,19 +68,38 @@ CREATE TABLE `pessoa` (
   `pessoaCpf` varchar(15) DEFAULT NULL,
   `pessoaCnpj` varchar(21) DEFAULT NULL,  
   `pessoaTermo` ENUM ('n', 's') DEFAULT 'n'
+) auto_increment=0,
+  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
---
--- Estrutura para tabela `interesses`
---
 
 CREATE TABLE `interesses` (
-  `interesseId` int(11) NOT NULL,
+  `interesseId` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `interesse` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) auto_increment=0,
+  ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `pessoaInteresses` (
+  `interesseId` int(11) NOT NULL,
+  `pessoaId` int(11) NOT NULL  
+) auto_increment=0,
+  ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `regiao` (
+  `regiaoId` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `regiao` varchar(255) NOT NULL  
+) auto_increment=0,
+  ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `estados` (
+  `estadoId` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `regiaoId` int(11) NOT NULL,
+  `estado` varchar(255) NOT NULL  
+) auto_increment=0,
+  ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 INSERT INTO `interesses` (
                           `interesseId`, `interesse`
@@ -114,19 +110,6 @@ INSERT INTO `interesses` (
                           (3, 'Educação'),
                           (4, 'Moda');
 
---
--- Estrutura para tabela `pessoaInteresses`
---
-
-CREATE TABLE `pessoaInteresses` (
-  `interesseId` int(11) NOT NULL,
-  `pessoaId` int(11) NOT NULL  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
---
--- Despejando dados para a tabela `users`
---
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`) VALUES
 (1, 'Jeandrei', 'jeandreiwalter@gmail.com', '$2y$10$lyyCqzV/cJw5A8TpddC47Ow8K2iVHOHbKl.Nzs0fm/CgjuDBRZoMq', '2018-11-23 10:19:18'),
@@ -135,18 +118,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`) VALUES
 (4, 'jeandrei', 'jeandreiwalter@educapenha.com.br', '$2y$10$RczfzoEUQTT69IMzK6BxYO9nlzd/r.BP7e1JyUaPNV0Hjva1c2ZOq', '2020-06-21 19:13:23');
 
 
-
---
--- Despejando dados para a tabela `posts`
---
-
 INSERT INTO `posts` (`id`, `user_id`, `title`, `body`, `created_at`) VALUES
 (2, 1, 'Post Two', 'This is a test for post two', '2018-11-27 20:01:26');
 
-
---
--- Despejando dados para a tabela `bairro`
---
 
 INSERT INTO `bairro` (`bairroId`, `bairroNome`) VALUES
 (1, 'Armação'),
@@ -159,9 +133,7 @@ INSERT INTO `bairro` (`bairroId`, `bairroNome`) VALUES
 (8, 'São Cristovão'),
 (9, 'São Francisco de Assis');
 
---
--- Despejando dados para a tabela `pessoa`
---
+
 INSERT INTO `pessoa` (
                       `pessoaId`, 
                       `pessoaNome`, 
@@ -231,10 +203,6 @@ INSERT INTO `pessoa` (
 
 
 
-CREATE TABLE `regiao` (
-  `regiaoId` int(11) NOT NULL,
-  `regiao` varchar(255) NOT NULL  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `regiao`(`regiaoId`, `regiao`) VALUES 
@@ -243,11 +211,7 @@ INSERT INTO `regiao`(`regiaoId`, `regiao`) VALUES
                                             (3,'SUDESTE'),
                                             (4,'SUL');
 
-CREATE TABLE `estados` (
-  `estadoId` int(11) NOT NULL,
-  `regiaoId` int(11) NOT NULL,
-  `estado` varchar(255) NOT NULL  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 
@@ -282,10 +246,11 @@ INSERT INTO `estados`(`estadoId`, `regiaoId`, `estado`) VALUES
 
 
 CREATE TABLE `municipios` (
-  `municipioId` int(11) NOT NULL,
+  `municipioId` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `estadoId` int(11) NOT NULL,
   `municipio` varchar(255) NOT NULL  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) auto_increment=0,
+  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `municipios`(`municipioId`, `estadoId`, `municipio`) VALUES
@@ -5859,127 +5824,3 @@ INSERT INTO `municipios`(`municipioId`, `estadoId`, `municipio`) VALUES
 (5568,26,'Vila Boa'),
 (5569,26,'Vila Propício'),
 (5570,27,'Brasília');
-
-
-
-
---
--- Índices de tabela `posts`
---
-ALTER TABLE `posts`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `posts`
---
-ALTER TABLE `file_post`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `users`
---
-ALTER TABLE `bairro`
-  ADD PRIMARY KEY (`bairroId`);
-
---
--- Índices de tabela `users`
---
-ALTER TABLE `pessoa`
-  ADD PRIMARY KEY (`pessoaId`);
-
---
--- Índices de tabela `interesse`
---
-ALTER TABLE `interesses`
-  ADD PRIMARY KEY (`interesseId`);
-
---
--- Índices de tabela `regiao`
---
-ALTER TABLE `regiao`
-  ADD PRIMARY KEY (`regiaoId`);
-
---
--- Índices de tabela `estado`
---
-ALTER TABLE `estados`
-  ADD PRIMARY KEY (`estadoId`);
-
-  --
--- Índices de tabela `estado`
---
-ALTER TABLE `municipios`
-  ADD PRIMARY KEY (`municipioId`);
-
-  
---
--- AUTO_INCREMENT de tabelas apagadas
---
-
---
--- AUTO_INCREMENT de tabela `posts`
---
-ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-
---
--- AUTO_INCREMENT de tabela `file_post`
---
-ALTER TABLE `file_post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;  
-
---
--- AUTO_INCREMENT de tabela `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-COMMIT;
-
---
--- AUTO_INCREMENT de tabela `bairro`
---
-ALTER TABLE `bairro`
-  MODIFY `bairroId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-COMMIT;
-
---
--- AUTO_INCREMENT de tabela `pessoa`
---
-ALTER TABLE `pessoa`
-  MODIFY `pessoaId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-COMMIT;
-
---
--- AUTO_INCREMENT de tabela `pessoa`
---
-ALTER TABLE `interesses`
-  MODIFY `interesseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-COMMIT;
-
---
--- AUTO_INCREMENT de tabela `regiao`
---
-ALTER TABLE `regiao`
-  MODIFY `regiaoId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-COMMIT;
-
---
--- AUTO_INCREMENT de tabela `estados`
---
-ALTER TABLE `estados`
-  MODIFY `estadoId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-COMMIT;
-
---
--- AUTO_INCREMENT de tabela `municipio`
---
-ALTER TABLE `municipios`
-  MODIFY `municipioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-COMMIT;
-

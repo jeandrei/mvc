@@ -223,7 +223,8 @@
                 //id que vem da própria função public function edit($id){
                 'id' => $id,
                 'title' => $post->title,
-                'body' => $post->body
+                'body' => $post->body,
+                'files'=> $this->postModel->getFilePostById($id)
             ];
 
             $this->view('posts/edit', $data);
@@ -264,6 +265,12 @@
             } else {
                 redirect('posts');
             }
+        }
+
+
+        public function delfile($id){
+            $idpost = $this->postModel->deleteFile($id);            
+            redirect('posts/edit/'.$idpost->post_id);            
         }
                   
     

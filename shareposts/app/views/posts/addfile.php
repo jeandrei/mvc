@@ -2,9 +2,21 @@
 
 <?php flash('post_message');  ?>
 
-<a href="<?php echo URLROOT; ?>/posts" class="btn btn-light"><i class="fa fa-backward"></i>Voltar</a>
+
+
+<!-- aqui para usar o mesmo arquivo addfile.php
+a única coisa que muda do adicionar para o editar é o botão voltar
+então eu verifico se editar eu imprimo a url /edit/id caso contário eu imprimo /posts -->
+<?php if($_GET['btn'] == 'edit') : ?>
+    <a href="<?php echo URLROOT; ?>/posts/edit/<?php echo $data['id']?>" class="btn btn-light"><i class="fa fa-backward"></i>Voltar</a>
+<?php else :?>
+    <a href="<?php echo URLROOT; ?>/posts" class="btn btn-light"><i class="fa fa-backward"></i>Voltar</a>
+<?php endif;?>
 <div class="card card-body bg-light mt-5">       
 <h2>Adicionar Arquivos ao Post</h2>  
+
+
+
 
 <!-- Para funcionar o envio de arquivo aqui no form tem que ter enctype="multipart/form-data" -->
 <form id="addFilePost" action="<?php echo URLROOT; ?>/posts/addfile/<?php echo $data['id'];?>" method="post" enctype="multipart/form-data" onsubmit="return Validate();">

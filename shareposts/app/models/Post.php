@@ -164,6 +164,13 @@
         }
 
         public function deletePost($id){
+            
+            $this->db->query('DELETE FROM file_post WHERE post_id = :id');
+            // Bind values
+            $this->db->bind(':id',$id);  
+
+            $this->db->execute();
+
             $this->db->query('DELETE FROM posts WHERE id = :id');
             // Bind values
             $this->db->bind(':id',$id);            
@@ -175,7 +182,27 @@
                 return false;
             }
 
-        }    
+        }
+        
+        public function deleteFile($id){
+            /* pego o id do post para poder retornar */
+            $this->db->query('SELECT post_id FROM file_post WHERE id = :id');
+            $this->db->bind(':id', $id);
+
+            $postId = $this->db->single();  
+
+            /* removo a imagem */
+            $this->db->query('DELETE FROM file_post WHERE id = :id');
+            // Bind values
+            $this->db->bind(':id',$id);            
+
+            // Execute
+            if($this->db->execute()){
+                return $postId;
+            } else {
+                return false;
+            }
+        }
     
     }
 
