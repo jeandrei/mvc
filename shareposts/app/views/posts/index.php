@@ -40,7 +40,7 @@
         <?php endif; ?>
         
         <a href="<?php echo URLROOT; ?>/posts/show/<?php echo $post['id']; ?>" class="btn btn-dark">
-        Mais (<?php echo $post['n_image'];?>) imagens</a>  
+        Visualizar este post - (<?php echo (($post['n_image'])>1)? $post['n_image'].' imagens':$post['n_image'].' imagem';?>)</a>  
         
         <div class="bg-light p-2 mb-3">
             Escrito por <?php echo $post['name']->name; ?> em <?php echo date('d/m/Y h:i:s', strtotime($post['created_at'])); ?>

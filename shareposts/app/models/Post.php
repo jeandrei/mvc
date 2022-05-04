@@ -45,6 +45,35 @@
 
         }
 
+        //retorna todas os arquivos de um post
+        public function getFilePostById($id_post){
+            $this->db->query('SELECT * FROM file_post WHERE post_id = :id_post');
+            $this->db->bind(':id_post', $id_post);
+
+            $result = $this->db->resultSet();
+            
+            //verifica se obteve algum resultado
+            if($result >0)
+            {
+                foreach ($result as $row)
+                {
+                $data[] = array(  
+                        'id' => $row->id,
+                        'title' => $row->title,
+                        'body' => $row->body,
+                        'file' => $row->file,
+                        'file_name' => $row->file_name,
+                        'file_type' => $row->file_type
+                    );
+                }                 
+                return $data;
+            }
+            else
+            {
+                return false;
+            }   
+        }
+
         //Retorna o número de imagens de um post no banco de dados
         public function getNumImagesPost($post_id){
             $this->db->query('SELECT count(id) as num

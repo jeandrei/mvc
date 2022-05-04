@@ -170,8 +170,6 @@
 
 
 
-
-
         public function edit($id){
             
             if($_SERVER['REQUEST_METHOD'] == 'POST'){ 
@@ -235,11 +233,13 @@
         public function show($id){
             $post = $this->postModel->getPostById($id);
             $user = $this->userModel->getUserById($post->user_id);
-            
+           
             $data = [
                 'post' => $post,
-                'user' => $user
+                'user' => $user,
+                'files' => $this->postModel->getFilePostById($post->id)
             ];
+            
 
 
             $this->view('posts/show' ,$data);
