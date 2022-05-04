@@ -9,9 +9,9 @@
         }
 
         
-        public function getPosts(){
+        public function getPosts2(){
             $this->db->query('SELECT *,
-                              posts.id as post_id,
+                              posts.id as postId,
                               users.id as userId,
                               posts.created_at as postCreated,
                               users.created_at as userCreated
@@ -24,45 +24,35 @@
             return $results;           
         }
 
-        //Pega a primeira imagem do post no banco de dados
-        public function getFirstFilePost($post_id){
-            
-            $this->db->query('SELECT *
-                              FROM file_post
-                              WHERE post_id = :post_id
-                              LIMIT 1
-            ');
-            $this->db->bind(':post_id',$post_id);
+        public function getPosts(){
+            $this->db->query('SELECT *,
+                              posts.id as postId,
+                              users.id as userId,
+                              posts.created_at as postCreated,
+                              users.created_at as userCreated
+                              FROM posts
+                              INNER JOIN users
+                              ON posts.user_id = users.id
+                              ORDER BY posts.created_at DESC
+                              ');
+            $posts = $this->db->resultSet();
 
-            $file = $this->db->single();
-          
-             // Check row
-             if($this->db->rowCount() > 0){
-                return $file;
-            } else {
-                return false;
-            } 
-
+                                   
+            foreach($posts as $post){                
+                $data[] = array(
+                    'id'=>$post->postId,
+                    'user_id'=>$post->userId,
+                    'name'=>$post->name,
+                    'title'=>$post->title,
+                    'body'=>$post->body,
+                    'created_at'=>$post->created_at,
+                    'files' => $this->getFilePostById($post->postId)                  
+                );
+            }
+                       
+            return $data;           
         }
 
-        //Retorna o número de imagens de um post no banco de dados
-        public function getNumImagesPost($post_id){
-            $this->db->query('SELECT count(id) as num
-                              FROM file_post
-                              WHERE post_id = :post_id                              
-            ');
-            $this->db->bind(':post_id',$post_id);
-            $this->db->bind(':post_id',$post_id);
-
-            $count = $this->db->single();
-          
-             // Check row
-             if($this->db->rowCount() > 0){
-                return $count->num;
-            } else {
-                return false;
-            } 
-        }
 
         public function addPost($data){
             $this->db->query('INSERT INTO posts (title, user_id, body) VALUES (:title, :user_id, :body)');
@@ -73,7 +63,7 @@
 
             // Execute
             if($this->db->execute()){
-                return  $this->db->lastId;  
+                return  $this->db->lastId;                
             } else {
                 return false;
             }
@@ -144,7 +134,43 @@
             return $row;
         }
 
+        public function getFilePostById($id_post){
+            $this->db->query('SELECT * FROM file_post WHERE post_id = :id_post');
+            $this->db->bind(':id_post', $id_post);
+
+            $result = $this->db->resultSet();
+            
+            //verifica se obteve algum resultado
+            if($result >0)
+            {
+                foreach ($result as $row)
+                {
+                $data[] = array(  
+                        'id' => $row->id,
+                        'title' => $row->title,
+                        'body' => $row->body,
+                        'file' => $row->file,
+                        'file_name' => $row->file_name,
+                        'file_type' => $row->file_type
+                    );
+                } 
+                //var_dump($data);
+                return $data;
+            }
+            else
+            {
+                return false;
+            }   
+        }
+
         public function deletePost($id){
+            
+            $this->db->query('DELETE FROM file_post WHERE post_id = :id');
+            // Bind values
+            $this->db->bind(':id',$id);  
+
+            $this->db->execute();
+
             $this->db->query('DELETE FROM posts WHERE id = :id');
             // Bind values
             $this->db->bind(':id',$id);            
@@ -156,13 +182,26 @@
                 return false;
             }
 
-        }  
+        }
         
-        
-        public function upload($file){
-            //array é os tipos de arquivos permitidos
-            $file = $this->db->uploadFile($file,array('jpeg','jpg','png'),31457280);   
-            return $file;                   
+        public function deleteFile($id){
+            /* pego o id do post para poder retornar */
+            $this->db->query('SELECT post_id FROM file_post WHERE id = :id');
+            $this->db->bind(':id', $id);
+
+            $postId = $this->db->single();  
+
+            /* removo a imagem */
+            $this->db->query('DELETE FROM file_post WHERE id = :id');
+            // Bind values
+            $this->db->bind(':id',$id);            
+
+            // Execute
+            if($this->db->execute()){
+                return $postId;
+            } else {
+                return false;
+            }
         }
     
     }

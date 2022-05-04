@@ -1,5 +1,5 @@
 <?php
-class Datatable {
+class Datatabledetail {
     private $db;
 
     public function __construct(){
@@ -12,7 +12,7 @@ class Datatable {
        $sql = "SELECT COUNT(*) AS allcount FROM " . $tabela; 
        $this->db->query($sql); 
        $row = $this->db->single();
-       return $row->allcount;
+       return $row->allcount;       
     }
 
     //Retorna o total de registros de uma tabela aplicando o filtro do campo buscar
@@ -24,22 +24,25 @@ class Datatable {
             $this->db->bind(':'.$key, $search);
         } 
         $row = $this->db->single();
-        return $row->allcount;
+        return $row->allcount;         
     }
 
     //Retorna os dados do banco de dados para a paginação, pode ter aplicado filtro do campo buscar
     public function empRecords($tabela,$searchQuery,$searchArray,$columnName,$columnSortOrder,$row,$rowperpage){       
         $sql = "SELECT * FROM ".$tabela." WHERE 1 ".$searchQuery." ORDER BY ".$columnName." ".$columnSortOrder." LIMIT :limit,:offset";
+
         $this->db->query($sql);   
-        // Bind values
+
+         // Bind values
           foreach ($searchArray as $key=>$search) {
             $this->db->bind(':'.$key, $search);
-        }  
+        }
         $this->db->bind(':limit', $row);
         $this->db->bind(':offset', $rowperpage);
         $empRecords = $this->db->resultSet();     
         return $empRecords;   
     }
-        
+
+    
 }
 ?>

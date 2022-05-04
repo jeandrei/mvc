@@ -40,6 +40,7 @@ class Datatable {
         $empRecords = $this->db->resultSet();     
         return $empRecords;   
     }
-        
+
+    
 }
 ?>

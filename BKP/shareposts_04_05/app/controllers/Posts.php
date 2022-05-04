@@ -4,41 +4,38 @@
 
         
         public function __construct(){
-                       
+            //IMPEDE O ACESSO A POSTS SE NÃO ESTIVER LOGADO
+            // isLoggedIn está no arquivo session_helper            
             if(!isLoggedIn()){               
                 redirect('users/login');
             }
-           
-            $this->postModel = $this->model('Post');           
+
+            // Carregamos o model
+            // $this->model('Post') pq Posts extends Controller
+            $this->postModel = $this->model('Post');
+            // para poder aproveitar uma função de outro model basta adicionar ele
+            // aqui por exemplo adicionei o User para poder usar a função
+            // $user = $this->userModel->getUserById($post->user_id);
             $this->userModel = $this->model('User');
         }
 
         public function index(){
-           
+
             // Get posts
             $posts = $this->postModel->getPosts();
             
-            
-            foreach($posts as $post){
-                $data[] = [
-                    'id' => $post->post_id,
-                    'user_id' => $post->user_id,
-                    'title' => $post->title,
-                    'body'=> $post->body,
-                    'created_at' => $post->postCreated,
-                    'image' => $this->postModel->getFirstFilePost($post->post_id),
-                    'n_image' => $this->postModel->getNumImagesPost($post->post_id),                    
-                    'name'=> $this->userModel->getUserById($post->user_id)
-                ];
-            }  
-                   
+            $data = [
+                'posts' => $posts
+            ];
+
             
             $this->view('posts/index', $data);
         }
 
-        public function add(){
+        public function add(){           
 
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){ 
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){   
+
                 // Sanitize POST array
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 
@@ -59,38 +56,40 @@
                   if(empty($data['body'])){
                     $data['body_err'] = 'Por favor informe o texto';
                 }
+               
                 
                 // Make sure no errors
                 if(empty($data['title_err']) && empty($data['body_err'])){
-                    // Validate
-                    if($lastId = $this->postModel->addPost($data)){
-                         //passo o lastId para poder adicionar arquivos no post   
-                         $data['lastId'] = $lastId;     
-                         flash('post_message', 'Post Adicionado');
-                         $this->view('posts/add', $data);
-                    } else {
-                     die('Algo de errado aconteceu');
-                    }
-                 } else {
-                     // Load view with errors
-                     $this->view('posts/add', $data);
-                 }
-     
-             } else {
- 
-             $data = [
-                 'title' => '',
-                 'boddy' => ''
-             ];
- 
-             $this->view('posts/add', $data);
-             }
- 
-         }
+                   // Validate
+                   if($lastId = $this->postModel->addPost($data)){
+                        //passo o lastId para poder adicionar arquivos no post   
+                        $data['lastId'] = $lastId;     
+                        flash('post_message', 'Post Adicionado');
+                        $this->view('posts/add', $data);
+                   } else {
+                    die('Algo de errado aconteceu');
+                   }
+                } else {
+                    // Load view with errors
+                    $this->view('posts/add', $data);
+                }
+    
+            } else {
 
+            $data = [
+                'title' => '',
+                'boddy' => ''
+            ];
 
+            $this->view('posts/add', $data);
+            }
 
-         //carrega o formulário para adicionar arquivos
+        }
+
+       
+       
+       
+        //carrega o formulário para adicionar arquivos
         public function addfile($id_post){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){  
                
@@ -122,7 +121,7 @@
                 * Utilizando a função upload_file que está no arquivo helpers/functions
                 * Se tiver erro vai retornar o erro em $file['error'];
                 */
-                $file = $this->postModel->upload('file_post');                
+                $file = upload_file('file_post');                
 
                 //se não tiver nenhum erro definimos os parâmetros do arquivo para inserir no bd
                 if(empty($file['error'])){
@@ -134,7 +133,7 @@
                 } else {
                     $data['file_post_err'] = $file['error'];
                 }               
-                                
+                
                 // Make sure no errors
                 if(empty($data['title_err']) && empty($data['body_err']) && empty($data['file_post_err'])){
                                           
@@ -224,7 +223,8 @@
                 //id que vem da própria função public function edit($id){
                 'id' => $id,
                 'title' => $post->title,
-                'body' => $post->body
+                'body' => $post->body,
+                'files'=> $this->postModel->getFilePostById($id)
             ];
 
             $this->view('posts/edit', $data);
@@ -238,6 +238,7 @@
             
             $data = [
                 'post' => $post,
+                'files'=> $this->postModel->getFilePostById($id),
                 'user' => $user
             ];
 
@@ -266,9 +267,13 @@
                 redirect('posts');
             }
         }
-    
-    
-    
+
+
+        public function delfile($id){
+            $idpost = $this->postModel->deleteFile($id);            
+            redirect('posts/edit/'.$idpost->post_id);            
+        }
+                  
     
     }
 
