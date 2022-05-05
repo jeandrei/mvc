@@ -169,6 +169,15 @@
         }
 
 
+        
+
+        //deleta um arquivo de um post
+        public function delfile($id){
+            $idpost = $this->postModel->deleteFile($id);            
+            redirect('posts/edit/'.$idpost->post_id);            
+        }
+
+
 
         public function edit($id){
             
@@ -222,7 +231,8 @@
                 //id que vem da própria função public function edit($id){
                 'id' => $id,
                 'title' => $post->title,
-                'body' => $post->body
+                'body' => $post->body,
+                'files' => $this->postModel->getFilePostById($id)
             ];
 
             $this->view('posts/edit', $data);
@@ -246,11 +256,11 @@
         }
 
 
-        public function delete($id){           
+        public function delete($id){              
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
             
             // Get existing post from model
-            $post = $this->postModel->getPostById($id);            
+            $post = $this->postModel->getPostById($id);           
             // Check for owner
             // se não for dono do post ele redireciona para o posts
             if($post->user_id != $_SESSION[SE.'user_id']){
@@ -263,7 +273,12 @@
                     die('Algo de errado aconteceu');
                 }
             } else {
-                redirect('posts');
+                $post = $this->postModel->getPostById($id);
+                $data = [
+                    'id'=>$id,
+                    'title'=>$post->title
+                ];
+                $this->view('posts/confirm',$data);
             }
         }
     

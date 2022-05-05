@@ -80,14 +80,9 @@
         <?php endif;?>
 <!-- *************************************************************************************** -->
 
-
-
-<form class="pull-right" action="<?php echo URLROOT; ?>/posts/delete/<?php echo $data['post']->id; ?>" method="post">
-    <a href="<?php echo URLROOT; ?>/posts/edit/<?php echo $data['post']->id; ?>" class="btn btn-dark">Editar</a>
-    <input type="submit" value="Deletar" class="btn btn-danger">
-</form>
-
-    
+        <a href="<?php echo URLROOT; ?>/posts/delete/<?php echo $data['post']->id; ?>" class="btn btn-danger">Excluir</a>
+        <a href="<?php echo URLROOT; ?>/posts/edit/<?php echo $data['post']->id; ?>" class="btn btn-dark">Editar</a>
+  
 
 <?php endif; ?>
 <?php require APPROOT . '/views/inc/footer.php'; ?>

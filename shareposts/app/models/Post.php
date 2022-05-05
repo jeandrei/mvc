@@ -74,6 +74,28 @@
             }   
         }
 
+
+        //Deleta um arquivo pelo seu id
+        public function deleteFile($id){
+            /* pego o id do post para poder retornar */
+            $this->db->query('SELECT post_id FROM file_post WHERE id = :id');
+            $this->db->bind(':id', $id);
+
+            $postId = $this->db->single();  
+
+            /* removo a imagem */
+            $this->db->query('DELETE FROM file_post WHERE id = :id');
+            // Bind values
+            $this->db->bind(':id',$id);            
+
+            // Execute
+            if($this->db->execute()){
+                return $postId;
+            } else {
+                return false;
+            }
+        }
+
         //Retorna o número de imagens de um post no banco de dados
         public function getNumImagesPost($post_id){
             $this->db->query('SELECT count(id) as num
@@ -169,11 +191,17 @@
             $this->db->bind(':id', $id);
 
             $row = $this->db->single();
-
+          
             return $row;
         }
 
         public function deletePost($id){
+            
+            //Deleto todos os arquivos de um post
+            if(!$this->deleteFilesPost($id)){
+                return false;
+            }
+
             $this->db->query('DELETE FROM posts WHERE id = :id');
             // Bind values
             $this->db->bind(':id',$id);            
@@ -185,7 +213,20 @@
                 return false;
             }
 
-        }  
+        }
+        
+        //Deleta todos os arquivos de um post
+        public function deleteFilesPost($id){
+            $this->db->query('DELETE FROM file_post WHERE post_id = :id');
+            // Bind values
+            $this->db->bind(':id',$id);  
+
+            if($this->db->execute()){
+                return true;
+            } else {
+                return false;
+            }
+        }
         
         
         public function upload($file){
