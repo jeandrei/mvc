@@ -40,5 +40,10 @@ class Pages extends Controller{
         
         $this->view('pages/about', $data);
     } 
+
+    //url /mvc/pages/about
+    public function teste(){     
+        $this->view('pages/teste');
+    } 
     
 }
