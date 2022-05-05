@@ -16,10 +16,10 @@
 
                 //init data
                 $data = [
-                    'name' => trim($_POST['name']),
-                    'email' => trim($_POST['email']),
-                    'password' => trim($_POST['password']),
-                    'confirm_password' => trim($_POST['confirm_password']),
+                    'name' => html($_POST['name']),
+                    'email' => html($_POST['email']),
+                    'password' => html($_POST['password']),
+                    'confirm_password' => html($_POST['confirm_password']),
                     'name_err' => '',
                     'email_err' => '',
                     'password_err' => '',
@@ -115,8 +115,8 @@
 
                 //init data
                 $data = [                    
-                    'email' => trim($_POST['email']),
-                    'password' => trim($_POST['password']),  
+                    'email' => html($_POST['email']),
+                    'password' => html($_POST['password']),  
                     'email_err' => '',
                     'password_err' => ''
                     
@@ -212,7 +212,7 @@
             
             //init data
             $data = [                
-                'email' => trim($_POST['email'])               
+                'email' => html($_POST['email'])               
             ];  
 
             // Validate Email
@@ -283,8 +283,8 @@
            
             //init data
             $data = [                
-                'password' => trim($_POST['password']),
-                'confirm_password' => trim($_POST['confirm_password']),
+                'password' => html($_POST['password']),
+                'confirm_password' => html($_POST['confirm_password']),
                 'password_err' => '',
                 'confirm_password_err' => ''               
             ]; 

@@ -1,4 +1,4 @@
-<?php require APPROOT . '/views/inc/header.php';?>
+<?php require APPROOT . '/views/inc/header.php';//debug($_SESSION[SE.'user_id']);?>
 
 <style>
 /* style do carrocel */
@@ -42,7 +42,7 @@
  Escrito por <?php echo $data['user']->name;?> on <?php echo date('d/m/Y h:i:s', strtotime($data['post']->created_at)); ?> 
 </div>
 <p><?php echo $data['post']->body; ?></p>
-<?php if($data['post']->user_id == $_SESSION[SE.'user_id']) : ?>
+
 <hr>
 
 
@@ -77,14 +77,15 @@
                 </button>
             </div>
             <!-- fim carrocel -->
-        <?php endif;?>
+  <?php endif;?>
 <!-- *************************************************************************************** -->
 
-        <a href="<?php echo URLROOT; ?>/posts/delete/<?php echo $data['post']->id; ?>" class="btn btn-danger">Excluir</a>
-        <a href="<?php echo URLROOT; ?>/posts/edit/<?php echo $data['post']->id; ?>" class="btn btn-dark">Editar</a>
-  
-
+<?php if($data['post']->user_id == $_SESSION[SE.'user_id']) : ?>
+  <a href="<?php echo URLROOT; ?>/posts/delete/<?php echo $data['post']->id; ?>" class="btn btn-danger">Excluir</a>
+  <a href="<?php echo URLROOT; ?>/posts/edit/<?php echo $data['post']->id; ?>" class="btn btn-dark">Editar</a>
 <?php endif; ?>
+
+
 <?php require APPROOT . '/views/inc/footer.php'; ?>
 
 

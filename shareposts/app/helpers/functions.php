@@ -165,6 +165,7 @@ function imprimeuf($ufsec){
       
 
       
+      //Função para entrada de dados
       function html($data)
       {
           //tira espaço em branco
@@ -174,12 +175,26 @@ function imprimeuf($ufsec){
           //transforma tags html exemplo <b> -> $b&gt dessa forma impede html injection
           $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
           return $data;
-      }      
+      } 
 
-
+      //função para saida de dados
       function htmlout($text)
       {
           echo html($text);
+      }
+
+      //função para imprimir data no formato brasileiro
+      function datebr($date){
+        $result = date('d/m/Y', strtotime($data));    
+        return $result;
+      }
+
+      //função para verificar conteúdo de dados
+      function debug($data){
+        echo("<pre>");
+        print_r($data);
+        echo("</pre>");
+        die();
       }
       
 

@@ -130,6 +130,21 @@
             }
         }
 
+        //Retorna o dono de um arquivo
+        public function getOwnerFile($id){
+            
+            $this->db->query('SELECT user_id FROM posts,file_post WHERE posts.id = file_post.post_id AND file_post.id = :id');
+            $this->db->bind(':id',$id);
+            $owner = $this->db->single();            
+            // Check row
+            if($this->db->rowCount() > 0){
+                return $owner->user_id;
+            } else {
+                return false;
+            } 
+
+        }
+
         //Adiciona os arquivos na tabela file_post
         public function addFilesPost($post_id,$data){           
             

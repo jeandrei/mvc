@@ -43,8 +43,8 @@
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 
                 $data = [
-                    'title' => trim($_POST['title']),
-                    'body' => trim($_POST['body']),
+                    'title' => html($_POST['title']),
+                    'body' => html($_POST['body']),
                     'user_id' => $_SESSION[SE.'user_id'],
                     'title_err' => '',
                     'body_err' => ''
@@ -100,8 +100,8 @@
                 
                 $data = [
                     'id' => $id_post,
-                    'title' => trim($_POST['title']),
-                    'body' => trim($_POST['body']),                    
+                    'title' => html($_POST['title']),
+                    'body' => html($_POST['body']),                    
                     'title_err' => '',
                     'body_err' => ''
                 ];
@@ -173,6 +173,12 @@
 
         //deleta um arquivo de um post
         public function delfile($id){
+            $owner = $this->postModel->getOwnerFile($id);           
+            //se não pertencer ao dono do post redireciono para o início
+            if($owner != $_SESSION[SE.'user_id']){
+                redirect('posts');
+            } 
+
             $idpost = $this->postModel->deleteFile($id);            
             redirect('posts/edit/'.$idpost->post_id);            
         }
@@ -187,8 +193,8 @@
                 
                 $data = [
                     'id' => $id,
-                    'title' => trim($_POST['title']),
-                    'body' => trim($_POST['body']),
+                    'title' => html($_POST['title']),
+                    'body' => html($_POST['body']),
                     'user_id' => $_SESSION[SE.'user_id'],
                     'title_err' => '',
                     'body_err' => ''
@@ -273,11 +279,14 @@
                     die('Algo de errado aconteceu');
                 }
             } else {
-                $post = $this->postModel->getPostById($id);
+                $post = $this->postModel->getPostById($id);                
                 $data = [
                     'id'=>$id,
                     'title'=>$post->title
-                ];
+                ]; 
+                if($post->user_id != $_SESSION[SE.'user_id']){
+                    redirect('posts');
+                }               
                 $this->view('posts/confirm',$data);
             }
         }
