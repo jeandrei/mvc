@@ -144,20 +144,25 @@
                                 
                 // Make sure no errors
                 if(empty($data['title_err']) && empty($data['body_err']) && empty($data['file_post_err'])){
-                                          
-                        if(isset($data['id'])){
-                            if(!$this->postModel->addFilesPost($data['id'],$data)){
-                                die('Erro ao tentar registraro arquivo!');
+                    if(isset($data['id'])){                  
+                        try{
+                            if($this->postModel->addFilesPost($data['id'],$data)){
+                                flash('message', 'Arquivo Adicionado com Sucesso!');
+                                $data = [
+                                    'id' => $id_post,
+                                    'title' => '',
+                                    'boddy' => ''
+                                ];
+                                $this->view("posts/addfile",$data);                                
+                            } else {
+                                throw new Exception('Ops! Algo deu errado ao tentar adicionar o arquivo!');
                             }
+                        } catch (Exception $e) {
+                            $erro = 'Erro: '.  $e->getMessage(). "\n";
+                            flash('message', $erro,'alert alert-danger');
+                            $this->view("posts/addfile",$data);
                         }
-                    flash('message', 'Arquivo Adicionado');
-                    $data = [
-                        'id' => $id_post,
-                        'title' => '',
-                        'boddy' => ''
-                    ];
-                    $this->view("posts/addfile",$data);
-                  
+                    }                   
                 } else {
                     // Load view with errors
                     $this->view("posts/addfile",$data);
@@ -180,14 +185,29 @@
 
         //deleta um arquivo de um post
         public function delfile($id){
-            $owner = $this->postModel->getOwnerFile($id);           
+            $owner = $this->postModel->getOwnerFile($id);
+            $post_id = $this->postModel->getIdPostFile($id);
+            
             //se não pertencer ao dono do post redireciono para o início
             if($owner != $_SESSION[SE.'user_id']){
                 redirect('posts');
             } 
 
-            $idpost = $this->postModel->deleteFile($id);            
-            redirect('posts/edit/'.$idpost->post_id);            
+            try {
+                if($idpost = $this->postModel->deleteFile($id)){
+                    flash('message', 'Arquivo excluido com Sucesso!');
+                    redirect('posts/edit/'.$post_id);
+                } else {
+                    throw new Exception('Ops! Algo deu errado ao tentar excluir o arquivo!');  
+                }
+            } catch (Exception $e) {
+                $erro = 'Erro: '.  $e->getMessage(). "\n";
+                flash('message', $erro,'alert alert-danger');
+                redirect('posts/edit/'.$post_id);
+            }
+
+                      
+                        
         }
 
 

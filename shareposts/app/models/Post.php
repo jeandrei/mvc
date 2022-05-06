@@ -77,6 +77,7 @@
 
         //Deleta um arquivo pelo seu id
         public function deleteFile($id){
+            
             /* pego o id do post para poder retornar */
             $this->db->query('SELECT post_id FROM file_post WHERE id = :id');
             $this->db->bind(':id', $id);
@@ -129,6 +130,23 @@
                 return false;
             }
         }
+
+        //Retorna o id do post de um arquivo
+        public function getIdPostFile($id){
+            
+            $this->db->query('SELECT posts.id FROM posts,file_post WHERE posts.id = file_post.post_id AND file_post.id = :id');
+            $this->db->bind(':id',$id);
+            $post_id = $this->db->single();            
+            // Check row
+            if($this->db->rowCount() > 0){
+                return $post_id->id;
+            } else {
+                return false;
+            } 
+
+        }
+
+
 
         //Retorna o dono de um arquivo
         public function getOwnerFile($id){
@@ -232,6 +250,7 @@
         
         //Deleta todos os arquivos de um post
         public function deleteFilesPost($id){
+           
             $this->db->query('DELETE FROM file_post WHERE post_id = :id');
             // Bind values
             $this->db->bind(':id',$id);  

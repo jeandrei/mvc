@@ -30,6 +30,8 @@
 }
 </style> 
 
+<?php  flash('message'); ?>
+
     <a href="<?php echo URLROOT; ?>/posts" class="btn btn-light"><i class="fa fa-backward"></i>Voltar</a>
     
     <div class="card card-body bg-light mt-5">       
