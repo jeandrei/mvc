@@ -3,7 +3,7 @@
     <div class="col-md-6 mx-auto">
         <div class="card card-body bg-light mt-5">
             <?php // Segunda parte da menságem        
-            flash('mensagem_erro');
+            flash('message');
             ?>
             <h2>Recuperação de senha</h2>
             <p>Por favor informe seu email</p>

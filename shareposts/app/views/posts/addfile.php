@@ -1,6 +1,6 @@
 <?php require APPROOT . '/views/inc/header.php';?>    
 
-<?php flash('post_message');  ?>
+<?php flash('message');  ?>
 
 
 

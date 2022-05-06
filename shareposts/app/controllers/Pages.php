@@ -42,8 +42,8 @@ class Pages extends Controller{
     } 
 
     //url /mvc/pages/about
-    public function teste(){     
-        $this->view('pages/teste');
+    public function javascript(){     
+        $this->view('pages/javascript');
     } 
     
 }

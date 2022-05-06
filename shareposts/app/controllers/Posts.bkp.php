@@ -39,7 +39,8 @@
         
        
 
-        public function add(){             
+        public function add(){          
+          
 
             if($_SERVER['REQUEST_METHOD'] == 'POST'){ 
                 // Sanitize POST array
@@ -65,19 +66,15 @@
                 
                 // Make sure no errors
                 if(empty($data['title_err']) && empty($data['body_err'])){
-                    try {
-                        if($lastId = $this->postModel->addPost($data)){
-                            $data['lastId'] = $lastId;     
-                            flash('message', 'Post Adicionado');
-                            $this->view('posts/add', $data);
-                        } else {
-                            throw new Exception('Ops! Algo deu errado ao tentar gravar os dados!');
-                        }
-                    } catch (Exception $e) {
-                        $erro = 'Erro: '.  $e->getMessage(). "\n";
-                        flash('message', $erro,'alert alert-danger');
-                        $this->view('posts/add');
-                    }     
+                    // Validate
+                    if($lastId = $this->postModel->addPost($data)){
+                         //passo o lastId para poder adicionar arquivos no post   
+                         $data['lastId'] = $lastId;     
+                         flash('post_message', 'Post Adicionado');
+                         $this->view('posts/add', $data);
+                    } else {
+                     die('Algo de errado aconteceu');
+                    }
                  } else {
                      // Load view with errors
                      $this->view('posts/add', $data);
@@ -150,7 +147,7 @@
                                 die('Erro ao tentar registraro arquivo!');
                             }
                         }
-                    flash('message', 'Arquivo Adicionado');
+                    flash('post_message', 'Arquivo Adicionado');
                     $data = [
                         'id' => $id_post,
                         'title' => '',
@@ -221,7 +218,7 @@
                 if(empty($data['title_err']) && empty($data['body_err'])){
                    // Validate
                    if($this->postModel->updatePost($data)){
-                    flash('message', 'Post Atualizado');
+                    flash('post_message', 'Post Atualizado');
                     redirect('posts');
                    } else {
                     die('Algo de errado aconteceu');
@@ -280,7 +277,7 @@
                 redirect('posts');
             }                
                 if($this->postModel->deletePost($id)){
-                    flash('message', 'Post Removido');
+                    flash('post_message', 'Post Removido');
                     redirect('posts');
                 } else {
                     die('Algo de errado aconteceu');

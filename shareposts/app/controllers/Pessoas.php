@@ -260,15 +260,15 @@
                 ){
                     //se passar a validação registra no banco de dados                    
                     if($this->pessoaModel->register($data)){
-                        flash('mensagem', 'Cadastro realizado com sucesso!');                     
+                        flash('message', 'Cadastro realizado com sucesso!');                     
                         $this->view('pessoas/add',$data);
                     } else {
-                        flash('mensagem', 'Erro ao efetuar o cadastro!','alert alert-danger');                     
+                        flash('message', 'Erro ao efetuar o cadastro!','alert alert-danger');                     
                         $this->view('pessoas/add',$data);
                     }
                 } else {
                     //Validação falhou
-                    flash('mensagem', 'Erro ao efetuar o cadastro, verifique os dados informados!','alert alert-danger');                     
+                    flash('message', 'Erro ao efetuar o cadastro, verifique os dados informados!','alert alert-danger');                     
                     $this->view('pessoas/add',$data);
                 }
                 
@@ -458,14 +458,14 @@
                 ){ 
                     //se passar a validação registra no banco de dados                    
                     if($this->pessoaModel->update($data)){                        
-                        flash('mensagem', 'Dados atualizados com sucesso!');                     
+                        flash('message', 'Dados atualizados com sucesso!');                     
                         $this->view('pessoas/edit',$data); 
                     } else {
-                        flash('mensagem', 'Erro ao efetuar a atualização!','alert alert-danger');                     
+                        flash('message', 'Erro ao efetuar a atualização!','alert alert-danger');                     
                         $this->view('pessoas/edit',$data);                    }
                 } else {
                     //Validação falhou
-                    flash('mensagem', 'Erro ao atualizar, verifique os dados informados!','alert alert-danger');                     
+                    flash('message', 'Erro ao atualizar, verifique os dados informados!','alert alert-danger');                     
                     $this->view('pessoas/edit',$data);                }
                 
                 
@@ -482,7 +482,7 @@
                 }
     
                 if($erro){
-                    flash('mensagem', $erro , 'alert alert-danger'); 
+                    flash('message', $erro , 'alert alert-danger'); 
                     $this->view('pessoas/index');
                     exit();
                 }        
@@ -535,7 +535,7 @@
             }
 
             if($erro){
-                flash('mensagem', $erro , 'alert alert-danger'); 
+                flash('message', $erro , 'alert alert-danger'); 
                 $this->view('pessoas/index');
                 exit();
             }  
@@ -543,9 +543,9 @@
             //esse $_POST['delete'] vem lá do view('confirma');
             if(isset($_POST['delete'])){
                 if($this->pessoaModel->delete($id)){
-                    flash('mensagem', 'Registro excluido com sucesso!', 'alert alert-success'); 
+                    flash('message', 'Registro excluido com sucesso!', 'alert alert-success'); 
                 } else {
-                    flash('mensagem', 'Erro ao tentar excluir o registro!', 'alert alert-danger');
+                    flash('message', 'Erro ao tentar excluir o registro!', 'alert alert-danger');
                 }      
                 redirect('pessoas/index');
            }else{   

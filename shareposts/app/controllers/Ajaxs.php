@@ -74,10 +74,10 @@
 
                     if($this->ajaxModel->gravaPessoa($data)){
                         //para acessar esses valores no jquery
-                        //exemplo responseObj.mensagem
+                        //exemplo responseObj.message
                         $json_ret = array(
                                             'classe'=>'alert alert-success', 
-                                            'mensagem'=>'Dados gravados com sucesso',
+                                            'message'=>'Dados gravados com sucesso',
                                             'error'=>false
                                         );                     
                         
@@ -86,7 +86,7 @@
                 } catch (Exception $e) {
                     $json_ret = array(
                             'classe'=>'alert alert-danger', 
-                            'mensagem'=>'Erro ao gravar os dados',
+                            'message'=>'Erro ao gravar os dados',
                             'error'=>$data
                             );                     
                     echo json_encode($json_ret); 
@@ -97,7 +97,7 @@
             }   else {
                 $json_ret = array(
                     'classe'=>'alert alert-danger', 
-                    'mensagem'=>'Erro ao tentar gravar os dados',
+                    'message'=>'Erro ao tentar gravar os dados',
                     'error'=>$error
                 );
                 echo json_encode($json_ret);

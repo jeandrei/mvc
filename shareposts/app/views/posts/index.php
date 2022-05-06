@@ -1,6 +1,6 @@
 <?php require APPROOT . '/views/inc/header.php';?>
-<!-- post_message é o nome da menságem está lá no controller -->
-<?php flash('post_message'); ?>
+<!-- message é o nome da menságem está lá no controller -->
+<?php flash('message'); ?>
 <!-- mb-3 marging bottom -->
 <div class="row mb-3">
     <div class="col-md-6">

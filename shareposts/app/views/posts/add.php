@@ -3,7 +3,7 @@
     
     <?php 
     
-    flash('post_message'); 
+    flash('message'); 
     
     ?>
 

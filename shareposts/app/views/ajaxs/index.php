@@ -200,7 +200,7 @@ Gravar
                         /* pode adicionar mais classes se precisar ficaria assim .addClass("confirmbox "+responseObj.classe) */
                         .addClass(responseObj.classe) 
                         /* aqui a mensagem que vem la do php responseObj.mensagem */                       
-                        .html(responseObj.mensagem) 
+                        .html(responseObj.message) 
                         .fadeIn(2000).fadeOut(2000);
                 }
             });//Fecha o ajax

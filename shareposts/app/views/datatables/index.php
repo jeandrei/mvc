@@ -6,7 +6,7 @@
 
 <!-- FLASH MESSAGE -->
 <!-- pessoa_message é o nome da menságem está lá no controller -->
-<?php flash('mensagem'); ?>
+<?php flash('message'); ?>
 <!-- mb-3 marging bottom -->
 
 <!-- TÍTULO -->

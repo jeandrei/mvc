@@ -18,7 +18,7 @@
               <a class="nav-link" href="<?php echo URLROOT; ?>/pages/about">Sobre</a>
           </li> 
           <li class="nav-item">
-              <a class="nav-link" href="<?php echo URLROOT; ?>/pages/teste">Teste</a>
+              <a class="nav-link" href="<?php echo URLROOT; ?>/pages/javascript">Javascript</a>
           </li> 
           
           <?php if(isset($_SESSION[SE.'user_id'])) : ?>  

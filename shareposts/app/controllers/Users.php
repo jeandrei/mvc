@@ -73,7 +73,7 @@
                       if($this->userModel->register($data)){
                         // Cria a menságem antes de chamar o view va para 
                         // views/users/login a segunda parte da menságem
-                        flash('register_success', 'Você está registrado e pode realizar o login agora');                        
+                        flash('message', 'Você está registrado e pode realizar o login agora');                        
                         redirect('users/login');
                       } else {
                           die('Algo deu errado!');
@@ -247,10 +247,10 @@
                             
                             //MANDE O EMAIL COM A SENHE
                             if($this->userModel->sendemail($data['email'], $password)){
-                                flash('register_success', 'Email enviado com sucesso!');                     
+                                flash('message', 'Email enviado com sucesso!');                     
                                 redirect('users/login');
                             } else {
-                                flash('mensagem_erro', 'Erro no envio do email! Tente novamente mais tarde.','alert-danger');                     
+                                flash('message', 'Erro no envio do email! Tente novamente mais tarde.','alert-danger');                     
                                 redirect('users/enviasenha');
                             }                   
                         }
@@ -317,7 +317,7 @@
                      if($this->userModel->updatePassword($data)){                       
                        // Cria a menságem antes de chamar o view va para 
                        // views/users/login a segunda parte da menságem
-                       flash('post_message', 'Senha atualizada com Sucesso');                        
+                       flash('message', 'Senha atualizada com Sucesso');                        
                        redirect('posts');
                      } else {
                          die('Ops! Algo deu errado.');

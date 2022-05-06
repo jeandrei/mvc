@@ -86,8 +86,8 @@
             /* removo a imagem */
             $this->db->query('DELETE FROM file_post WHERE id = :id');
             // Bind values
-            $this->db->bind(':id',$id);            
-
+            $this->db->bind(':id',$id);           
+                      
             // Execute
             if($this->db->execute()){
                 return $postId;
@@ -121,7 +121,7 @@
             $this->db->bind(':title',$data['title']);
             $this->db->bind(':user_id',$data['user_id']);
             $this->db->bind(':body',$data['body']);
-
+            
             // Execute
             if($this->db->execute()){
                 return  $this->db->lastId;  
