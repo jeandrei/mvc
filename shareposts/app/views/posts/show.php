@@ -32,6 +32,7 @@
 </style>
 
 
+<?php flash('message'); ?>
 
 
 

@@ -228,7 +228,7 @@
             return $row;
         }
 
-        public function deletePost($id){
+        public function deletePost($id){            
             
             //Deleto todos os arquivos de um post
             if(!$this->deleteFilesPost($id)){

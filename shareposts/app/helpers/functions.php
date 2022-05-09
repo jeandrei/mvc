@@ -250,4 +250,25 @@ function imprimeuf($ufsec){
         }        
       }
 
+      function validate($data,$options){
+
+        foreach($options as $option){          
+          switch ($option){
+            case 'isempty':
+              if(empty($data)){
+                return 'Não pode ser vazio!';
+              }
+              break;
+            case 'isnumber':
+              if(!is_numeric($data)){
+                return 'Deve ser um número';
+              }
+              break;
+              
+          }
+        }   
+       
+
+      }
+
 ?>

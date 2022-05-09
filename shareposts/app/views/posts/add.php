@@ -62,7 +62,7 @@
 
 <script> 
  $(document).ready(function(){
-	$('#addPost').validate({
+	$('#addPost_').validate({
 		rules : {
 			title : {
 				required : true,

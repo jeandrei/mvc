@@ -39,7 +39,10 @@
         
        
 
-        public function add(){             
+        public function add(){   
+            
+            $teste = validate('dsfsd',['isempty','isnumber']);
+            debug($teste);
 
             if($_SERVER['REQUEST_METHOD'] == 'POST'){ 
                 // Sanitize POST array
@@ -289,33 +292,36 @@
         }
 
 
-        public function delete($id){              
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            
+        public function delete($id){   
             // Get existing post from model
-            $post = $this->postModel->getPostById($id);           
-            // Check for owner
-            // se não for dono do post ele redireciona para o posts
-            if($post->user_id != $_SESSION[SE.'user_id']){
+            $post = $this->postModel->getPostById($id); 
+            //set if owner's post
+            $owner = ($post->user_id == $_SESSION[SE.'user_id']);                       
+
+            if(!$owner){
                 redirect('posts');
-            }                
-                if($this->postModel->deletePost($id)){
-                    flash('message', 'Post Removido');
-                    redirect('posts');
-                } else {
-                    die('Algo de errado aconteceu');
-                }
-            } else {
-                $post = $this->postModel->getPostById($id);                
-                $data = [
-                    'id'=>$id,
-                    'title'=>$post->title
-                ]; 
-                if($post->user_id != $_SESSION[SE.'user_id']){
-                    redirect('posts');
-                }               
-                $this->view('posts/confirm',$data);
-            }
+            }  
+
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){     
+                try {
+                    if($this->postModel->deletePost($id)){
+                        flash('message', 'Post removido com Sucesso!');
+                        redirect('posts');
+                    } else {
+                        throw new Exception('Ops! Algo deu errado ao tentar excluir o post!');  
+                    }
+                } catch (Exception $e) {
+                    $erro = 'Erro: '.  $e->getMessage(). "\n";
+                    flash('message', $erro,'alert alert-danger');
+                    redirect('posts/show/'.$id);
+                } 
+            } 
+
+            $data = [
+                'id'=>$id,
+                'title'=>$post->title
+            ];
+            $this->view('posts/confirm',$data);
         }
     
     
