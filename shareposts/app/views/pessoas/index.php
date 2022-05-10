@@ -34,14 +34,14 @@ function limpar(){
 <div class="row mb-3">
     <div class="col-md-6">
         <h1><?php echo $data['titulo']; ?></h1>
-    </div>
+    </div>  
+
     <div class="col-md-6">
-        <a href="<?php echo URLROOT; ?>/pessoas/add" class="btn btn-primary pull-right">
+        <a href="<?php echo URLROOT; ?>/pessoas/add" class="btn btn-primary float-end">
             <i class="fa fa-pencil"></i> Adicionar Pessoa
         </a>
     </div>
 </div>
-
 
 
 <!-- FORMULÁRIO -->
@@ -90,17 +90,18 @@ function limpar(){
   
   <!-- Número de registros por página -->
   <div class="row align-items-center">
-    <div class="col-11">
-     <span class="pull-right">Número de Linhas:</span>
+    <div class="col-10">
+     <span class="float-end">Número de Linhas:</span>
     </div>
-    <div class="col-1">
+    <div class="col-2">
       <select class="form-select" name="numRows">
         <?php
-        for($i=1;$i<=50;$i++){
-          if($i == $_SESSION['numRows']){
-            echo "<option value='$i' selected>$i</option>";
+        for($i=1;$i<=10;$i++){
+          $val = $i * 10;
+          if($val == $_SESSION['numRows']){            
+            echo "<option value='$val' selected>$val</option>";
           } else {
-            echo "<option value='$i'>$i</option>";
+            echo "<option value='$val'>$val</option>";
           }
             
         }

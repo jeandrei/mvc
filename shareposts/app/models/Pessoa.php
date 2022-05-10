@@ -111,7 +111,7 @@ class Pessoa {
     }
 
 
-    public function register($data){
+    public function register($data){      
        $this->db->query('
                             INSERT INTO pessoa SET
                             pessoaNome          = :pessoaNome, 
@@ -169,7 +169,7 @@ class Pessoa {
     }
 
 
-    public function update($data){
+    public function update($data){        
         $this->db->query('
                              UPDATE pessoa SET
                              pessoaNome          = :pessoaNome, 
@@ -312,7 +312,7 @@ class Pessoa {
 
 
 
-     public function delete($id){
+     public function delete($id){        
        $this->db->query('
                             DELETE
                             FROM

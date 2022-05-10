@@ -465,3 +465,12 @@ function fileValidation(myfiel,span)
         return true;
     }
 }
+
+
+/* mensagens para a validação do jquery validate */
+let custommsg = {
+    "required": 'Campo obrigatório!',
+    "minlength": 'Mínimo ',
+    "selectone": 'Campo obrigatório!',
+    "email": 'Email valido!'
+};

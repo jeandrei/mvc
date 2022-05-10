@@ -250,21 +250,103 @@ function imprimeuf($ufsec){
         }        
       }
 
-      function validate($data,$options){
+      //Validação dos dados antes de enviar o formulário
+      // validate($data['pessoaNome'],['required',['isnumeric','min'=>10,'max'=>20]]);
+      function validate($data,$options){       
 
-        foreach($options as $option){          
-          switch ($option){
-            case 'isempty':
-              if(empty($data)){
-                return 'Não pode ser vazio!';
+        //verifico se foi passado o option require
+        $required = (in_array('required',$options));
+        
+        //se for campo obrigatório e passar o campo em branco já retorno campo obrigatório          
+        if($required && (empty($data) || $data == 'null')){
+          return 'Campo Obrigatório!';
+        }
+     
+        //caso for passado alguma coisa faço a validação
+        foreach($options as $option){ 
+          
+          //aqui verifico se é um array primeiro pq se for eu tenho que pegar o item zero do array
+          //para poder pegar os valores
+          if(is_array($option))        {
+            $switch = $option[0];
+          } else {
+            $switch = $option;
+          }
+
+          switch ($switch){
+            case 'isstring':
+              if($required || !empty($data)){
+                if(!is_string($data)){
+                  return 'Deve ser um texto!';
+                } 
+                if(!empty($option['min']) && (strlen($data) < $option['min'])){
+                    return 'Mínimo ' . $option['min'] . ' caracteres!';
+                }
+                if(!empty($option['max']) && (strlen($data) > $option['max'])){
+                  return 'Máximo de ' . $option['max'] . ' caracteres!';
+                }                 
+              }              
+              break;
+            /* $data['erro'] = validate(['isnumeric','min'=>10,'max'=>20]]) número mínimo permitido e número máximo */
+            case 'isnumeric':                
+              if($required || !empty($data)){
+                if(!is_numeric($data)){
+                  return 'Deve ser um número!';
+                } 
+                if(!empty($option['min']) && $data < $option['min']){
+                    return 'Valor não pode ser menor que ' . $option['min'] . '!';
+                }
+                if(!empty($option['max']) && $data > $option['max']){
+                  return 'Valor não pode ser maior que ' . $option['max'] . '!';
+                }                 
+              }              
+              break;
+            /*$data['erro'] = ['date','min'=>18,'futuredate'=>false]] idade mínima e se aceita data futura */
+            case 'date':              
+              if($required || ($data!='null')){               
+                if(!empty($option['min']) && idadeMinima($data,$option['min'])){
+                  return 'Idade mínima é de '.$option['min'].' anos!';
+                }
+                if(($option['futuredate']==false) && $data > date("Y-m-d")){
+                  return 'Não é permitido informar data futura!';
+                }
               }
               break;
-            case 'isnumber':
-              if(!is_numeric($data)){
-                return 'Deve ser um número';
-              }
+            case 'email':
+              if($required || !empty($data)){
+                if(!validaemail($data)){
+                  return 'Email invalido!';
+                }
+              }              
               break;
-              
+            case 'phone':
+              if($required || !empty($data)){
+                if(!validatelefone($data)){
+                  return 'Telefone invalido!';
+                }
+              }              
+              break;
+            case 'cphone':
+              if($required || !empty($data)){
+                if(!validacelular($data)){
+                  return 'Celular invalido!';
+                }
+              }              
+              break;
+            case 'cpf':
+              if($required || !empty($data)){
+                if(!validaCPF($data)){
+                  return 'CPF invalido!';
+                }
+              }              
+              break;
+            case 'cnpj':
+              if($required || !empty($data)){
+                if(!validaCNPJ($data)){
+                  return 'CNPJ invalido!';
+                }
+              }              
+              break;
           }
         }   
        

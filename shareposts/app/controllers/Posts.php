@@ -39,10 +39,8 @@
         
        
 
-        public function add(){   
-            
-            $teste = validate('dsfsd',['isempty','isnumber']);
-            debug($teste);
+        public function add(){ 
+                      
 
             if($_SERVER['REQUEST_METHOD'] == 'POST'){ 
                 // Sanitize POST array
@@ -52,22 +50,22 @@
                     'title' => html($_POST['title']),
                     'body' => html($_POST['body']),
                     'user_id' => $_SESSION[SE.'user_id'],
+
+                    'pessoaNascimento' => html($_POST['pessoaNascimento']),
+
                     'title_err' => '',
                     'body_err' => ''
                 ];
 
-                // Validate title
-                if(empty($data['title'])){
-                    $data['title_err'] = 'Por favor informe o título';
-                }
+                // Validate title validate está em helpers functions                            
+                $data['title_err'] = validate($data['title'],['required']);               
 
-                  // Validate body
-                  if(empty($data['body'])){
-                    $data['body_err'] = 'Por favor informe o texto';
-                }
+                // Validate body
+                $data['body_err'] = validate($data['body'],['required']);
+              
                 
                 // Make sure no errors
-                if(empty($data['title_err']) && empty($data['body_err'])){
+                if(empty($data['title_err']) && empty($data['body_err']) && empty($data['teste_err'])){
                     try {
                         if($lastId = $this->postModel->addPost($data)){
                             $data['lastId'] = $lastId;     
@@ -117,14 +115,10 @@
                 ];
 
                 // Validate title
-                if(empty($data['title'])){
-                    $data['title_err'] = 'Por favor informe o título';
-                }
+                $data['title_err'] = validate($data['title'],['required','isempty']);               
 
-                  // Validate body
-                  if(empty($data['body'])){
-                    $data['body_err'] = 'Por favor informe o texto';
-                }
+                // Validate body
+                $data['body_err'] = validate($data['body'],['required','isempty']);
 
 
                /**
@@ -231,14 +225,10 @@
                 ];
 
                 // Validate title
-                if(empty($data['title'])){
-                    $data['title_err'] = 'Por favor informe o título';
-                }
+                $data['title_err'] = validate($data['title'],['required','isempty']);               
 
-                  // Validate body
-                  if(empty($data['body'])){
-                    $data['body_err'] = 'Por favor informe o texto';
-                }
+                // Validate body
+                $data['body_err'] = validate($data['body'],['required','isempty']);
                 
                 // Make sure no errors
                 if(empty($data['title_err']) && empty($data['body_err'])){

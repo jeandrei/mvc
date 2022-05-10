@@ -12,8 +12,9 @@
         <h2>Adicionar Postagem</h2>
         <p>Crie um Postagem</p>                               
          <!-- Para funcionar o envio de arquivo aqui no form tem que ter enctype="multipart/form-data" -->
-         <form id="addPost" action="<?php echo URLROOT; ?>/posts/add" method="post" enctype="multipart/form-data" onsubmit="return Validate();">  
+         <form id="addPost" action="<?php echo URLROOT; ?>/posts/add" method="post" enctype="multipart/form-data">  
                   
+                      
             <!--TITLE-->
             <div class="form-group">   
                 <label 
@@ -60,9 +61,10 @@
     </div>          
 <?php require APPROOT . '/views/inc/footer.php'; ?>
 
+<!-- custommsg está no main.js -->
 <script> 
  $(document).ready(function(){
-	$('#addPost_').validate({
+	$('#addPost').validate({
 		rules : {
 			title : {
 				required : true,
@@ -75,12 +77,12 @@
 		},
 		messages : {
 			title : {
-				required : 'Por favor informe um título.',
-				minlength : 'O título deve ter no mínimo 3 caracteres.'
+				required : custommsg['required'],
+				minlength : custommsg['minlength'] + ' {0} caracteres!'
 			},
             body : {
-				required : 'Por favor informe o corpo do post.',
-				minlength : 'O corpo do post deve ter no mínimo 30 caracteres.'
+				required : custommsg['required'],
+				minlength : custommsg['minlength'] + ' {0} caracteres!'
 			}
         }
     });
