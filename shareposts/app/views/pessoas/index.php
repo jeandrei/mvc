@@ -173,7 +173,7 @@ if(!empty($data['results'])){
       <th scope="col">Nascimento</th>
       <th scope="col">Municipio</th>
       <th scope="col">Logradouro</th>
-      <th scope="col">Bairro</th>
+      <th scope="col">Observação</th>
       <th scope="col">PCD</th>
       <th scope="col">Ações</th>      
     </tr>
