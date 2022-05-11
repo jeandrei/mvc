@@ -82,7 +82,8 @@
                             'pessoaMunicipio' => $row['pessoaMunicipio'],
                             'pessoaLogradouro' => $row['pessoaLogradouro'],
                             'pessoaBairro' => $this->bairroModel->getBairroById($row['bairroId']),
-                            'pessoaDeficiencia' => ($row['pessoaDeficiencia'] == 'n') ? 'Não' : 'Sim'                        
+                            'pessoaDeficiencia' => ($row['pessoaDeficiencia'] == 'n') ? 'Não' : 'Sim',
+                            'pessoaObservacao' => $row['pessoaObservacao']
                         ];
                     }
                 }

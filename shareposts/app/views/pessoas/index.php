@@ -136,7 +136,7 @@ if(!empty($data['results'])){
                           name=observacao
                           onkeyup=update(this.id,this.value)
                           id='.$row['pessoaId'].'
-                          value='.$row['observacao'].'                         
+                          value='.$row['pessoaObservacao'].'                         
                       >
                       <span id='.$row['pessoaId'].'_msg>
                   </td>
