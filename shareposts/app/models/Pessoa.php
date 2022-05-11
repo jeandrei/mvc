@@ -294,22 +294,8 @@ class Pessoa {
                 return $interesses;
             } else {
                 return [];
-            } 
-            
-            
-            
-                    
-            
-            
+            }
     }
-
-
-
-
-
-
-
-
 
 
      public function delete($id){        
@@ -326,6 +312,20 @@ class Pessoa {
 
         // Check row
         if($this->db->rowCount() > 0){
+            return true;
+        } else {
+            return false;
+        }
+     }
+
+     /**
+      * grava os dados do campo observação através do ajax
+      */
+     public function gravaObs($id,$data){         
+        $this->db->query('UPDATE pessoa SET pessoa.pessoaObservacao = :pessoaObservacao WHERE pessoaId=:id');
+        $this->db->bind(':id',$id); 
+        $this->db->bind(':pessoaObservacao',$data);                        
+        if($this->db->execute()){
             return true;
         } else {
             return false;

@@ -124,12 +124,22 @@ function limpar(){
 $results = '';
 if(!empty($data['results'])){
   foreach($data['results'] as $row){
-    $results.=' <tr>
+    $results.='<tr>
                   <td>'.$row['pessoaNome'].'</td>
                   <td>'.$row['pessoaNascimento'].'</td>
                   <td>'.$row['pessoaMunicipio'].'</td>
                   <td>'.$row['pessoaLogradouro'].'</td>
-                  <td>'.$row['pessoaBairro'].'</td>
+                  <td>
+                      <input 
+                          type=text 
+                          class=form-control
+                          name=observacao
+                          onkeyup=update(this.id,this.value)
+                          id='.$row['pessoaId'].'
+                          value='.$row['observacao'].'                         
+                      >
+                      <span id='.$row['pessoaId'].'_msg>
+                  </td>
                   <td>'.$row['pessoaDeficiencia'].'</td>
                   <td>
                     <a href="'.URLROOT.'/pessoas/edit/'.$row['pessoaId'].'">
@@ -190,3 +200,56 @@ if(!empty($data['results'])){
 
 <!-- FOOTER -->
 <?php require APPROOT . '/views/inc/footer.php'; ?>
+
+<script>
+  /* script executa a cada 3 segundos a variavel timer e a 
+    constante waitTimer tem que ficar fora da função */
+  let timer;
+  const waitTimer = 3000;
+  function update(id,data){
+    /**
+     * Toda vez que o usuário digita alguma coisa, qualquer tecla a primeria cois
+     * que entra na função é redefinir a variável timer que recebe o que será 
+     * executado no setTimeout, então fica nesse looping cada vez que o usuário digita alguma coisa
+     * a variável timer é rezetada e o setTimeout inicia a contagem de três segundos
+     * se tiver no dois segundos e o usuário digitar algo reinicia a contagem pois timer é zerado
+     * só se efetiva a operação quando da 3 segundos e a variável timer recebe o valor do
+     * setTimeout
+     * 
+     */
+    clearTimeout(timer);
+    /* depois de 3 segundos executa a função */
+    timer = setTimeout(function(){ 
+      $(document).ready(function() { 
+          $.ajax({
+              //para que controller os dados serão enviados
+              url: '<?php echo URLROOT; ?>/pessoas/gravaobs',
+              //O método que será usado, nesse caso post
+              method:'POST',
+              //os dados que serão passados através do post no controller para pegar é só
+              //usar o post $id=$_POST['id'] 
+              data:{
+                  id:id,
+                  data:data
+              },
+              success: function(retorno_php){
+                //retorno_php vem através do echo no controller
+                var responseObj = JSON.parse(retorno_php);
+                /* lá no span eu monto o id sendo id_msg exemplo id=4 fica 4_msg
+                então aqui eu monto a string para alterar o valor do span $("#4_msg") */
+                $("#"+id+"_msg")
+                //removo todas as classes
+                .removeClass()
+                //adiciono a classe que vem da resposta la do arquivo do controller\pessoas\gravaobs()
+                .addClass(responseObj.classe) 
+                //adiciono o texto que vem de retorno do controller\pessoas\gravaobs()
+                .html(responseObj.message) 
+                //defino um tempo para dar a mensagem nesse caso para aparecer 2 segundos e sumir 4
+                .fadeIn(2000).fadeOut(4000);                
+              }//sucess
+          });//Fecha o ajax  
+      });//Fecha document ready function
+    }, waitTimer);//feche timer = setTimeout
+    
+  }
+</script>

@@ -420,6 +420,38 @@
            }  
 
         }
+
+        /**
+         * Grava os dados através do ajax passando id e data
+         */
+        public function gravaobs(){
+            $id = $_POST['id'];
+            $data= $_POST['data'];
+            try{
+
+                if($this->pessoaModel->gravaObs($id,$data)){
+                    //para acessar esses valores no jquery
+                    //exemplo responseObj.message
+                    $json_ret = array(
+                                        'classe'=>'text-success', 
+                                        'message'=>'Dados gravados com sucesso',
+                                        'error'=>false
+                                    );                     
+                    
+                    echo json_encode($json_ret); 
+                } else {
+                  throw new Exception('Ops! Algo deu errado ao tentar gravar os dados!');
+                }    
+              } catch (Exception $e) {
+                $erro = 'Erro: '.  $e->getMessage(). "\n";
+                $json_ret = array(
+                        'classe'=>'text-danger', 
+                        'message'=>$erro,
+                        'error'=>true
+                        );                     
+                echo json_encode($json_ret); 
+              }
+        }//gravaobs
        
     }
 ?>
