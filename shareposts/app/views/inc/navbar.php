@@ -17,9 +17,16 @@
           <li class="nav-item">
               <a class="nav-link" href="<?php echo URLROOT; ?>/pages/about">Sobre</a>
           </li> 
-          <li class="nav-item">
-              <a class="nav-link" href="<?php echo URLROOT; ?>/pages/javascript">Javascript</a>
-          </li> 
+
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Javascript
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">                
+                <a class="dropdown-item" href="<?php echo URLROOT; ?>/javascript/basico">Basico</a>
+              </div>
+          </li>
+        
           
           <?php if(isset($_SESSION[SE.'user_id'])) : ?>  
             <li class="nav-item dropdown">
