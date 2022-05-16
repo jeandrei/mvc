@@ -88,4 +88,35 @@ const nums = [9,8,7,6,5,4,3,2,1];
 const odds = nums.filter(n => {
     return n % 2 === 1;
 });
+
+/**
+ * Diferença entre array e objeto
+ */
+let myArray = [];//array
+const myObject = {
+    name: 'MYNAME',
+    lastName: 'MYLASTNAME',
+    age: '18',
+    weight: '78'
+};
+
+/**
+ * null - never assumed by default, you can use it to reset/clear a variable
+ * undefined - default value of unitialized variables, não tem nada lá
+ * NaN - Not a Number example: 3 * 'hi'
+ */
+
+/**
+ * typeof - retorna o tipo de uma variável
+ */
+console.log(typeof 'Hei');//retornará string;
+
+/**
+ * Para importar um script a melhor prática é dentro do header usando defer
+ * <script src="assets/scripts/app.js" defer>
+ * o que o defer faz é carregar o script o mais rápido possível sem
+ * parar o carregamento da página
+ * */
+
+
 </script>
