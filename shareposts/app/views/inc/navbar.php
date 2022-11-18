@@ -20,11 +20,15 @@
 
           <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Javascript
+                Conteúdos
               </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">                
-                <a class="dropdown-item" href="<?php echo URLROOT; ?>/javascript/basico">Basico</a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio"> 
+                <a class="dropdown-item" href="<?php echo URLROOT; ?>/conteudo/javascript">Javascript</a>
+                <a class="dropdown-item" href="<?php echo URLROOT; ?>/conteudo/bootstrap">Bootstrap</a>
               </div>
+
+              
+
           </li>
         
           
@@ -39,6 +43,7 @@
                 <a class="dropdown-item" href="<?php echo URLROOT; ?>/datatabledetails">Datatable MVC Detail Row</a>
                 <a class="dropdown-item" href="<?php echo URLROOT; ?>/ajaxs">Ajax</a>
                 <a class="dropdown-item" href="<?php echo URLROOT; ?>/combodinamicos">Combo Dinâmico</a>             
+                <a class="dropdown-item" href="<?php echo URLROOT; ?>/modals">Modal</a>
               </div>
             </li>
           <?php endif; ?>         

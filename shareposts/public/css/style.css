@@ -1,7 +1,8 @@
 .obrigatorio{
     color:red;
     font-size: 15px;
-    letter-spacing: 3px;
+    letter-spacing: 3px;  
+    vertical-align: sub;   
 }
 
 /*Deixa o texto e a borda do erro jquery em vermelho*/
