@@ -169,7 +169,7 @@
         }
 
 
-        public function buscanome(){            
+        public function search(){            
             $html = "
                 <thead>
                     <tr class='text-center'>  
@@ -185,7 +185,7 @@
                 </thead>
                 <tbody>       
                 ";
-            if($pessoas = $this->modalModel->buscaNome($_GET['nome'])){
+            if($pessoas = $this->modalModel->search($_GET['nome'],$_GET['municipio'])){               
                 $i = 0;
                 foreach($pessoas as $pessoa){
                     $i++;
@@ -220,6 +220,12 @@
                             ";
 
                 }
+            } else {
+                $html .= '<tr>
+                            <td colspan="9" class="text-center">
+                                Nenhum resultado encontrado
+                            </td>
+                         </tr>';                
             }
         
         echo $html; 

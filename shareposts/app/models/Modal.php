@@ -16,14 +16,30 @@ class Modal {
         return $results;           
     }
 
-    public function buscaNome($nome){
-        $this->db->query('SELECT *                          
-                          FROM pessoa
-                          WHERE
-                          pessoa.pessoaNome LIKE "%" :pessoaNome"%"                                               
-                          ORDER BY pessoa.pessoaNome ASC
-                          ');
-        $this->db->bind(':pessoaNome', $nome);
+    public function search($nome=null, $municipio=null){                
+        $sql = 'SELECT * FROM pessoa WHERE 1';
+        
+        $bind = [];
+
+         if($nome != null){
+            $sql.= ' AND pessoa.pessoaNome LIKE "%" :pessoaNome"%"';
+            $bind = [':pessoaNome' => $nome];            
+        } 
+
+        if($municipio != null){
+            $sql.= ' AND pessoa.pessoaMunicipio LIKE "%" :pessoaMunicipio"%"';
+            $bind += [':pessoaMunicipio' => $municipio];            
+        }
+        
+        
+        
+        
+        $this->db->query($sql);
+        
+        foreach($bind as $key => $value){             
+            $this->db->bind($key, $value);            
+        }
+        
         $results = $this->db->resultSet(); 
         if($this->db->rowCount() > 0){
             return $results;

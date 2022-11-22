@@ -310,15 +310,17 @@
   const pesquisar = document.getElementById('pesquisar');   
   pesquisar.addEventListener('click', (e) => {  
    e.preventDefault();  
-    buscaNome();
+   search();
   });
-  function buscaNome(){
-    let nome=$("#pessoaNome").val();      
+  function search(){
+    let nome=$("#pessoaNome").val();
+    let municipio=$("#pessoaMunicipio").val();
     $.ajax({     
-      url:'<?php echo URLROOT; ?>/modals/buscanome',
+      url:'<?php echo URLROOT; ?>/modals/search',
       method:'GET',
       data:{
-        nome:nome
+        nome:nome,
+        municipio:municipio
       },
       success: function(retorno_php){
         document.getElementById('tabelaPessoas').innerHTML = retorno_php;
