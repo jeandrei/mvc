@@ -103,9 +103,7 @@
             $this->view('modals/index', $data);
         }
 
-        public function add(){
-            $this->view('modals/add');
-        }
+       
 
         public function edit(){            
             $this->view('modals/edit');
@@ -229,6 +227,97 @@
             }
         
         echo $html; 
+        }
+
+        public function add(){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                unset($data);
+                $data = [     
+                    'pessoaNome'            => html($_POST['pessoaNome']),
+                    'pessoaEmail'           => html($_POST['pessoaEmail']),
+                    'pessoaTelefone'        => html($_POST['pessoaTelefone']),
+                    'pessoaCelular'         => html($_POST['pessoaCelular']),
+                    'pessoaMunicipio'       => html($_POST['pessoaMunicipio']),
+                    'bairroId'              => html($_POST['bairroId']),
+                    'pessoaLogradouro'      => html($_POST['pessoaLogradouro']),
+                    'pessoaNumero'          => html($_POST['pessoaNumero']),
+                    'pessoaUf'              => html($_POST['pessoaUf']),
+                    'pessoaNascimento'      => html($_POST['pessoaNascimento']), 
+                    'pessoaCpf'             => html($_POST['pessoaCpf'])
+                ];
+
+                 //valida pessoaNome              
+                 $error['pessoaNome'] = validate($data['pessoaNome'],['required',['isstring','min'=>10]]);
+                 
+                //valida pessoaEmail
+                $error['pessoaEmail'] = validate($data['pessoaEmail'],['required','email']);
+                
+                //valida pessoaTelefone
+                $error['pessoaTelefone'] = validate($data['pessoaTelefone'],['required','phone']);
+              
+                //valida pessoaCelular
+                $error['pessoaCelular'] = validate($data['pessoaCelular'],['required','cphone']);
+                
+                //valida pessoaMunicipio
+                $error['pessoaMunicipio'] = validate($data['pessoaMunicipio'],['required',['isstring','min'=>3]]);
+
+                //valida bairroId
+                $error['bairroId'] = validate($data['bairroId'],['required']);
+              
+                //valida pessoaLogradouro
+                $error['pessoaLogradouro'] = validate($data['pessoaLogradouro'],['required',['isstring','min'=>3]]);
+
+                //valida pessoaUf
+                $error['pessoaUf'] = validate($data['pessoaUf'],['required']);
+            
+                //valida pessoaNascimento
+                $error['pessoaNascimento'] = validate($data['pessoaNascimento'],['required',['date','min'=>18,'futuredate'=>false]]);
+                
+                //valida pessoaCpf
+                $error['pessoaCpf'] = validate($data['pessoaCpf'],['required','cpf']);       
+
+                 if(
+                    empty($error['pessoaNome']) &&
+                    empty($error['pessoaEmail']) &&
+                    empty($error['pessoaTelefone']) &&
+                    empty($error['pessoaCelular']) &&
+                    empty($error['pessoaMunicipio']) &&
+                    empty($error['bairroId_err']) &&
+                    empty($error['pessoaLogradouro']) &&
+                    empty($error['pessoaUf']) &&
+                    empty($error['pessoaNascimento']) &&
+                    empty($error['pessoaCpf'])
+                   ){
+                        try {
+                            if($this->modalModel->register($data)){
+                                $json_ret = array(
+                                    'classe'=>'alert alert-success', 
+                                    'message'=>'Dados gravados com sucesso',
+                                    'error'=>false
+                                ); 
+                                echo json_encode($json_ret); 
+                            }
+
+                        } catch (Exception $e) {
+                            $json_ret = array(
+                                'classe'=>'alert alert-danger', 
+                                'message'=>'Erro ao gravar os dados',
+                                'e' => $e,
+                                'error'=>$error
+                                );                     
+                                echo json_encode($json_ret); 
+                        }                  
+                   } else {
+                    $json_ret = array(
+                        'classe'=>'alert alert-danger', 
+                        'message'=>'Erro ao tentar gravar os dados',
+                        'error'=>$error
+                    );
+                    echo json_encode($json_ret);
+                   }                
+            }
         }
 
 
