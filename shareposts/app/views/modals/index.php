@@ -409,7 +409,7 @@
                     .removeClass()                       
                     .addClass(responseObj.classe)
                     .html(responseObj.message);
-                    /* .fadeIn(4000).fadeOut(4000); */
+                    .fadeIn(4000).fadeOut(4000);
             closeModal();            
           }        
 
