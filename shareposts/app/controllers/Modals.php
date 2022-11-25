@@ -105,8 +105,107 @@
 
        
 
-        public function edit(){            
-            $this->view('modals/edit');
+        public function edit($id){            
+            if(isset($id)){
+                $data = $this->modalModel->getPessoaById($id);                
+                echo json_encode($data);
+            } else {
+                $data['status']=200;
+                $data['message']="Invalid or data not found";
+            }
+        }
+
+
+        public function update($id){
+                      
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                unset($data);
+                $data = [
+                    'pessoaId'              => $id,   
+                    'updatePessoaNome'            => html($_POST['updatePessoaNome']),
+                    'updatePessoaEmail'           => html($_POST['updatePessoaEmail']),
+                    'updatePessoaTelefone'        => html($_POST['updatePessoaTelefone']),
+                    'updatePessoaCelular'         => html($_POST['updatePessoaCelular']),
+                    'updatePessoaMunicipio'       => html($_POST['updatePessoaMunicipio']),
+                    'updateBairroId'              => html($_POST['updateBairroId']),
+                    'updatePessoaLogradouro'      => html($_POST['updatePessoaLogradouro']),'updatePessoaUf'              => html($_POST['updatePessoaUf']),
+                    'updatePessoaNascimento'      => html($_POST['updatePessoaNascimento']), 
+                    'updatePessoaCpf'             => html($_POST['updatePessoaCpf'])
+                ];
+                
+                 //valida pessoaNome              
+                 $error['updatePessoaNome'] = validate($data['updatePessoaNome'],['required',['isstring','min'=>10]]);
+                 
+                //valida pessoaEmail
+                $error['updatePessoaEmail'] = validate($data['updatePessoaEmail'],['required','email']);
+                
+                //valida pessoaTelefone
+                $error['updatePessoaTelefone'] = validate($data['updatePessoaTelefone'],['required','phone']);
+              
+                //valida pessoaCelular
+                $error['updatePessoaCelular'] = validate($data['updatePessoaCelular'],['required','cphone']);
+                
+                //valida pessoaMunicipio
+                $error['updatePessoaMunicipio'] = validate($data['updatePessoaMunicipio'],['required',['isstring','min'=>3]]);
+
+                //valida bairroId
+                $error['updateBairroId'] = validate($data['updateBairroId'],['required']);
+              
+                //valida pessoaLogradouro
+                $error['updatePessoaLogradouro'] = validate($data['updatePessoaLogradouro'],['required',['isstring','min'=>3]]);
+
+                //valida pessoaUf
+                $error['updatePessoaUf'] = validate($data['updatePessoaUf'],['required']);
+            
+                //valida pessoaNascimento
+                $error['updatePessoaNascimento'] = validate($data['updatePessoaNascimento'],['required',['date','min'=>18,'futuredate'=>false]]);
+                
+                //valida pessoaCpf
+                $error['updatePessoaCpf'] = validate($data['updatePessoaCpf'],['required','cpf']);       
+                
+                
+                 if(
+                    empty($error['updatePessoaNome']) &&
+                    empty($error['updatePessoaEmail']) &&
+                    empty($error['updatePessoaTelefone']) &&
+                    empty($error['updatePessoaCelular']) &&
+                    empty($error['updatePessoaMunicipio']) &&
+                    empty($error['updateBairroId']) &&
+                    empty($error['updatePessoaLogradouro']) &&
+                    empty($error['updatePessoaUf']) &&
+                    empty($error['updatePessoaNascimento']) &&
+                    empty($error['updatePessoaCpf'])
+                   ){
+                        try {                      
+                            if($this->modalModel->update($data)){
+                                $json_ret = array(
+                                    'classe'=>'alert alert-success', 
+                                    'message'=>'Dados gravados com sucesso',
+                                    'error'=>false
+                                ); 
+                                echo json_encode($json_ret); 
+                            }
+
+                        } catch (Exception $e) {
+                            $json_ret = array(
+                                'classe'=>'alert alert-danger', 
+                                'message'=>'Erro ao gravar os dados',
+                                'e' => $e,
+                                'error'=>$error
+                                );                     
+                                echo json_encode($json_ret); 
+                        }                  
+                   } else {
+                    $json_ret = array(
+                        'classe'=>'alert alert-danger', 
+                        'message'=>'Erro ao tentar gravar os dados',
+                        'error'=>$error
+                    );
+                    echo json_encode($json_ret);
+                   }                
+            }
         }
         
         public function pessoas(){
@@ -130,35 +229,37 @@
                 $i = 0;
                 foreach($pessoas as $pessoa){
                     $i++;
-                    $html .= "<tr class='text-center'>
-                              <th scope='row'>
-                              $i
+                    $html .= '<tr class="text-center">
+                              <th scope="row">
+                              '.$i.'
                               </th>
-                             ";
-                    $html .="
-                            <td>$pessoa->pessoaNome</td>
-                            <td>$pessoa->pessoaNascimento</td>
-                            <td>$pessoa->pessoaMunicipio</td>
-                            <td>$pessoa->pessoaLogradouro</td>
+                             ';
+                    $html .='
+                            <td>'.$pessoa->pessoaNome.'</td>
+                            <td>'.$pessoa->pessoaNascimento.'</td>
+                            <td>'.$pessoa->pessoaMunicipio.'</td>
+                            <td>'.$pessoa->pessoaLogradouro.'</td>
                             <td>
                                 <input 
-                                type=text 
-                                class=form-control
-                                name=observacao
-                                onkeyup=update(this.id,this.value)
-                                id='$pessoa->pessoaId'
-                                value='$pessoa->pessoaObservacao'                         
+                                type="text" 
+                                class="form-control"
+                                name="observacao"
+                                onkeyup=update(this.id,this.value)                             
+                                id='.$pessoa->pessoaId.'
+                                value='.$pessoa->pessoaObservacao.'                         
                                 >
-                                <span id='$pessoa->pessoaId'_msg>
+                                <span id='.$pessoa->pessoaId.'_msg>
                             </td>
-                            <td>$pessoa->pessoaPCD</td>
-                            <td colspan='2'>
-                            <a href='#' class='btn btn-primary'>Editar</a>
+                            <td>'.$pessoa->pessoaPCD.'</td>
+                            <td colspan="2">
+                            <button class="btn btn-primary" 
+                            onclick=edit('.$pessoa->pessoaId.')>Editar</button>
                             </td>
-                            <td colspan='2'>
-                            <a href='#' class='btn btn-danger'>Excluir</a>
+                            <td colspan="2">
+                            <button class="btn btn-danger" 
+                            onclick=excluir('.$pessoa->pessoaId.')>Excluir</button>
                             </td>
-                            ";
+                            </tr>';
 
                 }
             }
@@ -187,35 +288,37 @@
                 $i = 0;
                 foreach($pessoas as $pessoa){
                     $i++;
-                    $html .= "<tr class='text-center'>
-                              <th scope='row'>
-                              $i
+                    $html .= '<tr class="text-center">
+                              <th scope="row">
+                              '.$i.'
                               </th>
-                             ";
-                    $html .="
-                            <td>$pessoa->pessoaNome</td>
-                            <td>$pessoa->pessoaNascimento</td>
-                            <td>$pessoa->pessoaMunicipio</td>
-                            <td>$pessoa->pessoaLogradouro</td>
+                             ';
+                    $html .='
+                            <td>'.$pessoa->pessoaNome.'</td>
+                            <td>'.$pessoa->pessoaNascimento.'</td>
+                            <td>'.$pessoa->pessoaMunicipio.'</td>
+                            <td>'.$pessoa->pessoaLogradouro.'</td>
                             <td>
                                 <input 
-                                type=text 
-                                class=form-control
-                                name=observacao
-                                onkeyup=update(this.id,this.value)
-                                id='$pessoa->pessoaId'
-                                value='$pessoa->pessoaObservacao'                         
+                                type="text" 
+                                class="form-control"
+                                name="observacao"
+                                onkeyup=update(this.id,this.value)                             
+                                id='.$pessoa->pessoaId.'
+                                value='.$pessoa->pessoaObservacao.'                         
                                 >
-                                <span id='$pessoa->pessoaId'_msg>
+                                <span id='.$pessoa->pessoaId.'_msg>
                             </td>
-                            <td>$pessoa->pessoaPCD</td>
-                            <td colspan='2'>
-                            <a href='#' class='btn btn-primary'>Editar</a>
+                            <td>'.$pessoa->pessoaPCD.'</td>
+                            <td colspan="2">
+                            <button class="btn btn-primary" 
+                            onclick=edit('.$pessoa->pessoaId.')>Editar</button>
                             </td>
-                            <td colspan='2'>
-                            <a href='#' class='btn btn-danger'>Excluir</a>
+                            <td colspan="2">
+                            <button class="btn btn-danger" 
+                            onclick=excluir('.$pessoa->pessoaId.')>Excluir</button>
                             </td>
-                            ";
+                            </tr>';
 
                 }
             } else {
@@ -319,6 +422,14 @@
                    }                
             }
         }
+
+        public function delete($id){
+            if(isset($id)){
+                $this->modalModel->delete($id);
+            }
+        }
+
+        
 
 
 }   

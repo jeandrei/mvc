@@ -31,6 +31,7 @@ class Modal {
             $bind += [':pessoaMunicipio' => $municipio];            
         }             
         
+        $sql.= ' ORDER BY pessoa.pessoaNome ASC';
         $this->db->query($sql);
         
         foreach($bind as $key => $value){             
@@ -77,5 +78,73 @@ class Modal {
          }
          
      }
+
+
+     public function delete($id){
+        $this->db->query('DELETE FROM pessoa WHERE pessoa.pessoaId = :id');
+        $this->db->bind(':id',$id);
+        if($this->db->execute()){             
+            return true;  
+         } else {
+            return false;
+         }
+     }
+
+     public function getPessoaById($id){
+        $this->db->query('
+                        SELECT
+                                *
+                        FROM
+                                pessoa
+                        WHERE 
+                                pessoaId = :id
+                        ');
+        $this->db->bind(':id', $id);
+
+        $row = $this->db->single();
+        //verificq se teve algum resultado
+        if($this->db->rowCount() > 0){
+            return $row;
+        } else {
+            return false;
+        }         
+    }
+
+
+    public function update($data){        
+        $this->db->query('
+                             UPDATE pessoa SET
+                             pessoaNome          = :pessoaNome, 
+                             pessoaEmail         = :pessoaEmail, 
+                             pessoaTelefone      = :pessoaTelefone,
+                             pessoaCelular       = :pessoaCelular,
+                             pessoaMunicipio     = :pessoaMunicipio,
+                             bairroId            = :bairroId,
+                             pessoaLogradouro    = :pessoaLogradouro,pessoaUf            = :pessoaUf,
+                             pessoaNascimento    = :pessoaNascimento,pessoaCpf           = :pessoaCpf
+                             WHERE pessoaId = :pessoaId                      
+                         ');
+         $this->db->bind(':pessoaId',$data['pessoaId']);                
+         $this->db->bind(':pessoaNome',$data['updatePessoaNome']);
+         $this->db->bind(':pessoaEmail',$data['updatePessoaEmail']);
+         $this->db->bind(':pessoaTelefone',$data['updatePessoaTelefone']);
+         $this->db->bind(':pessoaCelular',$data['updatePessoaCelular']);
+         $this->db->bind(':pessoaMunicipio',$data['updatePessoaMunicipio']);
+         $this->db->bind(':bairroId',$data['updateBairroId']);
+         $this->db->bind(':pessoaLogradouro',$data['updatePessoaLogradouro']);         
+         $this->db->bind(':pessoaUf',$data['updatePessoaUf']);
+         $this->db->bind(':pessoaNascimento',$data['updatePessoaNascimento']); 
+         $this->db->bind(':pessoaCpf',$data['updatePessoaCpf']);               
+ 
+         if($this->db->execute()){ 
+                return true;
+            } else {
+                return false;
+            }                        
+         
+         
+     }
+
+    
 }
 ?>
