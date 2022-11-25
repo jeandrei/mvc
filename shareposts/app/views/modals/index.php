@@ -105,7 +105,7 @@
   const UISelectors = {
     addModal: "#addPessoaModal",
     editModal:"#editPessoaModal",
-    msg: "#msg",
+    flashMessage: "#msg",
     tabela: "#tabelaPessoas",
     btnGravar:"#gravar",
     btnUpdate:"#btnUpdate",
@@ -136,8 +136,8 @@
     updatePessoaNascimento:"#updatePessoaNascimento",
     updatePessoaCpf:"#updatePessoaCpf"
   }
+ 
 
-  
 
   //Pega os dados do formulário
   function getFormData(){
@@ -259,15 +259,13 @@
               }
             showModalAdd();
           } else {
-            $("#msg")
+            $(UISelectors.flashMessage)
                     .removeClass()                       
                     .addClass(responseObj.classe)
                     .html(responseObj.message)
                     .fadeIn(4000).fadeOut(4000);
             closeModalAdd();            
-          }        
-
-                
+          }                     
       }
     });
     carregaDados();
@@ -288,36 +286,24 @@
       success: function(retorno_php){  
         let responseObj = JSON.parse(retorno_php);
         
-        if(responseObj.error!==false){           
-                                                     
-              /**
-              IMPORTANTE TEM QUE TER ID NO SPAN PARA FUNCIONAR
-              aqui key traz a chave exemplo pessoaNome_err
-              e value traz o erro exemplo Por favor informe o nome
-              então na linha  $("#"+key) ele monta $("#pessoaNome_err")
-              para cada erro que tiver no array responseObj.error que vem
-              do controller
-              */ 
-              for (let [key, value] of entries(responseObj.error)) {                            
-                  // aqui ele monta o erro pessoaNome_err
+        if(responseObj.error!==false){               
+             
+              for (let [key, value] of entries(responseObj.error)) {                           
+                  
                   $("#"+key+"_err") 
                       .addClass("text-danger")
-                      .html(value)
-                  //se tiver algo no value quer dizer que tem erro e adicionamos a classe in-invalid caso contrário removemos a classe
-                  if(value){
-                    // aqui ele monta o id do input #pessoaNome
+                      .html(value)                  
+                  if(value){                   
                     $("#"+key) 
                       .addClass("is-invalid")
                   } else {
                     $("#"+key) 
                       .removeClass("is-invalid")
-                  }
-                     
-                      
+                  }  
               }
             showModalEdit();
           } else {
-            $("#msg")
+            $(UISelectors.flashMessage)
                     .removeClass()                       
                     .addClass(responseObj.classe)
                     .html(responseObj.message)
@@ -423,7 +409,6 @@
   function edit(id){
    //passa o id lá para o model no input hiddendata
    $('#hiddendata').val(id);
-
    
 
    $.post(`<?php echo URLROOT; ?>/modals/edit/${id}`,function(data,status){
