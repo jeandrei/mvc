@@ -75,7 +75,22 @@
 <!-- TABELA -->
 <table class="table table-striped" id="tabelaPessoas"></table>
 
-
+<script>
+  function getBairros(){  
+  $.ajax({
+    url:'<?php echo URLROOT; ?>/modals/getBairros',
+      method:'POST',         
+      async: false,
+      dataType: 'json'
+    }).done(function (response){
+      ret_val = response;
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+      ret_val = null;
+    });
+   return ret_val;
+}
+  let bairros = getBairros();
+</script>
 <!-- Require o modal de adicionar pessoa addPessoaModal -->
 <?php require 'addPessoaModal.php'; ?>
 
@@ -426,6 +441,7 @@
    })
 
    showModalEdit();
-  }
+  } 
+
  
 </script>

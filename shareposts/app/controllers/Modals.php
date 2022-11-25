@@ -429,6 +429,23 @@
             }
         }
 
+
+        public function getBairros(){
+            try {
+                if($bairros = $this->bairroModel->getBairros()){                
+                    echo json_encode($bairros);
+                }
+            } catch (Exception $e) {
+                $json_ret = array(
+                    'classe'=>'alert alert-danger', 
+                    'message'=>'Erro ao tentar recuperar os bairros',
+                    'error'=>true
+                );
+                echo json_encode($json_ret);
+            }            
+            
+        }
+
         
 
 

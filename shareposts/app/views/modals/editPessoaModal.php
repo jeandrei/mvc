@@ -124,9 +124,14 @@
                   <select
                       name="updateBairroId"
                       id="updateBairroId"
-                      class="form-select <?php echo (!empty($data['updateBairroId_err'])) ? 'is-invalid' : ''; ?>"
+                      class="form-select"
                   >
-                  <option value="1">Selecione o Bairro</option> 
+                  <option value="1">Selecione o Bairro</option>
+                    <script>
+                      bairros.forEach(bairro => {
+                        document.write(`<option value=${bairro.bairroId}>${bairro.bairroNome}</option>`)
+                      })
+                    </script> 
                   </select>
                   <span class="text-danger" id="updateBairroId_err">
                     <?php echo $data['updateBairroId_err']; ?>
